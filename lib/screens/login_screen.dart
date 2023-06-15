@@ -1,6 +1,6 @@
+import 'package:bootcamp/custom_widgets/_textfield.dart';
 import 'package:bootcamp/style/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -10,12 +10,21 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final emailcontroller = TextEditingController();
+  final passwordcontroller = TextEditingController();
+  @override
+  void dispose() {
+    super.dispose();
+    emailcontroller.dispose();
+    passwordcontroller.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.white,
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(
               height: 70,
@@ -79,9 +88,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     //Kullanıcı adı ve şifre
                     Container(
                       width: MediaQuery.of(context).size.width - 75,
-                      height: 200,
+
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Colors.grey.shade100,
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [
                           BoxShadow(
@@ -90,6 +99,57 @@ class _LoginScreenState extends State<LoginScreen> {
                             blurRadius: 5,
                             offset: const Offset(0, 4),
                           ),
+                        ],
+                      ),
+                      //email
+                      child: Column(
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          AppTextField(
+                            controller: emailcontroller,
+                            hintText: 'Email',
+                            obscureText: false,
+                          ),
+
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          //şifre
+                          AppTextField(
+                            controller: passwordcontroller,
+                            hintText: 'Şifre',
+                            obscureText: true,
+                          ),
+
+                          const SizedBox(
+                            height: 5,
+                          ),
+
+                          //şifrenizi mi unuttunuz?
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 25.0),
+                            child: SizedBox(
+                              height: 20,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    'Şifenizi mi unuttunuz?',
+                                    style: TextStyle(
+                                        color: AppColors.darkGrey,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+
+                          
                         ],
                       ),
                     ),
@@ -126,9 +186,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     //google ve apple ile giriş
                     Container(
                       width: MediaQuery.of(context).size.width - 75,
-                      height: 200,
+                      height: 100,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Colors.grey.shade100,
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [
                           BoxShadow(
@@ -140,28 +200,27 @@ class _LoginScreenState extends State<LoginScreen> {
                         ],
                       ),
                     ),
-
+                    const SizedBox(
+                      height: 25,
+                    ),
                     //hesabın yok mu
-                    const Padding(
-                      padding: EdgeInsets.only(top: 30),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Hesabın yok mu ?",
-                            style: TextStyle(
-                                fontSize: 20, color: AppColors.darkGrey),
-                          ),
-                          SizedBox(
-                            width: 4,
-                          ),
-                          Text(
-                            "Kayıt ol",
-                            style: TextStyle(
-                                fontSize: 20, color: AppColors.orange),
-                          )
-                        ],
-                      ),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Hesabın yok mu ?",
+                          style: TextStyle(
+                              fontSize: 20, color: AppColors.darkGrey),
+                        ),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        Text(
+                          "Kayıt ol",
+                          style:
+                              TextStyle(fontSize: 20, color: AppColors.orange),
+                        )
+                      ],
                     )
                   ],
                 ),
