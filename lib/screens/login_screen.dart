@@ -1,3 +1,4 @@
+import 'package:bootcamp/custom_widgets/_button.dart';
 import 'package:bootcamp/custom_widgets/_textfield.dart';
 import 'package:bootcamp/style/colors.dart';
 import 'package:flutter/material.dart';
@@ -145,11 +146,19 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
+
                           const SizedBox(
                             height: 5,
                           ),
 
-                          
+                          //giriş yap butonu
+                          const GirisButton(
+                            text: 'Giriş Yap',
+                          ),
+
+                          const SizedBox(
+                            height: 20,
+                          )
                         ],
                       ),
                     ),
