@@ -17,7 +17,6 @@ class AppTextField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25.0),
       child: Container(
-
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(25)),
         child: TextField(
           controller: controller,
@@ -35,6 +34,7 @@ class AppTextField extends StatelessWidget {
                   color: AppColors.green,
                 ),
               ),
+              contentPadding: const EdgeInsets.symmetric(vertical: 10,horizontal: 15),
               fillColor: Colors.grey.shade200,
               filled: true,
               hintText: hintText,

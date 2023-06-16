@@ -10,7 +10,7 @@ class GirisButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(15),
+      padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
       margin: const EdgeInsets.symmetric(horizontal: 25),
       decoration: BoxDecoration(
         color: AppColors.green,

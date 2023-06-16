@@ -11,230 +11,353 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final emailcontroller = TextEditingController();
-  final passwordcontroller = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
   @override
   void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
     super.dispose();
-    emailcontroller.dispose();
-    passwordcontroller.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: AppColors.white,
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(
-              height: 70,
+            SizedBox(
+              height: screenHeight * 0.01,
             ),
-
             //Logo
             Image.asset(
               'assets/logos/logo.png',
-              height: 150,
-              width: 380,
+              height: screenHeight * 0.3,
+              width: screenWidth * 0.8,
             ),
-
-            const SizedBox(
-              height: 40,
+            SizedBox(
+              height: screenHeight * 0.04,
             ),
-
-            Stack(children: [
-              Positioned(
-                child: Container(
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.midGrey.withOpacity(0.3),
-                        spreadRadius: 4,
-                        blurRadius: 15,
-                        offset: const Offset(0, -4),
+            Stack(
+              children: [
+                Positioned(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.midGrey.withOpacity(0.3),
+                          spreadRadius: 4,
+                          blurRadius: 15,
+                          offset: Offset(0, -4),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  decoration: const BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
+                    ),
+                  ),
+                  width: screenWidth,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: screenHeight * 0.02,
+                      ),
+                      //Giriş Yap
+                      const Text(
+                        "Giriş Yap",
+                        style: TextStyle(
+                          fontSize: 35,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.orange,
+                        ),
+                      ),
+                      SizedBox(
+                        height: screenHeight * 0.02,
+                      ),
+                      //Kullanıcı adı ve şifre
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 30,
+                        ),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          elevation: 5,
+                          color: Colors.grey.shade50,
+                          //email
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: screenHeight * 0.02,
+                              ),
+                              AppTextField(
+                                controller: emailController,
+                                hintText: 'Email',
+                                obscureText: false,
+                              ),
+                              SizedBox(
+                                height: screenHeight * 0.01,
+                              ),
+                              //şifre
+                              AppTextField(
+                                controller: passwordController,
+                                hintText: 'Şifre',
+                                obscureText: true,
+                              ),
+                              SizedBox(
+                                height: screenHeight * 0.005,
+                              ),
+                              //şifrenizi mi unuttunuz?
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: screenWidth * 0.1,
+                                ),
+                                child: const SizedBox(
+                                  height: 20,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        'Şifrenizi mi unuttunuz?',
+                                        style: TextStyle(
+                                          color: AppColors.darkGrey,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: screenHeight * 0.005,
+                              ),
+                              //giriş yap butonu
+                              const GirisButton(
+                                text: 'Giriş Yap',
+                              ),
+                              SizedBox(
+                                height: screenHeight * 0.02,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      // ya da
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: screenHeight * 0.02,
+                          horizontal: screenWidth * 0.04,
+                        ),
+                        child: Row(
+                          children: [
+                            const Expanded(
+                              child: Divider(
+                                thickness: 2,
+                                color: AppColors.orange,
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: screenWidth * 0.02,
+                              ),
+                              child: const Text(
+                                "ya da",
+                                style: TextStyle(
+                                  color: AppColors.darkGrey,
+                                ),
+                              ),
+                            ),
+                            const Expanded(
+                              child: Divider(
+                                thickness: 2,
+                                color: AppColors.orange,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      //google ve apple ile giriş
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          elevation: 5,
+                          color: Colors.grey.shade50,
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: screenHeight * 0.02,
+                              ),
+                              //google ile giriş
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: screenWidth * 0.1,
+                                ),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                          color: AppColors.green,
+                                        ),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            decoration: const BoxDecoration(
+                                              border: Border(
+                                                right: BorderSide(
+                                                  color: AppColors.green,
+                                                ),
+                                              ),
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsets.all(5),
+                                              child: Image.asset(
+                                                'assets/logos/google.png',
+                                                width: 30,
+                                                height: 30,
+                                              ),
+                                            ),
+                                          ),
+                                          const Expanded(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  'Google ile devam et',
+                                                  style: TextStyle(
+                                                    color: AppColors.midGrey,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 20,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: screenHeight * 0.01,
+                              ),
+                              //apple ile giriş
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: screenWidth * 0.1,
+                                ),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                          color: AppColors.green,
+                                        ),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            decoration: const BoxDecoration(
+                                              border: Border(
+                                                right: BorderSide(
+                                                  color: AppColors.green,
+                                                ),
+                                              ),
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsets.all(5),
+                                              child: Image.asset(
+                                                'assets/logos/apple.png',
+                                                width: 30,
+                                                height: 30,
+                                              ),
+                                            ),
+                                          ),
+                                          const Expanded(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  'Apple ile devam et',
+                                                  style: TextStyle(
+                                                    color: AppColors.midGrey,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 20,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: screenHeight * 0.02,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: screenHeight * 0.025,
+                      ),
+                      //hesabın yok mu
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Hesabın yok mu?",
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: AppColors.darkGrey,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 4,
+                          ),
+                          Text(
+                            "Kayıt ol",
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: AppColors.orange,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ),
-              ),
-              Container(
-                decoration: const BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
-                  ),
-                ),
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 20,
-                    ),
-
-                    //Giriş Yap
-                    const Text(
-                      "Giriş Yap",
-                      style: TextStyle(
-                          fontSize: 35,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.orange),
-                    ),
-
-                    const SizedBox(
-                      height: 20,
-                    ),
-
-                    //Kullanıcı adı ve şifre
-                    Container(
-                      width: MediaQuery.of(context).size.width - 75,
-
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade100,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.midGrey.withOpacity(0.3),
-                            spreadRadius: 2,
-                            blurRadius: 5,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      //email
-                      child: Column(
-                        children: [
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          AppTextField(
-                            controller: emailcontroller,
-                            hintText: 'Email',
-                            obscureText: false,
-                          ),
-
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          //şifre
-                          AppTextField(
-                            controller: passwordcontroller,
-                            hintText: 'Şifre',
-                            obscureText: true,
-                          ),
-
-                          const SizedBox(
-                            height: 5,
-                          ),
-
-                          //şifrenizi mi unuttunuz?
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 25.0),
-                            child: SizedBox(
-                              height: 20,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    'Şifenizi mi unuttunuz?',
-                                    style: TextStyle(
-                                        color: AppColors.darkGrey,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-
-                          const SizedBox(
-                            height: 5,
-                          ),
-
-                          //giriş yap butonu
-                          const GirisButton(
-                            text: 'Giriş Yap',
-                          ),
-
-                          const SizedBox(
-                            height: 20,
-                          )
-                        ],
-                      ),
-                    ),
-
-                    // ya da
-                    const Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 20, horizontal: 15),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Divider(
-                              thickness: 1,
-                              color: AppColors.orange,
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Text(
-                              "ya da",
-                              style: TextStyle(color: AppColors.midGrey),
-                            ),
-                          ),
-                          Expanded(
-                            child: Divider(
-                              thickness: 1,
-                              color: AppColors.orange,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    //google ve apple ile giriş
-                    Container(
-                      width: MediaQuery.of(context).size.width - 75,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade100,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.midGrey.withOpacity(0.3),
-                            spreadRadius: 2,
-                            blurRadius: 5,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    //hesabın yok mu
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Hesabın yok mu ?",
-                          style: TextStyle(
-                              fontSize: 20, color: AppColors.darkGrey),
-                        ),
-                        SizedBox(
-                          width: 4,
-                        ),
-                        Text(
-                          "Kayıt ol",
-                          style:
-                              TextStyle(fontSize: 20, color: AppColors.orange),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ]),
+              ],
+            ),
           ],
         ),
       ),
