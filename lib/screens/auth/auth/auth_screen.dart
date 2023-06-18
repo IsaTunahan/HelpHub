@@ -15,12 +15,12 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  bool _showSplash = true; // SplashScreen'ın gösterilip gösterilmeyeceğini belirlemek için bir değişken
+  bool _showSplash = true; 
 
   @override
   void initState() {
     super.initState();
-    // 2 saniye sonra _showSplash değerini false yaparak SplashScreen'ı kaldırıyoruz
+
     Timer(const Duration(seconds: 2), () {
       setState(() {
         _showSplash = false;
@@ -30,22 +30,25 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          if (_showSplash) {
-
-            return const SplashScreen(); 
-          } else {
-            if (snapshot.hasData) {
-              return const HomeScreen();
+    if (_showSplash) {
+      return SplashScreen();
+    } else {
+      return Scaffold(
+        body: StreamBuilder<User?>(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Container(); // İsteğe bağlı: Bağlantı durumu bekleniyorsa boş bir widget dönebilirsiniz.
             } else {
-              return const LoginOrRegisterScreen();
+              if (snapshot.hasData) {
+                return HomeScreen();
+              } else {
+                return LoginOrRegisterScreen();
+              }
             }
-          }
-        },
-      ),
-    );
+          },
+        ),
+      );
+    }
   }
 }
