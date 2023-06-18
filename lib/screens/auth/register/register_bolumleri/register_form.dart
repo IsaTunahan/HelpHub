@@ -1,4 +1,5 @@
 import 'package:bootcamp/custom_widgets/alert.dart';
+import 'package:bootcamp/style/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,9 +7,7 @@ import 'package:flutter/material.dart';
 import '../../../../custom_widgets/_textformfield.dart';
 
 class RegisterForm extends StatefulWidget {
-  const RegisterForm({
-    super.key,
-  });
+  const RegisterForm({super.key,});
 
   @override
   State<RegisterForm> createState() => _RegisterFormState();
@@ -31,8 +30,6 @@ class _RegisterFormState extends State<RegisterForm> {
           email: emailController.text.trim(),
           password: passwordController.text.trim(),
         );
-
-
       } on FirebaseAuthException catch (e) {
         String errorMessage = 'Bilinmeyen bir hata oluştu';
 
@@ -55,7 +52,10 @@ class _RegisterFormState extends State<RegisterForm> {
         showDialog(
           context: context,
           builder: (context) {
-            return const ErrorDialog(title: 'Hata', message: 'Bilinmeyen bir hata oluştu');
+            return const ErrorDialog(
+              title: 'Hata',
+              message: 'Bilinmeyen bir hata oluştu',
+            );
           },
         );
       } finally {
@@ -67,7 +67,8 @@ class _RegisterFormState extends State<RegisterForm> {
   }
 
   bool passwordConfirmed() {
-    if (passwordController.text.trim() == confirmPasswordController.text.trim()) {
+    if (passwordController.text.trim() ==
+        confirmPasswordController.text.trim()) {
       return true;
     } else {
       showDialog(
@@ -115,7 +116,7 @@ class _RegisterFormState extends State<RegisterForm> {
             SizedBox(height: screenHeight * 0.02),
             AppTextFormField(
               controller: emailController,
-              hintText: 'Email ',
+              hintText: 'Email',
               obscureText: false,
             ),
             SizedBox(height: screenHeight * 0.01),
@@ -138,7 +139,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 margin: const EdgeInsets.symmetric(horizontal: 25),
                 decoration: BoxDecoration(
-                  color: isLoading ? Colors.grey : Colors.green,
+                  color: isLoading ? AppColors.purple : AppColors.purple,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Padding(
@@ -147,14 +148,17 @@ class _RegisterFormState extends State<RegisterForm> {
                       ? const SizedBox(
                           width: 24,
                           height: 24,
-                          child: CupertinoActivityIndicator(),
+                          child: CircularProgressIndicator(
+                            color: AppColors.white,
+                          ),
                         )
                       : const Text(
                           'Giriş Yap',
                           style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         ),
                 ),
               ),

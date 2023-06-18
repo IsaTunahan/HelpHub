@@ -1,6 +1,5 @@
 import 'package:bootcamp/custom_widgets/alert.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../custom_widgets/_textformfield.dart';
@@ -63,6 +62,8 @@ class _GirisFormState extends State<LoginForm> {
           );
         },
       );
+
+
     } catch (e) {
       print('Hata: $e');
       const ErrorDialog(title: 'Hata', message: 'Bilinmeyen bir hata oluştu');
@@ -131,8 +132,8 @@ class _GirisFormState extends State<LoginForm> {
                     child: const Text(
                       'Şifrenizi mi unuttunuz?',
                       style: TextStyle(
-                        color: AppColors.orange,
-                        fontWeight: FontWeight.w500,
+                        color: AppColors.purple,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
@@ -148,7 +149,7 @@ class _GirisFormState extends State<LoginForm> {
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 margin: const EdgeInsets.symmetric(horizontal: 25),
                 decoration: BoxDecoration(
-                  color: isLoading ? Colors.grey : AppColors.green,
+                  color: isLoading ? AppColors.purple : AppColors.purple,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Padding(
@@ -157,7 +158,7 @@ class _GirisFormState extends State<LoginForm> {
                       ? const SizedBox(
                           width: 24,
                           height: 24,
-                          child: CupertinoActivityIndicator(),
+                          child: CircularProgressIndicator(color: AppColors.white,),
                         )
                       : const Text(
                           'Giriş Yap',

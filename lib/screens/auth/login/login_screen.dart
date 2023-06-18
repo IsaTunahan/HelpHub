@@ -1,50 +1,17 @@
-import 'package:bootcamp/custom_widgets/_button.dart';
-import 'package:bootcamp/custom_widgets/_textformfield.dart';
-import 'package:bootcamp/screens/auth/forgot_pw_reset/forgot_pw_screen.dart';
+import 'package:bootcamp/screens/auth/login/login_bolumleri/login_form.dart';
+import 'package:bootcamp/screens/auth/login/login_bolumleri/login_google_apple.dart';
 import 'package:bootcamp/style/colors.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
   final VoidCallback ShowRegisterScreen;
-  const LoginScreen({super.key, required this.ShowRegisterScreen});
+  const LoginScreen({super.key,  required this.ShowRegisterScreen});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-
-  Future signIn() async {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return const Center(child: CircularProgressIndicator());
-      },
-    );
-
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      );
-
-      Navigator.pop(context);
-    } catch (e) {
-      print('Hata: $e');
-      Navigator.pop(context);
-    }
-  }
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -58,16 +25,16 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             children: [
               const SizedBox(
-                height: 100,
+                height: 80,
               ),
               //Logo
               Image.asset(
-                'assets/logos/logo.png',
+                'assets/logos/HelpHub.png',
                 height: screenHeight * 0.2,
                 width: screenWidth * 0.8,
               ),
               const SizedBox(
-                height: 31,
+                height: 51,
               ),
 
               Stack(
@@ -107,82 +74,15 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: TextStyle(
                             fontSize: 35,
                             fontWeight: FontWeight.bold,
-                            color: AppColors.orange,
+                            color: AppColors.purple,
                           ),
                         ),
                         SizedBox(
                           height: screenHeight * 0.02,
                         ),
 
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 30,
-                          ),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            elevation: 5,
-                            color: Colors.grey.shade50,
-                            //email
-                            child: Column(
-                              children: [
-                                SizedBox(height: screenHeight * 0.02),
-                                AppTextFormField(
-                                  controller: emailController,
-                                  hintText: 'Email',
-                                  obscureText: false,
-                                ),
-                                SizedBox(height: screenHeight * 0.01),
-                                //şifre
-                                AppTextFormField(
-                                  controller: passwordController,
-                                  hintText: 'Şifre',
-                                  obscureText: true,
-                                ),
-                                SizedBox(height: screenHeight * 0.01),
-                                //şifrenizi mi unuttunuz?
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: screenWidth * 0.05),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: ((context) {
-                                                return const forgotPassword();
-                                              }),
-                                            ),
-                                          );
-                                        },
-                                        child: const Text(
-                                          'Şifrenizi mi unuttunuz?',
-                                          style: TextStyle(
-                                            color: AppColors.orange,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(height: screenHeight * 0.01),
-                                //giriş yap butonu
-                                GestureDetector(
-                                  onTap: signIn,
-                                  child: const GirisButton(
-                                    text: 'Giriş Yap',
-                                  ),
-                                ),
-                                SizedBox(height: screenHeight * 0.02),
-                              ],
-                            ),
-                          ),
-                        ),
+                        const LoginForm(),
+
                         // ya da
                         Padding(
                           padding: EdgeInsets.symmetric(
@@ -194,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               const Expanded(
                                 child: Divider(
                                   thickness: 2,
-                                  color: AppColors.orange,
+                                  color: AppColors.purple,
                                 ),
                               ),
                               Padding(
@@ -211,156 +111,16 @@ class _LoginScreenState extends State<LoginScreen> {
                               const Expanded(
                                 child: Divider(
                                   thickness: 2,
-                                  color: AppColors.orange,
+                                  color: AppColors.purple,
                                 ),
                               ),
                             ],
                           ),
                         ),
+
                         //google ve apple ile giriş
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 30),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            elevation: 5,
-                            color: Colors.grey.shade50,
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: screenHeight * 0.02,
-                                ),
-                                //google ile giriş
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: screenWidth * 0.05,
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          border: Border.all(
-                                            color: AppColors.green,
-                                          ),
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              decoration: const BoxDecoration(
-                                                border: Border(
-                                                  right: BorderSide(
-                                                    color: AppColors.green,
-                                                  ),
-                                                ),
-                                              ),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(5),
-                                                child: Image.asset(
-                                                  'assets/logos/google.png',
-                                                  width: 30,
-                                                  height: 30,
-                                                ),
-                                              ),
-                                            ),
-                                            const Expanded(
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    'Google ile devam et',
-                                                    style: TextStyle(
-                                                      color: AppColors.midGrey,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 20,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: screenHeight * 0.01,
-                                ),
-                                //apple ile giriş
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: screenWidth * 0.05,
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          border: Border.all(
-                                            color: AppColors.green,
-                                          ),
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              decoration: const BoxDecoration(
-                                                border: Border(
-                                                  right: BorderSide(
-                                                    color: AppColors.green,
-                                                  ),
-                                                ),
-                                              ),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(5),
-                                                child: Image.asset(
-                                                  'assets/logos/apple.png',
-                                                  width: 30,
-                                                  height: 30,
-                                                ),
-                                              ),
-                                            ),
-                                            const Expanded(
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    'Apple ile devam et',
-                                                    style: TextStyle(
-                                                      color: AppColors.midGrey,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 20,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: screenHeight * 0.02,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                        const LGoogleApple(),
+
                         SizedBox(
                           height: screenHeight * 0.025,
                         ),
@@ -387,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   "Kayıt ol",
                                   style: TextStyle(
                                     fontSize: 20,
-                                    color: AppColors.orange,
+                                    color: AppColors.purple,
                                   ),
                                 ),
                               ),

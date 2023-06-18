@@ -1,5 +1,5 @@
-import 'package:bootcamp/custom_widgets/_button.dart';
-import 'package:bootcamp/custom_widgets/_textformfield.dart';
+import 'package:bootcamp/screens/auth/register/register_bolumleri/register_form.dart';
+import 'package:bootcamp/screens/auth/register/register_bolumleri/register_google_apple.dart';
 import 'package:bootcamp/style/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,10 +9,10 @@ class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key, required this.ShowLoginScreen});
 
   @override
-  State<RegisterScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<RegisterScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
@@ -63,15 +63,17 @@ class _LoginScreenState extends State<RegisterScreen> {
           child: Column(
             children: [
               const SizedBox(
-                height: 100,
+                height: 80,
               ),
               //Logo
               Image.asset(
-                'assets/logos/logo.png',
+                'assets/logos/HelpHub.png',
                 height: screenHeight * 0.2,
                 width: screenWidth * 0.8,
               ),
-
+              const SizedBox(
+                height: 20,
+              ),
               Stack(
                 children: [
                   Positioned(
@@ -109,58 +111,14 @@ class _LoginScreenState extends State<RegisterScreen> {
                           style: TextStyle(
                             fontSize: 35,
                             fontWeight: FontWeight.bold,
-                            color: AppColors.orange,
+                            color: AppColors.purple,
                           ),
                         ),
                         SizedBox(
                           height: screenHeight * 0.02,
                         ),
 
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 30,
-                          ),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            elevation: 5,
-                            color: Colors.grey.shade50,
-                            //email
-                            child: Column(
-                              children: [
-                                SizedBox(height: screenHeight * 0.02),
-                                AppTextFormField(
-                                  controller: emailController,
-                                  hintText: 'Email ',
-                                  obscureText: false,
-                                ),
-                                SizedBox(height: screenHeight * 0.01),
-                                //şifre
-                                AppTextFormField(
-                                  controller: passwordController,
-                                  hintText: 'Şifre',
-                                  obscureText: true,
-                                ),
-                                SizedBox(height: screenHeight * 0.01),
-                                AppTextFormField(
-                                  controller: confirmPasswordController,
-                                  hintText: 'Şifreyi Doğrula',
-                                  obscureText: true,
-                                ),
-                                SizedBox(height: screenHeight * 0.01),
-                                //giriş yap butonu
-                                GestureDetector(
-                                  onTap: signUp,
-                                  child: const GirisButton(
-                                    text: 'Giriş Yap',
-                                  ),
-                                ),
-                                SizedBox(height: screenHeight * 0.02),
-                              ],
-                            ),
-                          ),
-                        ),
+                        const RegisterForm(),
                         // ya da
                         Padding(
                           padding: EdgeInsets.symmetric(
@@ -172,7 +130,7 @@ class _LoginScreenState extends State<RegisterScreen> {
                               const Expanded(
                                 child: Divider(
                                   thickness: 2,
-                                  color: AppColors.orange,
+                                  color: AppColors.purple,
                                 ),
                               ),
                               Padding(
@@ -189,156 +147,16 @@ class _LoginScreenState extends State<RegisterScreen> {
                               const Expanded(
                                 child: Divider(
                                   thickness: 2,
-                                  color: AppColors.orange,
+                                  color: AppColors.purple,
                                 ),
                               ),
                             ],
                           ),
                         ),
+
                         //google ve apple ile giriş
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 30),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            elevation: 5,
-                            color: Colors.grey.shade50,
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: screenHeight * 0.02,
-                                ),
-                                //google ile giriş
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: screenWidth * 0.05,
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          border: Border.all(
-                                            color: AppColors.green,
-                                          ),
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              decoration: const BoxDecoration(
-                                                border: Border(
-                                                  right: BorderSide(
-                                                    color: AppColors.green,
-                                                  ),
-                                                ),
-                                              ),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(5),
-                                                child: Image.asset(
-                                                  'assets/logos/google.png',
-                                                  width: 30,
-                                                  height: 30,
-                                                ),
-                                              ),
-                                            ),
-                                            const Expanded(
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    'Google ile devam et',
-                                                    style: TextStyle(
-                                                      color: AppColors.midGrey,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 20,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: screenHeight * 0.01,
-                                ),
-                                //apple ile giriş
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: screenWidth * 0.05,
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          border: Border.all(
-                                            color: AppColors.green,
-                                          ),
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              decoration: const BoxDecoration(
-                                                border: Border(
-                                                  right: BorderSide(
-                                                    color: AppColors.green,
-                                                  ),
-                                                ),
-                                              ),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(5),
-                                                child: Image.asset(
-                                                  'assets/logos/apple.png',
-                                                  width: 30,
-                                                  height: 30,
-                                                ),
-                                              ),
-                                            ),
-                                            const Expanded(
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    'Apple ile devam et',
-                                                    style: TextStyle(
-                                                      color: AppColors.midGrey,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 20,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: screenHeight * 0.02,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                        const RGoogleApple(),
+
                         SizedBox(
                           height: screenHeight * 0.025,
                         ),
@@ -365,7 +183,7 @@ class _LoginScreenState extends State<RegisterScreen> {
                                   "Giriş yap",
                                   style: TextStyle(
                                     fontSize: 20,
-                                    color: AppColors.orange,
+                                    color: AppColors.purple,
                                   ),
                                 ),
                               ),

@@ -26,18 +26,17 @@ class AppTextFormField extends StatelessWidget {
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
             borderSide: const BorderSide(
-              color: AppColors.orange,
+              color: AppColors.yellow,
             ),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
             borderSide: const BorderSide(
-              color: AppColors.green,
+              color: AppColors.purple,
             ),
           ),
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-          fillColor: Colors.grey.shade100,
+          contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+          fillColor: AppColors.white,
           filled: true,
           hintText: hintText,
           hintStyle: const TextStyle(

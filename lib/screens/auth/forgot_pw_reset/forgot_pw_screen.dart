@@ -43,7 +43,7 @@ class _forgotPasswordState extends State<forgotPassword> {
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-        foregroundColor: AppColors.orange,
+        foregroundColor: AppColors.purple,
         elevation: 0,
         backgroundColor: AppColors.white,
       ),
@@ -55,7 +55,7 @@ class _forgotPasswordState extends State<forgotPassword> {
             children: [
               //Logo
               Image.asset(
-                'assets/logos/logo.png',
+                'assets/logos/HelpHub.png',
                 height: screenHeight * 0.2,
                 width: screenWidth * 0.8,
               ),
@@ -100,7 +100,7 @@ class _forgotPasswordState extends State<forgotPassword> {
                           style: TextStyle(
                             fontSize: 35,
                             fontWeight: FontWeight.bold,
-                            color: AppColors.orange,
+                            color: AppColors.purple,
                           ),
                         ),
                         SizedBox(
@@ -151,7 +151,7 @@ class _forgotPasswordState extends State<forgotPassword> {
                                     margin: const EdgeInsets.symmetric(
                                         horizontal: 25),
                                     decoration: BoxDecoration(
-                                      color: AppColors.green,
+                                      color: AppColors.purple,
                                       borderRadius: BorderRadius.circular(15),
                                     ),
                                     child: const Padding(
