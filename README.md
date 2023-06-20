@@ -77,6 +77,25 @@ Daily Scrum toplantısı her güne ait notlarımız Click Up içerisinde Product
 |---------|---------|---------|
 | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Bildirim.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Profil.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/kategori.png" width="300"> |
 
+---
+
+Sprint Review: Alınan kararlar: Uygulamaya ait logo oluşturulmuştur. 
+
+Kullanıcılar için sign in - sign up sayfaları ile login sayfası hazır durumdadır.
+
+Uygulama için önceden karar verilen footer yapısı çalışır durumdadır. Kullanıcıların ihtiyaç gir ve desek ol butonlarının çalışılırlığı reviewda gösterilmiştir. 
+
+Kullanıcılara ait profil sayfaları temellendirilmiştir. 
+
+Sprint Review katılımcıları: Gülüşan Şenses, Özge Önal, İsa Tunahan İslamoğlu, Abdülkadir Hocaoğlu.
+
+Sprint Retrospective:
+
+Tüm takım üyelerine iletişim ve hızlı adaptasyon için teşekkür edildi.
+
+Research maddelerine daha fazla odaklanılması için gerekirse tüm takım üyelerinin destek vererek zaman ayırması gerektiğine karar verildi.
+
+Takım üyelerinden birinin katılımı için teşvik gerektiği kanısına ortak varıldı ve Scrum Masterın birebir görüşmesi istendi.
 
   
 
