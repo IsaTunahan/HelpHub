@@ -91,7 +91,7 @@
 
 * Sprint Review katılımcıları: Gülüşan Şenses, Özge Önal, İsa Tunahan İslamoğlu, Abdülkadir Hocaoğlu.
 
-* Sprint Retrospective:
+# Sprint Retrospective:
 
 * Tüm takım üyelerine iletişim ve hızlı adaptasyon için teşekkür edildi.
 
