@@ -28,7 +28,7 @@
 ## Hedef Kitle
 
 * Hayatın farklı alanlarında fırsat eşitsizliğine maruz kalanlar
-Fırsat eşitsizliğe uğrayan insanları gören tüm destekçiler
+* Fırsat eşitsizliğe uğrayan insanları gören tüm destekçiler
 
 ## Düşündüğümüz Fikirler
 [Fikirler için tıklayın](https://app.clickup.com/9009157545/v/dc/8cftnd9-400/8cftnd9-160)
@@ -36,7 +36,7 @@ Fırsat eşitsizliğe uğrayan insanları gören tüm destekçiler
 ## Product Backlog URL
 [URL için tıklayın](https://app.clickup.com/9009157545/v/l/li/900901694160)
 
-Duygu Büyükbakkal Click Up’ımıza davet edilmiştir.
+* Duygu Büyükbakkal Click Up’ımıza davet edilmiştir.
 
 
 
@@ -44,15 +44,15 @@ Duygu Büyükbakkal Click Up’ımıza davet edilmiştir.
 # Sprint 1
 ![Sprint 1](https://github.com/IsaTunahan/Bootcamp/blob/main/Sprint%201.png?raw=true)
 
-Sprint içinde tamamlanması tahmin edilen puan: 100 Puan
+* Sprint içinde tamamlanması tahmin edilen puan: 100 Puan
 
-Puan tamamlama mantığı: Toplamda proje boyunca tamamlanması gereken 300 puanlık backlog bulunmaktadır. 
+* Puan tamamlama mantığı: Toplamda proje boyunca tamamlanması gereken 300 puanlık backlog bulunmaktadır. 
 
-Her sprint 100 puan tamamlamamız gerekmektedir.
+* Her sprint 100 puan tamamlamamız gerekmektedir.
 
-Daily Scrum: Daily Scrum toplantıları takımın iletişimde olmasını istediğimiz için hafta içi akşam saatlerinde gün içerisinde whatsappdan anlaştığımız şekilde google meet üzerinden yapılmaktadır. 
+* Daily Scrum: Daily Scrum toplantıları takımın iletişimde olmasını istediğimiz için hafta içi akşam saatlerinde gün içerisinde whatsappdan anlaştığımız şekilde google meet üzerinden yapılmaktadır. 
 
-Daily Scrum toplantısı her güne ait notlarımız Click Up içerisinde Product Backlog altında Daily Scrum Notlar adıyla yer almaktadır. 
+* Daily Scrum toplantısı her güne ait notlarımız Click Up içerisinde Product Backlog altında Daily Scrum Notlar adıyla yer almaktadır. 
 
 [Notlar için tıklayın](https://app.clickup.com/9009157545/v/dc/8cftnd9-440/8cftnd9-200)
 
@@ -79,23 +79,25 @@ Daily Scrum toplantısı her güne ait notlarımız Click Up içerisinde Product
 
 ---
 
-Sprint Review: Alınan kararlar: Uygulamaya ait logo oluşturulmuştur. 
+# Sprint Review:
 
-Kullanıcılar için sign in - sign up sayfaları ile login sayfası hazır durumdadır.
+* Alınan kararlar: Uygulamaya ait logo oluşturulmuştur. 
 
-Uygulama için önceden karar verilen footer yapısı çalışır durumdadır. Kullanıcıların ihtiyaç gir ve desek ol butonlarının çalışılırlığı reviewda gösterilmiştir. 
+* Kullanıcılar için sign in - sign up sayfaları ile login sayfası hazır durumdadır.
 
-Kullanıcılara ait profil sayfaları temellendirilmiştir. 
+* Uygulama için önceden karar verilen footer yapısı çalışır durumdadır. Kullanıcıların ihtiyaç gir ve desek ol butonlarının çalışılırlığı reviewda gösterilmiştir. 
 
-Sprint Review katılımcıları: Gülüşan Şenses, Özge Önal, İsa Tunahan İslamoğlu, Abdülkadir Hocaoğlu.
+* Kullanıcılara ait profil sayfaları temellendirilmiştir. 
 
-Sprint Retrospective:
+* Sprint Review katılımcıları: Gülüşan Şenses, Özge Önal, İsa Tunahan İslamoğlu, Abdülkadir Hocaoğlu.
 
-Tüm takım üyelerine iletişim ve hızlı adaptasyon için teşekkür edildi.
+* Sprint Retrospective:
 
-Research maddelerine daha fazla odaklanılması için gerekirse tüm takım üyelerinin destek vererek zaman ayırması gerektiğine karar verildi.
+* Tüm takım üyelerine iletişim ve hızlı adaptasyon için teşekkür edildi.
 
-Takım üyelerinden birinin katılımı için teşvik gerektiği kanısına ortak varıldı ve Scrum Masterın birebir görüşmesi istendi.
+* Research maddelerine daha fazla odaklanılması için gerekirse tüm takım üyelerinin destek vererek zaman ayırması gerektiğine karar verildi.
+
+* Takım üyelerinden birinin katılımı için teşvik gerektiği kanısına ortak varıldı ve Scrum Masterın birebir görüşmesi istendi.
 
   
 
