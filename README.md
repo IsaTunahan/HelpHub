@@ -43,3 +43,18 @@ Fırsat eşitsizliğe uğrayan insanları gören tüm destekçiler
 | Giriş Yap | Kayıt Ol | Şifre Sıfırlama |
 |---------|---------|---------|
 | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Giri%C5%9F.png?raw=true" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Kay%C4%B1t.png?raw=true" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/%C5%9Eifremi%20unuttum.png?raw=true" width="300"> |
+
+# Anasayfa Ekranı
+| Anasayfa | İhtiyacım Var | Destek Ol |
+|---------|---------|---------|
+| <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Anasayfa.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/İhtiyacimvar.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Destekol.png" width="300"> |
+
+
+# Anasayfa Ekranı
+| Bildirim | Profil | Kategori |
+|---------|---------|---------|
+| <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Bildirim.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Profil.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/kategori.png" width="300"> |
+
+
+  
+
