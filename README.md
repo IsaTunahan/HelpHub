@@ -33,10 +33,21 @@ Fırsat eşitsizliğe uğrayan insanları gören tüm destekçiler
 ## Düşündüğümüz Fikirler
 [Fikirler için tıklayın](https://app.clickup.com/9009157545/v/dc/8cftnd9-400/8cftnd9-160)
 
+## Product Backlog URL
+[URL için tıklayın](https://app.clickup.com/9009157545/v/l/li/900901694160)
+
+Duygu Büyükbakkal Click Up’ımıza davet edilmiştir.
+
+
 
 ---
 # Sprint 1
 ![Sprint 1](https://github.com/IsaTunahan/Bootcamp/blob/main/Sprint%201.png?raw=true)
+Sprint içinde tamamlanması tahmin edilen puan: 100 Puan
+Puan tamamlama mantığı: Toplamda proje boyunca tamamlanması gereken 300 puanlık backlog bulunmaktadır. Her sprint 100 puan tamamlamamız gerekmektedir.
+Daily Scrum: Daily Scrum toplantıları takımın iletişimde olmasını istediğimiz için hafta içi akşam saatlerinde gün içerisinde whatsappdan anlaştığımız şekilde google meet üzerinden yapılmaktadır. Daily Scrum toplantısı her güne ait notlarımız Click Up içerisinde Product Backlog altında Daily Scrum Notlar adıyla yer almaktadır. 
+[Notlar için tıklayın](https://app.clickup.com/9009157545/v/dc/8cftnd9-440/8cftnd9-200)
+
 ---
 
 # Giriş Ekranı
