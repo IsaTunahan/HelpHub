@@ -99,5 +99,17 @@
 
 * Takım üyelerinden birinin katılımı için teşvik gerektiği kanısına ortak varıldı ve Scrum Masterın birebir görüşmesi istendi.
 
-  
+Sprint planlamasında takım üyelerinin oy birliği ile Help Hub projesine karar verildi. Sprint planlamasında Sprint 1'e dahil edilecek tüm tasklar önceliklendirilerek kendi içlerinde puanlandı. Tasklar için How toplantısına geçildi. Tasklar takım üyelerine assign edildi. Takım üyeleri daily scrumlarda tasklarının ne aşamada olduğundan o gün neye odaklanacaklarından ve engelleri olup olmadığından bahsettiler.
 
+
+# Sprint Notları
+
+* Sprint planlamasında takım üyelerinin oy birliği ile Help Hub projesine karar verildi. 
+
+* Sprint planlamasında Sprint 1'e dahil edilecek tüm tasklar önceliklendirilerek kendi içlerinde puanlandı. 
+
+* Tasklar için How toplantısına geçildi. 
+
+* Tasklar takım üyelerine assign edildi. 
+
+* Takım üyeleri daily scrumlarda tasklarının ne aşamada olduğundan o gün neye odaklanacaklarından ve engelleri olup olmadığından bahsettiler.
