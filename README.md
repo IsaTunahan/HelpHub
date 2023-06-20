@@ -47,7 +47,7 @@ Fırsat eşitsizliğe uğrayan insanları gören tüm destekçiler
 # Anasayfa Ekranı
 | Anasayfa | İhtiyacım Var | Destek Ol |
 |---------|---------|---------|
-| <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Anasayfa.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/İhtiyacimvar.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Destekol.png" width="300"> |
+| <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Anasayfa.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Ihtiyacimvar.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Destekol.png" width="300"> |
 
 
 # Anasayfa Ekranı
