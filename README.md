@@ -85,7 +85,7 @@
 
 * Kullanıcılar için sign in - sign up sayfaları ile login sayfası hazır durumdadır.
 
-* Uygulama için önceden karar verilen footer yapısı çalışır durumdadır. Kullanıcıların ihtiyaç gir ve desek ol butonlarının çalışılırlığı reviewda gösterilmiştir. 
+* Uygulama için önceden karar verilen footer yapısı çalışır durumdadır. Kullanıcıların ihtiyaç gir ve destek ol butonlarının çalışılırlığı reviewda gösterilmiştir. 
 
 * Kullanıcılara ait profil sayfaları temellendirilmiştir. 
 
