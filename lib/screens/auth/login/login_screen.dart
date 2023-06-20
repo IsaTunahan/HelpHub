@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
   final VoidCallback ShowRegisterScreen;
-  const LoginScreen({super.key,  required this.ShowRegisterScreen});
+  const LoginScreen({super.key, required this.ShowRegisterScreen});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -19,136 +19,142 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return Scaffold(
       backgroundColor: AppColors.white,
-      body: SizedBox(
-        height: screenHeight,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 80,
-              ),
-              //Logo
-              Image.asset(
-                'assets/logos/HelpHub.png',
-                height: screenHeight * 0.2,
-                width: screenWidth * 0.8,
-              ),
-              const SizedBox(
-                height: 51,
-              ),
-
-              Stack(
+      body: SingleChildScrollView(
+        child: SizedBox(
+          height: screenHeight,
+          child: Stack(children: [
+            Positioned(
+              bottom: screenHeight - (screenHeight - 30),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Positioned(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.midGrey.withOpacity(0.3),
-                            spreadRadius: 4,
-                            blurRadius: 15,
-                            offset: const Offset(0, -4),
-                          ),
-                        ],
-                      ),
-                    ),
+                  const SizedBox(
+                    height: 80,
                   ),
+                  //Logo
+                  Image.asset(
+                    'assets/logos/HelpHub.png',
+                    height: screenHeight * 0.2,
+                    width: screenWidth * 0.8,
+                  ),
+                  const SizedBox(
+                    height: 51,
+                  ),
+
                   Container(
-                    decoration: const BoxDecoration(
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30),
-                      ),
-                    ),
-                    width: screenWidth,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.grey1.withOpacity(0.4),
+                              spreadRadius: 4,
+                              blurRadius: 15,
+                              offset: const Offset(0, -4),
+                            ),
+                          ],
+                        ),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(
-                          height: screenHeight * 0.02,
-                        ),
-                        //Giriş Yap
-                        const Text(
-                          "Giriş Yap",
-                          style: TextStyle(
-                            fontSize: 35,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.purple,
-                          ),
-                        ),
-                        SizedBox(
-                          height: screenHeight * 0.02,
-                        ),
-
-                        const LoginForm(),
-
-                        // ya da
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            vertical: screenHeight * 0.02,
-                            horizontal: screenWidth * 0.04,
-                          ),
-                          child: Row(
-                            children: [
-                              const Expanded(
-                                child: Divider(
-                                  thickness: 2,
-                                  color: AppColors.purple,
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: screenWidth * 0.02,
-                                ),
-                                child: const Text(
-                                  "ya da",
-                                  style: TextStyle(
-                                    color: AppColors.darkGrey,
-                                  ),
-                                ),
-                              ),
-                              const Expanded(
-                                child: Divider(
-                                  thickness: 2,
-                                  color: AppColors.purple,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        //google ve apple ile giriş
-                        const LGoogleApple(),
-
-                        SizedBox(
-                          height: screenHeight * 0.025,
-                        ),
-                        //hesabın yok mu
+                        
                         Container(
+                          decoration: const BoxDecoration(
+                            color: AppColors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(25),
+                              topRight: Radius.circular(25),
+                            ),
+                          ),
                           width: screenWidth,
-                          color: AppColors.white,
-                          child: Row(
+                          child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              SizedBox(
+                                height: screenHeight * 0.02,
+                              ),
+                              //Giriş Yap
                               const Text(
-                                "Hesabınız yok mu?",
+                                "Giriş Yap",
                                 style: TextStyle(
-                                  fontSize: 20,
-                                  color: AppColors.darkGrey,
+                                  fontSize: 35,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.purple,
                                 ),
                               ),
-                              const SizedBox(
-                                width: 4,
+                              SizedBox(
+                                height: screenHeight * 0.02,
                               ),
-                              GestureDetector(
-                                onTap: widget.ShowRegisterScreen,
-                                child: const Text(
-                                  "Kayıt ol",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: AppColors.purple,
-                                  ),
+                  
+                              const LoginForm(),
+                  
+                              // ya da
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: screenHeight * 0.02,
+                                  horizontal: screenWidth * 0.04,
+                                ),
+                                child: Row(
+                                  children: [
+                                    const Expanded(
+                                      child: Divider(
+                                        thickness: 2,
+                                        color: AppColors.purple,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: screenWidth * 0.02,
+                                      ),
+                                      child: const Text(
+                                        "ya da",
+                                        style: TextStyle(
+                                          color: AppColors.darkGrey,
+                                        ),
+                                      ),
+                                    ),
+                                    const Expanded(
+                                      child: Divider(
+                                        thickness: 2,
+                                        color: AppColors.purple,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                  
+                              //google ve apple ile giriş
+                              const LGoogleApple(),
+                  
+                              SizedBox(
+                                height: screenHeight * 0.025,
+                              ),
+                              //hesabın yok mu
+                              Container(
+                                width: screenWidth,
+                                color: AppColors.white,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Text(
+                                      "Hesabınız yok mu?",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: AppColors.darkGrey,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 4,
+                                    ),
+                                    GestureDetector(
+                                      onTap: widget.ShowRegisterScreen,
+                                      child: const Text(
+                                        "Kayıt ol",
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          color: AppColors.purple,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
@@ -156,11 +162,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ],
                     ),
-                  ),
+                  )
                 ],
               ),
-            ],
-          ),
+            ),
+          ]),
         ),
       ),
     );

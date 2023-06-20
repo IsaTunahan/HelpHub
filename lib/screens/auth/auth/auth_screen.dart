@@ -38,7 +38,7 @@ class _AuthScreenState extends State<AuthScreen> {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Container(); // İsteğe bağlı: Bağlantı durumu bekleniyorsa boş bir widget dönebilirsiniz.
+              return Container(); 
             } else {
               if (snapshot.hasData) {
                 return HomeScreen();
