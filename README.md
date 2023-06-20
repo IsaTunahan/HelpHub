@@ -58,6 +58,9 @@ Daily Scrum toplantısı her güne ait notlarımız Click Up içerisinde Product
 
 ---
 
+# Logo
+![Logo](https://github.com/IsaTunahan/Bootcamp/blob/main/logo.png)
+
 # Giriş Ekranı
 | Giriş Yap | Kayıt Ol | Şifre Sıfırlama |
 |---------|---------|---------|
