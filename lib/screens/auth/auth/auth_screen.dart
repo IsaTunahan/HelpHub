@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bootcamp/screens/auth/login_or_register/login_or_register_screen.dart';
-import 'package:bootcamp/screens/home/home_screen.dart';
+import 'package:bootcamp/screens/profile/profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +31,7 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     if (_showSplash) {
-      return SplashScreen();
+      return const SplashScreen();
     } else {
       return Scaffold(
         body: StreamBuilder<User?>(
@@ -41,9 +41,9 @@ class _AuthScreenState extends State<AuthScreen> {
               return Container(); 
             } else {
               if (snapshot.hasData) {
-                return HomeScreen();
+                return const ProfileScreen();
               } else {
-                return LoginOrRegisterScreen();
+                return const LoginOrRegisterScreen();
               }
             }
           },

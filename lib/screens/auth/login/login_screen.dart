@@ -55,7 +55,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                     child: Column(
                       children: [
-                        
                         Container(
                           decoration: const BoxDecoration(
                             color: AppColors.white,
