@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="katman_2" data-name="katman 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 28.5">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #815DA4;
+      }
+    </style>
+  </defs>
+  <g id="Icons">
+    <g id="User">
+      <circle class="cls-1" cx="12.5" cy="7" r="7"/>
+      <path class="cls-1" d="M24.47,20.03c0-3.59-2.86-6.53-6.35-6.53h-.55c-1.35,1.35-3.18,2.18-5.2,2.18s-3.86-.83-5.2-2.18h-.28c-3.49,0-6.35,2.94-6.35,6.53l-.53,8.47H25l-.53-8.47Z"/>
+    </g>
+  </g>
+</svg>

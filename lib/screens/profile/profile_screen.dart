@@ -1,3 +1,4 @@
+
 import 'package:bootcamp/screens/profile/prf_yrd_ihtc.dart';
 import 'package:bootcamp/style/colors.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-
 
     return Scaffold(
       backgroundColor: AppColors.white,
@@ -38,6 +38,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: Column(
         children: [
+          
           Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: screenWidth - (screenWidth - 25)),
@@ -79,7 +80,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               color: AppColors.white,
-
                               child: const Padding(
                                 padding: EdgeInsets.symmetric(
                                     vertical: 20, horizontal: 25),
@@ -126,7 +126,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               height: 5,
                             ),
                             Text(
-                              '@isatuahan',
+                              '@isatunahan',
                               style: TextStyle(
                                 color: AppColors.purple,
                               ),

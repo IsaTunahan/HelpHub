@@ -44,19 +44,19 @@ class ProfilYardimlar extends StatelessWidget {
                         padding: const EdgeInsets.all(15.0),
                         child: Column(
                           children: [
-                            Row(
+                            const Row(
                               children: [
-                                const Expanded(
+                                Expanded(
                                   child: Text(
                                     "Şişli, İstanbul",
                                     style: TextStyle(
-                                      color: AppColors.yellow,
+                                      color: AppColors.purple,
                                     ),
                                   ),
                                 ),
                                 Text(
                                   "Cuma",
-                                  style: TextStyle(color: Colors.grey[600]),
+                                  style: TextStyle(color: AppColors.grey3),
                                 )
                               ],
                             ),
@@ -66,6 +66,7 @@ class ProfilYardimlar extends StatelessWidget {
                                   child: Text(
                                     "Bebek Bezi",
                                     style: TextStyle(
+                                        color: AppColors.darkGrey,
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold),
                                   ),
@@ -73,7 +74,10 @@ class ProfilYardimlar extends StatelessWidget {
                                 Text(
                                   "10:00",
                                   style: TextStyle(
-                                      fontSize: 30, fontWeight: FontWeight.bold),
+                                    color: AppColors.darkGrey,
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 )
                               ],
                             ),
@@ -101,6 +105,7 @@ class ProfilYardimlar extends StatelessWidget {
                                   Text(
                                     "1 kişi destek veriyor",
                                     style: TextStyle(
+                                        color: AppColors.darkGrey,
                                         fontSize: 15,
                                         fontWeight: FontWeight.w500),
                                   )
@@ -114,9 +119,12 @@ class ProfilYardimlar extends StatelessWidget {
                                     style: ElevatedButton.styleFrom(
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
-                                                BorderRadius.circular(15)),
+                                                BorderRadius.circular(10)),
                                         backgroundColor: Colors.purple),
-                                    child: const Text("Detay"),
+                                    child: const Text(
+                                      "Detay",
+                                      style: TextStyle(color: AppColors.white),
+                                    ),
                                   ),
                                 ),
                               )

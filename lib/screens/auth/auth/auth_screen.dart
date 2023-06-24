@@ -1,7 +1,7 @@
 import 'dart:async';
 
+import 'package:bootcamp/custom_widgets/bottom_nav_bar.dart';
 import 'package:bootcamp/screens/auth/login_or_register/login_or_register_screen.dart';
-import 'package:bootcamp/screens/profile/profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -41,7 +41,7 @@ class _AuthScreenState extends State<AuthScreen> {
               return Container(); 
             } else {
               if (snapshot.hasData) {
-                return const ProfileScreen();
+                return const MyHomePage();
               } else {
                 return const LoginOrRegisterScreen();
               }
