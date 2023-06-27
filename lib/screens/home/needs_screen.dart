@@ -1,3 +1,4 @@
+import 'package:bootcamp/style/icons/helphub_icons.dart';
 import 'package:flutter/material.dart';
 
 class NeedsScreen extends StatelessWidget {
@@ -6,8 +7,15 @@ class NeedsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(
-        child: Text('İhtiyaçlar Sayfası'),
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            children: [
+              Text('İhtiyaçlar Sayfası'),
+              Icon(Helphub.help,size: 50,),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -11,8 +11,10 @@ class ProfilYardimlar extends StatelessWidget {
         Expanded(
           child: Container(
             decoration: const BoxDecoration(
-                border: Border.symmetric(
-                    horizontal: BorderSide(width: 3, color: AppColors.purple))),
+              border: Border.symmetric(
+                horizontal: BorderSide(width: 3, color: AppColors.purple),
+              ),
+            ),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 35),
               child: Column(

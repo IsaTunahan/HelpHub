@@ -1,6 +1,8 @@
-
 import 'package:bootcamp/screens/profile/prf_yrd_ihtc.dart';
+import 'package:bootcamp/screens/profile/settings_screen.dart';
 import 'package:bootcamp/style/colors.dart';
+import 'package:bootcamp/style/icons/helphub_icons.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -20,25 +22,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: AppBar(
         title: const Text(
           'Profil',
-          style: TextStyle(color: AppColors.purple, fontSize: 45),
+          style: TextStyle(color: AppColors.purple, fontSize: 40),
         ),
         backgroundColor: AppColors.white,
         elevation: 0,
         actions: [
-          Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: screenWidth - (screenWidth - 25)),
-            child: IconButton(
-              onPressed: () {},
-              icon:
-                  const Icon(Icons.settings, color: AppColors.yellow, size: 50),
-            ),
-          )
+          GestureDetector(
+              onTap: () {
+                FirebaseAuth.instance.signOut();
+              },
+              child: const Icon(
+                Helphub.next,
+                color: AppColors.lightpurple,
+              ))
         ],
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const SettingsScreen()));
+          },
+          child:
+              const Icon(Helphub.settings, color: AppColors.lightpurple, size: 35),
+        ),
       ),
       body: Column(
         children: [
-          
           Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: screenWidth - (screenWidth - 25)),

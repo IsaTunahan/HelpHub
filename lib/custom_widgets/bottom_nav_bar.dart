@@ -3,7 +3,7 @@ import 'package:bootcamp/screens/home/home_screen.dart';
 import 'package:bootcamp/screens/home/needs_screen.dart';
 import 'package:bootcamp/screens/profile/profile_screen.dart';
 import 'package:bootcamp/style/colors.dart';
-import 'package:bootcamp/style/icons/custom_icons.dart';
+import 'package:bootcamp/style/icons/helphub_icons.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -47,24 +47,42 @@ class _MyHomePageState extends State<MyHomePage> {
             currentIndex: _selectedIndex,
             onTap: _onItemTapped,
             items: [
-               BottomNavigationBarItem(
+              BottomNavigationBarItem(
                 icon: _selectedIndex == 0
-                    ? const Icon(Icons.home)
-                    : const Icon(Icons.home_outlined),
+                    ? const Icon(
+                        Helphub.home,
+                      )
+                    : const Icon(Helphub.home_outline),
                 label: 'Ana Sayfa',
               ),
-              const BottomNavigationBarItem(
-                icon: Icon(Icons.add_task_rounded),
+              BottomNavigationBarItem(
+                icon: _selectedIndex == 1
+                    ? const Icon(
+                        Helphub.help,
+                      )
+                    : const Icon(
+                        Helphub.help_outline,
+                      ),
                 label: 'Yardım Et',
               ),
-              const BottomNavigationBarItem(
-                icon: Icon(Icons.add_task_rounded),
+              BottomNavigationBarItem(
+                icon: _selectedIndex == 2
+                    ? const Icon(
+                        Helphub.need,
+                      )
+                    : const Icon(
+                        Helphub.need_outline,
+                      ),
                 label: 'İhtiyacım Var',
               ),
               BottomNavigationBarItem(
                 icon: _selectedIndex == 3
-                    ? CustomIcons.user
-                    : CustomIcons.user_outlined,
+                    ? const Icon(
+                        Helphub.user,
+                      )
+                    : const Icon(
+                        Helphub.user_outline,
+                      ),
                 label: 'Profil',
               ),
             ],
