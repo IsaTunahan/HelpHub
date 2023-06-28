@@ -1,9 +1,10 @@
-import 'package:bootcamp/screens/auth/login/login_screen.dart';
-import 'package:bootcamp/screens/auth/register/registers_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../login/login_screen.dart';
+import '../register/registers_screen.dart';
+
 class LoginOrRegisterScreen extends StatefulWidget {
-  const LoginOrRegisterScreen({super.key});
+  const LoginOrRegisterScreen({super.key, required bool showLoginPage,});
 
   @override
   State<LoginOrRegisterScreen> createState() => _LoginOrRegisterScreenState();
@@ -12,7 +13,7 @@ class LoginOrRegisterScreen extends StatefulWidget {
 class _LoginOrRegisterScreenState extends State<LoginOrRegisterScreen> {
   bool showLoginPage = true;
 
-  void toogleScreens() {
+  void toggleScreens() {
     setState(() {
       showLoginPage = !showLoginPage;
     });
@@ -20,10 +21,8 @@ class _LoginOrRegisterScreenState extends State<LoginOrRegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (showLoginPage) {
-      return LoginScreen(ShowRegisterScreen: toogleScreens);
-    } else {
-      return RegisterScreen(ShowLoginScreen: toogleScreens);
-    }
+    return showLoginPage
+        ? LoginScreen(ShowRegisterScreen: toggleScreens)
+        : RegisterScreen(ShowLoginScreen: toggleScreens);
   }
 }

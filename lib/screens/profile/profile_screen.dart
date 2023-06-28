@@ -1,8 +1,7 @@
 import 'package:bootcamp/screens/profile/prf_yrd_ihtc.dart';
-import 'package:bootcamp/screens/profile/settings_screen.dart';
+import 'package:bootcamp/screens/profile/settings/settings_screen.dart';
 import 'package:bootcamp/style/colors.dart';
 import 'package:bootcamp/style/icons/helphub_icons.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -26,23 +25,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         backgroundColor: AppColors.white,
         elevation: 0,
-        actions: [
-          GestureDetector(
-              onTap: () {
-                FirebaseAuth.instance.signOut();
-              },
-              child: const Icon(
-                Helphub.next,
-                color: AppColors.lightpurple,
-              ))
-        ],
         leading: GestureDetector(
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const SettingsScreen()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const SettingsScreen()));
           },
-          child:
-              const Icon(Helphub.settings, color: AppColors.lightpurple, size: 35),
+          child: const Icon(Helphub.settings,
+              color: AppColors.purple, size: 35),
         ),
       ),
       body: Column(

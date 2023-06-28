@@ -43,7 +43,7 @@ class _AuthScreenState extends State<AuthScreen> {
               if (snapshot.hasData) {
                 return const MyHomePage();
               } else {
-                return const LoginOrRegisterScreen();
+                return  const LoginOrRegisterScreen(showLoginPage: true,);
               }
             }
           },

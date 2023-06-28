@@ -1,10 +1,3 @@
-// Place fonts/helphub.ttf in your fonts/ directory and
-// add the following to your pubspec.yaml
-// flutter:
-//   fonts:
-//    - family: helphub
-//      fonts:
-//       - asset: fonts/helphub.ttf
 import 'package:flutter/widgets.dart';
 
 class Helphub {
