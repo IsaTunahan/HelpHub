@@ -2,8 +2,17 @@ import 'package:bootcamp/style/colors.dart';
 import 'package:bootcamp/style/icons/helphub_icons.dart';
 import 'package:flutter/material.dart';
 
-class ProfilBilgileri extends StatelessWidget {
+class ProfilBilgileri extends StatefulWidget {
   const ProfilBilgileri({super.key});
+
+  @override
+  State<ProfilBilgileri> createState() => _ProfilBilgileriState();
+}
+
+class _ProfilBilgileriState extends State<ProfilBilgileri> {
+  
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +29,12 @@ class ProfilBilgileri extends StatelessWidget {
         ),
         elevation: 5,
         color: Colors.grey.shade50,
+        
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+        
+    
             const Padding(
               padding: EdgeInsets.all(10.0),
               child: Text(
@@ -36,8 +48,7 @@ class ProfilBilgileri extends StatelessWidget {
             ),
             ListTile(
               leading: const CircleAvatar(
-                backgroundImage: AssetImage(
-                    'assets/profil/isa.jpg'),
+                backgroundImage: AssetImage('assets/profil/isa.jpg'),
                 radius: 20,
               ),
               title: const Text(
@@ -186,3 +197,5 @@ class ProfilBilgileri extends StatelessWidget {
     );
   }
 }
+
+
