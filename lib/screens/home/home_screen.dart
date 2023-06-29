@@ -1,9 +1,11 @@
-import 'package:bootcamp/style/colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../style/colors.dart';
+
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -11,122 +13,121 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final user = FirebaseAuth.instance.currentUser!;
+  late CollectionReference<Map<String, dynamic>> collection;
+  List<DocumentSnapshot<Map<String, dynamic>>> documents = [];
+
+  @override
+  void initState() {
+    super.initState();
+    collection = FirebaseFirestore.instance.collection('needs');
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    final querySnapshot = await collection.get();
+
+    setState(() {
+      documents = querySnapshot.docs;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Giriş yapıldı: ${user.email!}'),
-            ElevatedButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
-              },
-              child: const Text('Çıkış Yap'),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(screenHeight * 0.2),
+        child: AppBar(
+          backgroundColor: AppColors.lightGrey,
+          elevation: 0,
+          flexibleSpace: Container(
+            width: double.infinity,
+            child: Image.asset(
+              'assets/logos/HelpHub.png',
+              fit: BoxFit.contain,
             ),
-            const SizedBox(
-              height: 15,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return Dialog(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Container(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Text(
-                              'Hata',
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 16.0),
-                            const Text(
-                              'Bilinmeyen bir hata oluştu',
-                              style: TextStyle(fontSize: 16.0),
-                            ),
-                            const SizedBox(height: 16.0),
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.purple),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text('Tamam'),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                );
-              },
-              child: const Text('Alert'),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      height: 50,
-                      width: 50,
-                      color: AppColors.purple,
-                    ),
-                    Container(
-                      height: 50,
-                      width: 50,
-                      color: AppColors.lightpurple,
-                    ),
-                    Container(
-                      height: 50,
-                      width: 50,
-                      color: AppColors.yellow,
-                    ),
-                    Container(
-                      height: 50,
-                      width: 50,
-                      color: AppColors.lightyellow,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 15,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      height: 50,
-                      width: 50,
-                      color: AppColors.grey1,
-                    ),
-                    Container(
-                      height: 50,
-                      width: 50,
-                      color: AppColors.grey2,
-                    ),
-                    Container(
-                      height: 50,
-                      width: 50,
-                      color: AppColors.grey3,
-                    ),
-                  ],
-                )
-              ],
-            )
-          ],
+          ),
         ),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Text(
+              'En Son Eklernen İhtiyaçlar',
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Expanded(
+            child: documents.isEmpty
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : ListView.builder(
+                    itemCount: documents.length,
+                    itemBuilder: (context, index) {
+                      final data =
+                          documents[index].data() as Map<String, dynamic>;
+                      final anakategori = data['Ana Kategori'];
+                      final altkategori = data['Alt Kategori'];
+                      final ihtiyac = data['İhtiyaç'];
+                      final ihtiyacsahibimail = data['İhtiyaç Sahibi'];
+
+                      return Card(
+                        elevation: 5,
+                        color: Colors.grey.shade50,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                ihtiyacsahibimail ?? '',
+                                style: const TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                              Text(
+                                anakategori ?? '',
+                                style: const TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                              Text(
+                                altkategori ?? '',
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              Text(
+                                ihtiyac ?? '',
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+          ),
+        ],
       ),
     );
   }
