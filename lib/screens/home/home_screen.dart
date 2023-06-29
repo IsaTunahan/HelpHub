@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: const EdgeInsets.all(5.0),
             child: Text(
-              'En Son Eklernen İhtiyaçlar',
+              'En Son Eklenen İhtiyaçlar',
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -64,9 +64,12 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Expanded(
             child: documents.isEmpty
-                ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
+                    ? const Center(
+                        child: Text(
+                          'Şu anda gösterilebilecek bir ihtiyaç bulunmuyor...',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      )
                 : ListView.builder(
                     itemCount: documents.length,
                     itemBuilder: (context, index) {

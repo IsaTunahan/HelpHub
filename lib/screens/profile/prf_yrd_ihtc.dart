@@ -2,6 +2,7 @@ import 'package:bootcamp/screens/profile/profil_ihtiyaclar.dart';
 import 'package:bootcamp/screens/profile/profil_yardimlar.dart';
 import 'package:bootcamp/style/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class CategorySwitcherWidget extends StatefulWidget {
   const CategorySwitcherWidget({super.key});
@@ -11,6 +12,7 @@ class CategorySwitcherWidget extends StatefulWidget {
 }
 
 class _CategorySwitcherWidgetState extends State<CategorySwitcherWidget> {
+  final user = FirebaseAuth.instance.currentUser!;
   int _selectedIndex = 0;
 
   @override
@@ -106,12 +108,13 @@ class _CategorySwitcherWidgetState extends State<CategorySwitcherWidget> {
         ),
         IndexedStack(
           index: _selectedIndex,
-          children: const [
-            ProfilYardimlar(),
-            ProfilIhtiyaclar()
+          children: [
+            ProfilYardimlar(currentUserEmail: user.email!),
+            ProfilIhtiyaclar(currentUserEmail: user.email!),
           ],
         ),
       ],
     );
   }
 }
+

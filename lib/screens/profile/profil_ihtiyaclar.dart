@@ -1,145 +1,127 @@
 import 'package:bootcamp/style/colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+class ProfilIhtiyaclar extends StatefulWidget {
+  final String currentUserEmail;
 
-class ProfilIhtiyaclar extends StatelessWidget {
-  const ProfilIhtiyaclar({super.key});
+  const ProfilIhtiyaclar({Key? key, required this.currentUserEmail}) : super(key: key);
+
+  @override
+  State<ProfilIhtiyaclar> createState() => _ProfilIhtiyaclarState();
+}
+class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
+  late CollectionReference<Map<String, dynamic>> collection;
+  List<DocumentSnapshot<Map<String, dynamic>>> documents = [];
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    collection = FirebaseFirestore.instance.collection('needs');
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    final querySnapshot = await collection.where('İhtiyaç Sahibi', isEqualTo: widget.currentUserEmail).get();
+
+    setState(() {
+      documents = querySnapshot.docs;
+      isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: Container(
-            decoration: const BoxDecoration(
-                border: Border.symmetric(
-                    horizontal: BorderSide(width: 3, color: AppColors.yellow))),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 35),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      const Expanded(
-                        child: Text(
-                          "7 Nisan 2023",
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.more_vert),
-                      )
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15),
-                    child: Card(
-                      elevation: 5,
-                      color: Colors.grey.shade50,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Column(
-                          children: [
-                            const Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    "Beşiktaş, İstanbul",
-                                    style: TextStyle(
-                                      color: AppColors.purple,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  "Cuma",
-                                  style: TextStyle(color: AppColors.grey3),
-                                )
-                              ],
-                            ),
-                            const Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    "Bebek Bezi",
-                                    style: TextStyle(
-                                        color: AppColors.darkGrey,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                Text(
-                                  "10:00",
-                                  style: TextStyle(
-                                    color: AppColors.darkGrey,
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                )
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            const Divider(
-                              color: Colors.white,
-                              thickness: 1.5,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Row(children: [
-                              const Row(
-                                children: [
-                                  CircleAvatar(
-                                    backgroundImage:
-                                        AssetImage("assets/profil/isa.jpg"),
-                                    radius: 15,
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    "1 kişi destek veriyor",
-                                    style: TextStyle(
-                                        color: AppColors.darkGrey,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500),
-                                  )
-                                ],
-                              ),
-                              Expanded(
-                                child: Align(
-                                  alignment: Alignment.centerRight,
-                                  child: ElevatedButton(
-                                    onPressed: () {},
-                                    style: ElevatedButton.styleFrom(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        backgroundColor: Colors.purple),
-                                    child: const Text(
-                                      "Detay",
-                                      style: TextStyle(color: AppColors.white),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ])
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
-                ],
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Text(
+                'İhtiyaçlarım',
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-          ),
+            isLoading
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : documents.isEmpty
+                    ? const Center(
+                        child: Text(
+                          'Daha önce ihtiyaç girmediniz...',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      )
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: documents.length,
+                        itemBuilder: (context, index) {
+                          final data = documents[index].data() as Map<String, dynamic>;
+                          final anakategori = data['Ana Kategori'];
+                          final altkategori = data['Alt Kategori'];
+                          final ihtiyac = data['İhtiyaç'];
+
+                          return Card(
+                            elevation: 5,
+                            color: Colors.grey.shade50,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    widget.currentUserEmail,
+                                    style: const TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Text(
+                                    anakategori ?? '',
+                                    style: const TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Text(
+                                    altkategori ?? '',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    ihtiyac ?? '',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
