@@ -15,6 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final user = FirebaseAuth.instance.currentUser!;
   late CollectionReference<Map<String, dynamic>> collection;
   List<DocumentSnapshot<Map<String, dynamic>>> documents = [];
+  String? selectedCategory;
 
   @override
   void initState() {
@@ -24,15 +25,34 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> fetchData() async {
-    final querySnapshot = await collection.get();
+    Query<Map<String, dynamic>> query = collection;
+
+    if (selectedCategory != null && selectedCategory != 'Tüm Kategoriler') {
+      query = query.where('Ana Kategori', isEqualTo: selectedCategory);
+    }
+
+    query = query.orderBy('createdAt', descending: true);
+
+    final querySnapshot = await query.get();
 
     setState(() {
       documents = querySnapshot.docs;
     });
   }
 
+  Future<void> addNeed(String category, String subcategory, String need) async {
+    await collection.add({
+      'İhtiyaç Sahibi': user.email,
+      'Ana Kategori': category,
+      'Alt Kategori': subcategory,
+      'İhtiyaç': need,
+      'createdAt': FieldValue.serverTimestamp(),
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: PreferredSize(
@@ -55,21 +75,51 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: const EdgeInsets.all(5.0),
             child: Text(
-              'En Son Eklenen İhtiyaçlar',
+              'En Son Eklenen İhtiyaçlar (${selectedCategory ?? 'Tüm Kategoriler'})',
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Container(
+              width: screenWidth,
+              child: DropdownButton<String>(
+                value: selectedCategory,
+                hint: const Text('Kategori Seç'),
+                onChanged: (value) {
+                  setState(() {
+                    selectedCategory = value;
+                    fetchData();
+                  });
+                },
+                items: <String>[
+                  'Tüm Kategoriler',
+                  'Temel İhtiyaçlar ve Barınma',
+                  'Giyim',
+                  'Sağlık',
+                  'Eğitim',
+                  'İletişim ve Ulaşım',
+                  'Kişisel Bakım',
+                ].map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
           Expanded(
             child: documents.isEmpty
-                    ? const Center(
-                        child: Text(
-                          'Şu anda gösterilebilecek bir ihtiyaç bulunmuyor...',
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      )
+                ? const Center(
+                    child: Text(
+                      'Şu anda gösterilebilecek bir ihtiyaç bulunmuyor...',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  )
                 : ListView.builder(
                     itemCount: documents.length,
                     itemBuilder: (context, index) {
@@ -131,6 +181,56 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Örnek olarak ihtiyaç eklemek için bir dialog göster
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text('Yeni İhtiyaç Ekle'),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    DropdownButton<String>(
+                      value: selectedCategory,
+                      hint: Text('Kategori Seçin'),
+                      onChanged: (newValue) {
+                        setState(() {
+                          selectedCategory = newValue;
+                        });
+                      },
+                      items: <String>[
+                        'Temel İhtiyaçlar ve Barınma',
+                        'Giyim',
+                        'Sağlık',
+                        'Eğitim',
+                        'İletişim ve Ulaşım',
+                        'Kişisel Bakım',
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                    SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: () {
+                        // Yeni ihtiyacı kaydetmek için fonksiyonu çağır
+                        addNeed(selectedCategory ?? '', '', '');
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('Kaydet'),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        },
+        child: Icon(Icons.add),
       ),
     );
   }

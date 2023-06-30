@@ -69,8 +69,7 @@ class _NeedsScreenState extends State<NeedsScreen> {
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize:
-            Size.fromHeight(screenHeight * 0.2), 
+        preferredSize: Size.fromHeight(screenHeight * 0.2),
         child: AppBar(
           backgroundColor: AppColors.lightGrey,
           elevation: 0,
@@ -182,11 +181,12 @@ class _NeedsScreenState extends State<NeedsScreen> {
                   CollectionReference ihtiyacs = firestore.collection('needs');
 
                   try {
-                    await ihtiyacs.add({
+                    await ihtiyacs.doc().set({
                       'İhtiyaç Sahibi': user.email,
                       'Ana Kategori': category,
                       'Alt Kategori': subcategory,
                       'İhtiyaç': ihtiyac,
+                      'createdAt': DateTime.now(),
                     });
                     print('Veri Firestore\'a başarıyla eklendi.');
 
