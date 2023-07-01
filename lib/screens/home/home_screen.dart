@@ -2,6 +2,9 @@ import 'package:bootcamp/style/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../repository/user_repository/user_repository.dart';
+import '../auth/auth/models/user_model.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -11,6 +14,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final user = FirebaseAuth.instance.currentUser!;
+  String userId = FirebaseAuth.instance.currentUser?.uid ?? '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +33,22 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 15,
             ),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
+                if (userId.isNotEmpty) {
+                  UserRepository userRepository = UserRepository();
+                  UserModel? user = await userRepository.getUserData(userId);
+
+                  if (user != null) {
+                    // Verileri kullanın veya gösterin
+                    print('username: ${user.username}');
+                    print('firstName: ${user.firstName}');
+                    print('lastName: ${user.lastName}');
+                    print('phone: ${user.phone}');
+                    print('email: ${user.email}');
+                  } else {
+                    print('Veriler bulunamadı');
+                  }
+                }
                 showDialog(
                   context: context,
                   builder: (context) {
@@ -102,7 +121,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 15,),
+                const SizedBox(
+                  height: 15,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [

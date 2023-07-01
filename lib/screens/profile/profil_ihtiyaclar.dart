@@ -96,7 +96,7 @@ class ProfilIhtiyaclar extends StatelessWidget {
                                 children: [
                                   CircleAvatar(
                                     backgroundImage:
-                                        AssetImage("assets/profil/isa.jpg"),
+                                        AssetImage("assets/profile/isa.jpg"),
                                     radius: 15,
                                   ),
                                   SizedBox(

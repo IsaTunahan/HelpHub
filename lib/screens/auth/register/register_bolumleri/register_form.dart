@@ -1,22 +1,31 @@
 import 'package:bootcamp/custom_widgets/alert.dart';
 import 'package:bootcamp/style/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../custom_widgets/_textformfield.dart';
+import '../../../../repository/user_repository/user_repository.dart';
 
 class RegisterForm extends StatefulWidget {
-  const RegisterForm({super.key,});
+  const RegisterForm({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<RegisterForm> createState() => _RegisterFormState();
 }
 
 class _RegisterFormState extends State<RegisterForm> {
+  final userRepository = UserRepository();
+
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final usernameController = TextEditingController();
+  final phoneController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+
   bool isLoading = false;
 
   Future<void> signUp() async {
@@ -26,10 +35,21 @@ class _RegisterFormState extends State<RegisterForm> {
       });
 
       try {
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        final userCredential =
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController.text.trim(),
           password: passwordController.text.trim(),
         );
+
+         final user = await userRepository.addStatus(
+        FirebaseAuth.instance.currentUser!.uid,
+        usernameController.text.trim(),
+        firstNameController.text.trim(),
+        lastNameController.text.trim(),
+        emailController.text.trim(),
+        int.parse(phoneController.text.trim())
+      );
+        print('Veriler Firestore\'a gönderildi.');
       } on FirebaseAuthException catch (e) {
         String errorMessage = 'Bilinmeyen bir hata oluştu';
 
@@ -74,17 +94,9 @@ class _RegisterFormState extends State<RegisterForm> {
       showDialog(
         context: context,
         builder: (context) {
-          return CupertinoAlertDialog(
-            title: const Text('Hata'),
-            content: const Text('Şifreler uyuşmuyor.'),
-            actions: [
-              CupertinoDialogAction(
-                child: const Text('Tamam'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
+          return const ErrorDialog(
+            title: 'Hata',
+            message: 'Şifreler uyuşmuyor.',
           );
         },
       );
@@ -94,9 +106,15 @@ class _RegisterFormState extends State<RegisterForm> {
 
   @override
   void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    confirmPasswordController.dispose();
+    if (mounted) {
+      firstNameController.dispose();
+      lastNameController.dispose();
+      usernameController.dispose();
+      phoneController.dispose();
+      emailController.dispose();
+      passwordController.dispose();
+      confirmPasswordController.dispose();
+    }
     super.dispose();
   }
 
@@ -114,6 +132,30 @@ class _RegisterFormState extends State<RegisterForm> {
         child: Column(
           children: [
             SizedBox(height: screenHeight * 0.02),
+            AppTextFormField(
+              controller: usernameController,
+              hintText: 'Kullanıcı Adı',
+              obscureText: false,
+            ),
+            SizedBox(height: screenHeight * 0.01),
+            AppTextFormField(
+              controller: firstNameController,
+              hintText: 'İsim',
+              obscureText: false,
+            ),
+            SizedBox(height: screenHeight * 0.01),
+            AppTextFormField(
+              controller: lastNameController,
+              hintText: 'Soyisim',
+              obscureText: false,
+            ),
+            SizedBox(height: screenHeight * 0.01),
+            AppTextFormField(
+              controller: phoneController,
+              hintText: 'Telefon',
+              obscureText: false,
+            ),
+            SizedBox(height: screenHeight * 0.01),
             AppTextFormField(
               controller: emailController,
               hintText: 'Email',
@@ -153,7 +195,7 @@ class _RegisterFormState extends State<RegisterForm> {
                           ),
                         )
                       : const Text(
-                          'Giriş Yap',
+                          'Kayıt Ol',
                           style: TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.bold,

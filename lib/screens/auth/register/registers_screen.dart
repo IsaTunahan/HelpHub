@@ -1,7 +1,6 @@
 import 'package:bootcamp/screens/auth/register/register_bolumleri/register_form.dart';
 import 'package:bootcamp/screens/auth/register/register_bolumleri/register_google_apple.dart';
 import 'package:bootcamp/style/colors.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -13,43 +12,6 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
-
-  Future signUp() async {
-    if (passwordConfirmed()) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return const Center(child: CircularProgressIndicator());
-        },
-      );
-
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      );
-      Navigator.pop(context);
-    }
-  }
-
-  bool passwordConfirmed() {
-    if (passwordController.text.trim() ==
-        confirmPasswordController.text.trim()) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -60,24 +22,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
       body: SingleChildScrollView(
         child: SizedBox(
           height: screenHeight,
-          child: Stack(
-            children:[ Positioned(bottom: screenHeight - (screenHeight -30),
+          child: Stack(children: [
+            Positioned(
+              bottom: screenHeight - (screenHeight - 30),
               child: Column(
                 children: [
-                  const SizedBox(
-                    height: 80,
-                  ),
-                  //Logo
-                  Image.asset(
-                    'assets/logos/HelpHub.png',
-                    height: screenHeight * 0.2,
-                    width: screenWidth * 0.8,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  
-                  
                   Container(
                     decoration: BoxDecoration(
                       boxShadow: [
@@ -118,7 +67,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               SizedBox(
                                 height: screenHeight * 0.02,
                               ),
-                        
+
                               const RegisterForm(),
                               // ya da
                               Padding(
@@ -154,10 +103,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   ],
                                 ),
                               ),
-                        
+
                               //google ve apple ile giriş
                               const RGoogleApple(),
-                        
+
                               SizedBox(
                                 height: screenHeight * 0.025,
                               ),
@@ -199,8 +148,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ],
               ),
-            ),]
-          ),
+            ),
+          ]),
         ),
       ),
     );
