@@ -146,10 +146,10 @@ Sprint planlamasında takım üyelerinin oy birliği ile Help Hub projesine kara
 
 # Sprint Review
 *  Alınan kararlar: Uygulamanın büyük çoğunluğu reviewda gösterilmiş olup, sprint 3de firestore bağlantıları ve iterasyona odaklanılacaktır.
-*  Kullanıcı giriş sayfasında Facebook ile devam et hazır durumdadır.
 *  Footer ikonlar itere edilmiştir.
 *  Profil sayfasına Yardımlar ve İhtiyaçlar yaratılmıştır.
 *  Ayarlar sayfasında kişisel bilgiler editlenebilir durumdadır.
+*  Firebase veriler hem gönderilebiliyor hem çekilebiliyor.
 *  Ayarlar sayfasına eklenen Çıkış button çalışır durumdadır.
 *  Sprint Review Katılımcıları: Gülüşan Şenses, Özge Önal, İsa Tunahan İslamoğlu, Abdülkadir Hocaoğlu.
 
