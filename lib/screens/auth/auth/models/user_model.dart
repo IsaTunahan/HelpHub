@@ -16,7 +16,7 @@ class UserModel {
     required this.lastName,
     required this.phone,
     required this.email,
-this.profileImageURL,
+this.profileImageURL,  
   }); 
 
   factory UserModel.fromSnapshot(DocumentSnapshot snapshot) {

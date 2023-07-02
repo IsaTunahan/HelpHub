@@ -1,5 +1,5 @@
 import 'package:bootcamp/screens/auth/register/register_bolumleri/register_form.dart';
-import 'package:bootcamp/screens/auth/register/register_bolumleri/register_google_apple.dart';
+import 'package:bootcamp/screens/auth/register/register_bolumleri/register_google.dart';
 import 'package:bootcamp/style/colors.dart';
 import 'package:flutter/material.dart';
 
