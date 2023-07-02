@@ -1,4 +1,4 @@
-# Daily Scrum Notlar
+![image](https://github.com/IsaTunahan/Bootcamp/assets/118114545/e87f48b3-2271-4e9e-9702-ba9a2726cb47)# Daily Scrum Notlar
 ## Takım İsmi
 
 * Scrum Fighters
@@ -166,7 +166,12 @@ Takım üyeleri daily scrumlarda tasklarının ne aşamada olduğunu ileterek, e
 # Giriş Ekranı
 | Giriş Yap | Kayıt Ol | Şifre Sıfırlama |
 |---------|---------|---------|
-| <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/GirişYap.png?raw=true" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Kayıt%20Ol.png?raw=true" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/%C5%9Eifremi%20unuttum.png?raw=true" width="300"> |
+| <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Giriş%20Yap.png?raw=true" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Kayıt%20Ol.png?raw=true" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/%C5%9Eifremi%20unuttum.png?raw=true" width="300"> |
+
+# Profil Ekranı
+| Profil | Ayarlar |
+|---------|---------|
+| <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Giriş.png?raw=true" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Ayarlar.png?raw=true" width="300"> | 
 
 
 
