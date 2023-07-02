@@ -134,6 +134,16 @@ Sprint planlamasında takım üyelerinin oy birliği ile Help Hub projesine kara
   
 [Notlar için tıklayın](https://sharing.clickup.com/d/h/8cftnd9-440/8821548eef1d0b8)
 
+# Giriş Ekranı
+| Giriş Yap | Kayıt Ol | Şifre Sıfırlama |
+|---------|---------|---------|
+| <img src="https://github.com/IsaTunahan/Bootcamp/blob/2102fe227bc911d0ed5f86d1d76310f13cbcb0be/Giris%CC%A7Yap.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Kayıt%20Ol.png?raw=true" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/a98bf327464c38032c557e3fb892706f11fc4589/s%CC%A7ifre%20s%C4%B1f%C4%B1rlama.png" width="300"> |
+
+# Profil Ekranı
+| Profil Yardım | Profil İhtiyaç | Ayarlar |
+|---------|---------|---------|
+| <img src="https://github.com/IsaTunahan/Bootcamp/blob/19546f44ee2da286e0da06f3ad239d2957be677f/profil_yard%C4%B1m.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/2102fe227bc911d0ed5f86d1d76310f13cbcb0be/profil_ihtiyac%CC%A7.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/2cc3b618e2c5ed1d8a6b0af0d9a8fcab8c635bad/Ayarlarr.png" width="300"> |
+
 # Sprint Review
 *  Alınan kararlar: Uygulamanın büyük çoğunluğu reviewda gösterilmiş olup, sprint 3de firestore bağlantıları ve iterasyona odaklanılacaktır.
 *  Kullanıcı giriş sayfasında Facebook ile devam et hazır durumdadır.
@@ -164,14 +174,6 @@ Takım üyeleri daily scrumlarda tasklarının ne aşamada olduğunu ileterek, e
 
   
 
-# Giriş Ekranı
-| Giriş Yap | Kayıt Ol | Şifre Sıfırlama |
-|---------|---------|---------|
-| <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Giriş%20Yap.png?raw=true" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Kayıt%20Ol.png?raw=true" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/%C5%9Eifremi%20unuttum.png?raw=true" width="300"> |
 
-# Profil Ekranı
-| Profil Yardım | Profil İhtiyaç | Ayarlar |
-|---------|---------|---------|
-| <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Profil.png?raw=true" width="300"> | <img src="https://raw.githubusercontent.com/IsaTunahan/Bootcamp/main/profil_ihtiyaç.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Ayarlar.png?raw=true" width="300"> |
 
 
