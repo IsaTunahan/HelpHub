@@ -66,7 +66,7 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
                         itemCount: documents.length,
                         itemBuilder: (context, index) {
                           final data = documents[index].data() as Map<String, dynamic>;
-                          final anakategori = data['Ana Kategori'];
+                          final anakategori = data['anaKategori'];
                           final altkategori = data['Alt Kategori'];
                           final ihtiyac = data['İhtiyaç'];
 

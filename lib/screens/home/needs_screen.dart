@@ -183,7 +183,7 @@ class _NeedsScreenState extends State<NeedsScreen> {
                   try {
                     await ihtiyacs.doc().set({
                       'İhtiyaç Sahibi': user.email,
-                      'Ana Kategori': category,
+                      'anaKategori': category,
                       'Alt Kategori': subcategory,
                       'İhtiyaç': ihtiyac,
                       'createdAt': DateTime.now(),

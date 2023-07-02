@@ -62,7 +62,7 @@ class _ProfilYardimlarState extends State<ProfilYardimlar> {
                     itemCount: documents.length,
                     itemBuilder: (context, index) {
                       final data = documents[index].data() as Map<String, dynamic>;
-                      final anakategori = data['Ana Kategori'];
+                      final anakategori = data['anaKategori'];
                       final altkategori = data['Alt Kategori'];
                       final birim = data['Birim'];
                       final destek = data['Destek'];

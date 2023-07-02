@@ -125,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemBuilder: (context, index) {
                       final data =
                           documents[index].data() as Map<String, dynamic>;
-                      final anakategori = data['Ana Kategori'];
+                      final anakategori = data['anaKategori'];
                       final altkategori = data['Alt Kategori'];
                       final ihtiyac = data['İhtiyaç'];
                       final ihtiyacsahibimail = data['İhtiyaç Sahibi'];
@@ -181,56 +181,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Örnek olarak ihtiyaç eklemek için bir dialog göster
-          showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: Text('Yeni İhtiyaç Ekle'),
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    DropdownButton<String>(
-                      value: selectedCategory,
-                      hint: Text('Kategori Seçin'),
-                      onChanged: (newValue) {
-                        setState(() {
-                          selectedCategory = newValue;
-                        });
-                      },
-                      items: <String>[
-                        'Temel İhtiyaçlar ve Barınma',
-                        'Giyim',
-                        'Sağlık',
-                        'Eğitim',
-                        'İletişim ve Ulaşım',
-                        'Kişisel Bakım',
-                      ].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                    SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: () {
-                        // Yeni ihtiyacı kaydetmek için fonksiyonu çağır
-                        addNeed(selectedCategory ?? '', '', '');
-                        Navigator.of(context).pop();
-                      },
-                      child: Text('Kaydet'),
-                    ),
-                  ],
-                ),
-              );
-            },
-          );
-        },
-        child: Icon(Icons.add),
       ),
     );
   }
