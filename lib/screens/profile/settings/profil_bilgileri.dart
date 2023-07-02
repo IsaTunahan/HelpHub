@@ -4,27 +4,29 @@ import 'package:bootcamp/style/colors.dart';
 import 'package:bootcamp/style/icons/helphub_icons.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../repository/user_repository/user_repository.dart';
 
 class ProfilBilgileri extends StatefulWidget {
-  const ProfilBilgileri({Key? key}) : super(key: key);
+  const ProfilBilgileri({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<ProfilBilgileri> createState() => _ProfilBilgileriState();
 }
 
 class _ProfilBilgileriState extends State<ProfilBilgileri> {
-  String _profileImageURL = 'assets/profile/user_profile.png';
-
   String _username = '';
   String _firstName = '';
   String _lastName = '';
   String _email = '';
   String _phone = '';
+  File? _image;
+  String? _profileImageURL;
 
   Future<void> _fetchUserData() async {
     final user = FirebaseAuth.instance.currentUser;
@@ -51,47 +53,109 @@ class _ProfilBilgileriState extends State<ProfilBilgileri> {
     _fetchUserData();
   }
 
-Future<void> _updateProfileImage(ImageSource source) async {
-  final picker = ImagePicker();
-  final pickedImage = await picker.pickImage(source: source);
-
-  if (pickedImage != null) {
-    String userID = FirebaseAuth.instance.currentUser!.uid;
-    String filePath = 'profil_resimleri/$userID/profil.png';
-
+  Future<void> _updateUserData() async {
     try {
-      firebase_storage.Reference ref =
-          firebase_storage.FirebaseStorage.instance.ref().child(filePath);
-      firebase_storage.UploadTask uploadTask = ref.putFile(
-        File(pickedImage.path),
-        firebase_storage.SettableMetadata(
-          contentType: 'image/png',
-        ),
-      );
+      final currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser != null) {
+        final userRef =
+            FirebaseFirestore.instance.collection('users').doc(currentUser.uid);
+        await userRef.update({'profileImageURL': _profileImageURL});
+      }
+    } catch (e) {
+      print('Hata: $e');
+    }
+  }
 
-      firebase_storage.TaskSnapshot snapshot = await uploadTask;
-      String downloadURL = await snapshot.ref.getDownloadURL();
+  Future<void> _pickImage(ImageSource source) async {
+    final pickedImage = await ImagePicker().pickImage(source: source);
+    if (pickedImage != null) {
+      setState(() {
+        _image = File(pickedImage.path);
+      });
 
+      // Profil resmini Firebase Storage'a yükle
+      await _uploadProfileImage();
+    }
+  }
+
+  Future<void> showImageSourceDialog() async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Profil Resmi'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                GestureDetector(
+                  child: const Row(
+                    children: [
+                      Icon(Helphub.image, color: AppColors.purple),
+                      SizedBox(width: 10),
+                      Text('Galeri'),
+                    ],
+                  ),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    _pickImage(ImageSource.gallery);
+                  },
+                ),
+                const SizedBox(height: 10),
+                GestureDetector(
+                  child: const Row(
+                    children: [
+                      Icon(Helphub.camera, color: AppColors.purple),
+                      SizedBox(width: 10),
+                      Text('Kamera'),
+                    ],
+                  ),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    _pickImage(ImageSource.camera);
+                  },
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('İptal'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _uploadProfileImage() async {
+    try {
+      // Firebase Storage referansı oluştur
+      final FirebaseStorage storage = FirebaseStorage.instance;
+      final Reference storageRef = storage.ref();
+
+      // Kullanıcının UID'sine göre bir klasör oluştur ve resmi yükle
+      final Reference imageRef = storageRef
+          .child('Profil_resimleri/${FirebaseAuth.instance.currentUser!.uid}');
+      final UploadTask uploadTask = imageRef.putFile(_image!);
+
+      // Yükleme işlemini tamamla ve indirme URL'sini al
+      final TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() {});
+      final String downloadURL = await taskSnapshot.ref.getDownloadURL();
+
+      // Profil resmi URL'sini kullanıcı verilerine kaydet
       setState(() {
         _profileImageURL = downloadURL;
       });
 
-      FirebaseAuth auth = FirebaseAuth.instance;
-      User? user = auth.currentUser;
-
-      if (user != null) {
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(user.uid)
-            .update({'profil_resim_url': downloadURL});
-      }
-    } catch (error) {
-      print('Firebase Storage Hatası: $error');
+      // Kullanıcının verilerini güncelle
+      await _updateUserData();
+    } catch (e) {
+      print('Hata: $e');
     }
   }
-}
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -111,72 +175,64 @@ Future<void> _updateProfileImage(ImageSource source) async {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Text(
-                'Profil Bilgileri',
-                style: TextStyle(
-                  color: AppColors.darkGrey,
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            ListTile(
-              leading: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: AppColors.purple,
-                    width: 2,
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Text(
+                    'Profil Bilgileri',
+                    style: TextStyle(
+                      color: AppColors.darkGrey,
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                child: CircleAvatar(
-                  backgroundImage: AssetImage(_profileImageURL),
-                  radius: 25,
-                ),
-              ),
-              title: const Text(
-                'Profil Resmi',
-                style: TextStyle(color: AppColors.darkGrey),
-              ),
-              trailing: IconButton(
-                icon: const Icon(
-                  Icons.edit,
-                  color: AppColors.purple,
-                ),
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text('Profil Resmini Güncelle'),
-                        content: SingleChildScrollView(
-                          child: ListBody(
-                            children: <Widget>[
-                              GestureDetector(
-                                child: const Text('Kamera'),
-                                onTap: () {
-                                  Navigator.of(context).pop();
-                                  _updateProfileImage(ImageSource.camera);
-                                },
-                              ),
-                              const Padding(padding: EdgeInsets.all(8.0)),
-                              GestureDetector(
-                                child: const Text('Galeri'),
-                                onTap: () {
-                                  Navigator.of(context).pop();
-                                  _updateProfileImage(ImageSource.gallery);
-                                },
-                              ),
-                            ],
-                          ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Stack(children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: AppColors.purple,
+                        width: 2,
+                      ),
+                    ),
+                    child: CircleAvatar(
+                      backgroundColor: Colors.grey.shade50,
+                      backgroundImage:
+                          const AssetImage('assets/profile/user_profile.png'),
+                      radius: 40,
+                    ),
+                  ),
+                  Positioned(
+                      bottom: -10,
+                      left: 45,
+                      child: Container(
+                        height: 38,
+                        width: 38,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.grey.shade50,
                         ),
-                      );
-                    },
-                  );
-                },
-              ),
+                        child: IconButton(
+                          iconSize: 22,
+                          icon: const Icon(
+                            Helphub.image,
+                            color: AppColors.purple,
+                          ),
+                          onPressed: () {
+                            showImageSourceDialog();
+                          },
+                        ),
+                      )),
+                ]),
+              ],
             ),
             ListTile(
               leading: const Icon(

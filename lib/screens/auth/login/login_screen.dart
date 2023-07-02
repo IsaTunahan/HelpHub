@@ -88,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               // ya da
                               Padding(
                                 padding: EdgeInsets.symmetric(
-                                  vertical: screenHeight * 0.02,
+                                  vertical: screenHeight * 0.01,
                                   horizontal: screenWidth * 0.04,
                                 ),
                                 child: Row(

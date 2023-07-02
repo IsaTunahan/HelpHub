@@ -40,9 +40,10 @@ dependencies:
   google_fonts: ^5.1.0
   google_sign_in: ^6.1.4
   image_picker: ^1.0.0
-  firebase_storage: ^11.2.4
+
   cloud_firestore: ^4.8.2
   get: ^4.6.5
+  firebase_storage: ^11.2.4
 
 
 

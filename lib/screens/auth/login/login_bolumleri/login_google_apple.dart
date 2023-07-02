@@ -4,14 +4,17 @@ import 'package:flutter/material.dart';
 import '../../../../style/colors.dart';
 
 class LGoogleApple extends StatelessWidget {
-  const LGoogleApple({super.key, });
+  const LGoogleApple({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
+      padding:
+          EdgeInsets.symmetric(horizontal: screenWidth - (screenWidth - 30)),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
@@ -20,8 +23,8 @@ class LGoogleApple extends StatelessWidget {
         color: Colors.grey.shade50,
         child: Column(
           children: [
-            SizedBox(
-              height: screenHeight * 0.02,
+             SizedBox(
+              height: screenHeight * 0.01,
             ),
             //google ile giriş
             Padding(
@@ -141,8 +144,8 @@ class LGoogleApple extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
-              height: screenHeight * 0.02,
+             SizedBox(
+              height: screenHeight * 0.01,
             ),
           ],
         ),

@@ -29,7 +29,8 @@ class _CategorySwitcherWidgetState extends State<CategorySwitcherWidget> {
             color: Colors.grey.shade50,
             elevation: 5,
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.symmetric(
+                  horizontal: screenWidth - (screenWidth - 10), vertical: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -40,8 +41,6 @@ class _CategorySwitcherWidgetState extends State<CategorySwitcherWidget> {
                       });
                     },
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 20),
                       decoration: BoxDecoration(
                         color: _selectedIndex == 0
                             ? AppColors.purple
@@ -54,14 +53,19 @@ class _CategorySwitcherWidgetState extends State<CategorySwitcherWidget> {
                           width: 2,
                         ),
                       ),
-                      child: Text(
-                        'Yardımlar',
-                        style: TextStyle(
-                          color: _selectedIndex == 0
-                              ? AppColors.white
-                              : AppColors.purple,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 5,
+                            horizontal: screenWidth*0.02),
+                        child: Text(
+                          'Yardımlar',
+                          style: TextStyle(
+                            color: _selectedIndex == 0
+                                ? AppColors.white
+                                : AppColors.purple,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
@@ -73,8 +77,7 @@ class _CategorySwitcherWidgetState extends State<CategorySwitcherWidget> {
                       });
                     },
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 20),
+                     
                       decoration: BoxDecoration(
                         color: _selectedIndex == 1
                             ? Colors.yellow
@@ -87,14 +90,19 @@ class _CategorySwitcherWidgetState extends State<CategorySwitcherWidget> {
                           width: 2,
                         ),
                       ),
-                      child: Text(
-                        'İhtiyaçlar',
-                        style: TextStyle(
-                          color: _selectedIndex == 1
-                              ? AppColors.white
-                              : Colors.yellow,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 5,
+                            horizontal: screenWidth*0.02),
+                        child: Text(
+                          'İhtiyaçlar',
+                          style: TextStyle(
+                            color: _selectedIndex == 1
+                                ? AppColors.white
+                                : Colors.yellow,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
@@ -106,10 +114,7 @@ class _CategorySwitcherWidgetState extends State<CategorySwitcherWidget> {
         ),
         IndexedStack(
           index: _selectedIndex,
-          children: const [
-            ProfilYardimlar(),
-            ProfilIhtiyaclar()
-          ],
+          children: const [ProfilYardimlar(), ProfilIhtiyaclar()],
         ),
       ],
     );

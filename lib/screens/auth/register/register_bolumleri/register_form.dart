@@ -26,6 +26,7 @@ class _RegisterFormState extends State<RegisterForm> {
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
+
   bool isLoading = false;
 
   Future<void> signUp() async {
@@ -41,14 +42,15 @@ class _RegisterFormState extends State<RegisterForm> {
           password: passwordController.text.trim(),
         );
 
-         final user = await userRepository.addStatus(
-        FirebaseAuth.instance.currentUser!.uid,
-        usernameController.text.trim(),
-        firstNameController.text.trim(),
-        lastNameController.text.trim(),
-        emailController.text.trim(),
-        int.parse(phoneController.text.trim())
-      );
+        final user = await userRepository.addStatus(
+          FirebaseAuth.instance.currentUser!.uid,
+          usernameController.text.trim(),
+          firstNameController.text.trim(),
+          lastNameController.text.trim(),
+          emailController.text.trim(),
+          int.parse(phoneController.text.trim()),
+
+        );
         print('Veriler Firestore\'a gönderildi.');
       } on FirebaseAuthException catch (e) {
         String errorMessage = 'Bilinmeyen bir hata oluştu';

@@ -11,7 +11,9 @@ class RGoogleApple extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
+      padding: EdgeInsets.symmetric(
+        horizontal: screenWidth - (screenWidth - 30),
+      ),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
@@ -21,7 +23,7 @@ class RGoogleApple extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              height: screenHeight * 0.02,
+              height: screenHeight * 0.01,
             ),
             //google ile kayıt
             Padding(
@@ -29,7 +31,7 @@ class RGoogleApple extends StatelessWidget {
                 horizontal: screenWidth * 0.05,
               ),
               child: GestureDetector(
-                onTap:() => AuthService().signInWithGoogle(),
+                onTap: () => AuthService().signInWithGoogle(),
                 child: Column(
                   children: [
                     Container(
@@ -140,7 +142,7 @@ class RGoogleApple extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: screenHeight * 0.02,
+              height: screenHeight * 0.01,
             ),
           ],
         ),
