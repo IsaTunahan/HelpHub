@@ -113,3 +113,60 @@ Sprint planlamasında takım üyelerinin oy birliği ile Help Hub projesine kara
 * Tasklar takım üyelerine assign edildi. 
 
 * Takım üyeleri daily scrumlarda tasklarının ne aşamada olduğundan o gün neye odaklanacaklarından ve engelleri olup olmadığından bahsettiler.
+
+
+
+
+
+
+---
+
+
+# Sprint 2
+
+![Logo](https://github.com/IsaTunahan/Bootcamp/blob/main/sprint2.png)
+
+*  Sprint içinde tamamlanması tahmin edilen puan: 100
+*  Puan tamamlama mantığı: Toplamda proje boyunca tamamlanması gereken 300 puanlık backlog maddesi bulunmaktadır. Sprint 1'de 100 puan, Sprint 2'de 100 puanlık kısmı tamamlanarak toplamda 200 puana ulaşılmıştır. 
+*  Daily Scrum: Daily Scrum toplantıları, sprint 1de olduğu gibi takımın iletişimde kalması adına hafta içi akşam saatlerinde Slack ya da Google Meet üzerinden yapılmaktadır.
+*  Daily Scrum toplantısı her güne ait notlarımız ClickUp içerisinde Product Backlog altında Daily Scrum Notlar adıyla yer almaktadır.
+  
+[Notlar için tıklayın](https://sharing.clickup.com/d/h/8cftnd9-440/8821548eef1d0b8)
+
+# Sprint Review
+*  Alınan kararlar: Uygulamanın büyük çoğunluğu reviewda gösterilmiş olup, sprint 3de firestore bağlantıları ve iterasyona odaklanılacaktır.
+*  Kullanıcı giriş sayfasında Facebook ile devam et hazır durumdadır.
+*  Footer ikonlar itere edilmiştir.
+*  Profil sayfasına Yardımlar ve İhtiyaçlar yaratılmıştır.
+*  Ayarlar sayfasında kişisel bilgiler editlenebilir durumdadır.
+*  Ayarlar sayfasına eklenen Çıkış button çalışır durumdadır.
+*  Sprint Review Katılımcıları: Gülüşan Şenses, Özge Önal, İsa Tunahan İslamoğlu, Abdülkadir Hocaoğlu.
+
+# Sprint Retrospective
+*  Furkan Oğuzhan'ın takım ile iletişimi konusunda sprint 1 sonunda Scrum Master görüşmüş olup, sınavları biteceği için sprint 2 de destek olabileceğini iletmiştir. Ancak Sprint 2 boyunca da takımla/scrum master ile iletişimi olmamıştır.
+*  Kalan takım üyeleri birbirlerine özverileri için teşekkürlerini iletti.
+*  Sprint planlamasında takım üyeleri ile alınacak tasklara ortak karar verildi. 
+Tasklar için how toplantısına geçildi. Tasklar takım üyelerine assign edildi.
+Takım üyeleri daily scrumlarda tasklarının ne aşamada olduğunu ileterek, engel bulunup bulunmadığı konusunda görüşmeler yapıldı.
+
+# Sprint Notları
+*  Sprint planlamada tüm tasklara takım ile karar verildi.
+*  Kayıt Ol sayfasındaki kişisel bilgilerin düzenlenebilmesi sağlandı.
+*  Yardım Et ve İhtiyacım Var sayfalarının FireStore bağlantıları yapıldı.
+*  Karar verilen ikonlar uygulamada kullanıldı.
+*  Çıkış Yap butonu Ayarlar sayfasına eklendi.
+*  Profil sayfasına tab yaratıldı.
+*  Facebook ile giriş eklendi ve çalışır hale getirildi.
+*  Tüm tasklar daily scrumlarda görüşülerek ilerlendi.
+*  Facebook ile giriş eklendi ve çalışır hale getirildi.
+*  Sprint review ve sonrasında retro gerçekleştirildi.
+
+  
+
+# Giriş Ekranı
+| Giriş Yap | Kayıt Ol | Şifre Sıfırlama |
+|---------|---------|---------|
+| <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/GirişYap.png?raw=true" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Kayıt%20Ol.png?raw=true" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/%C5%9Eifremi%20unuttum.png?raw=true" width="300"> |
+
+
+
