@@ -75,8 +75,7 @@ class _CategorySwitcherWidgetState extends State<CategorySwitcherWidget> {
                       });
                     },
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 20),
+                     
                       decoration: BoxDecoration(
                         color: _selectedIndex == 1
                             ? Colors.yellow
@@ -89,19 +88,23 @@ class _CategorySwitcherWidgetState extends State<CategorySwitcherWidget> {
                           width: 2,
                         ),
                       ),
-                      child: Text(
-                        'İhtiyaçlar',
-                        style: TextStyle(
-                          color: _selectedIndex == 1
-                              ? AppColors.white
-                              : Colors.yellow,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 5,
+                            horizontal: screenWidth*0.02),
+                        child: Text(
+                          'İhtiyaçlar',
+                          style: TextStyle(
+                            color: _selectedIndex == 1
+                                ? AppColors.white
+                                : Colors.yellow,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                   ),
-                ],
+              )],
               ),
             ),
           ),
