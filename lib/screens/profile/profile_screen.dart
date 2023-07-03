@@ -2,12 +2,13 @@ import 'package:bootcamp/screens/profile/prf_yrd_ihtc.dart';
 import 'package:bootcamp/screens/profile/settings/settings_screen.dart';
 import 'package:bootcamp/style/colors.dart';
 import 'package:bootcamp/style/icons/helphub_icons.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../repository/user_repository/user_repository.dart';
+
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({super.key});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -17,7 +18,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String _username = '';
   String _firstName = '';
   String _lastName = '';
-  final user = FirebaseAuth.instance.currentUser;
+
+  Future<void> _fetchUserData() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final userId = user.uid;
+      final userRepository = UserRepository();
+      final userData = await userRepository.getUserData(userId);
+
+      if (userData != null) {
+        setState(() {
+          _username = userData.username;
+          _firstName = userData.firstName;
+          _lastName = userData.lastName;
+        });
+      }
+    }
+  }
 
   @override
   void initState() {
@@ -25,26 +42,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _fetchUserData();
   }
 
-  Future<void> _fetchUserData() async {
-    final querySnapshot = await FirebaseFirestore.instance
-        .collection('user')
-        .where('email', isEqualTo: user!.email)
-        .get();
-
-    if (querySnapshot.docs.isNotEmpty) {
-      final userData = querySnapshot.docs.first.data();
-      setState(() {
-        _username = userData['username'];
-        _firstName = userData['firstName'];
-        _lastName = userData['lastName'];
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
+    final screenHeith = MediaQuery.of(context).size.height;
 
     return Scaffold(
       backgroundColor: AppColors.white,
@@ -58,25 +59,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
         leading: GestureDetector(
           onTap: () {
             Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const SettingsScreen(),
-              ),
-            );
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const SettingsScreen()));
           },
-          child: const Icon(
-            Helphub.settings,
-            color: AppColors.purple,
-            size: 35,
-          ),
+          child:
+              const Icon(Helphub.settings, color: AppColors.purple, size: 35),
         ),
       ),
       body: Column(
         children: [
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: screenWidth - (screenWidth - 25),
-            ),
+                horizontal: screenWidth - (screenWidth - 25)),
             child: Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
@@ -86,9 +81,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: SingleChildScrollView(
                 child: Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: screenWidth * 0.02,
-                    vertical: screenHeight * 0.01,
-                  ),
+                      horizontal: screenWidth * 0.02,
+                      vertical: screenHeith * 0.01),
                   child: Row(
                     children: [
                       Container(
@@ -118,24 +112,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 fontSize: 25,
                               ),
                             ),
-                            const SizedBox(height: 5),
+                            const SizedBox(
+                              height: 5,
+                            ),
                             Text(
                               '@$_username',
                               style: const TextStyle(
                                 color: AppColors.purple,
                               ),
                             ),
-                            const SizedBox(height: 15),
+                            const SizedBox(
+                              height: 15,
+                            )
                           ],
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ),
               ),
             ),
           ),
-          const CategorySwitcherWidget(),
+          const CategorySwitcherWidget()
         ],
       ),
     );
