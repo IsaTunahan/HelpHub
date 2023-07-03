@@ -76,7 +76,7 @@
 # Anasayfa Ekranı
 | Bildirim | Profil | Kategori |
 |---------|---------|---------|
-| <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Bildirim.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Profil.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/kategori.png" width="300"> |
+| <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Bildirim.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/kadprofl.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/kategori.png" width="300"> |
 
 ---
 
