@@ -142,7 +142,20 @@ Sprint planlamasında takım üyelerinin oy birliği ile Help Hub projesine kara
 # Profil Ekranı
 | Profil Yardım | Profil İhtiyaç | Ayarlar |
 |---------|---------|---------|
-| <img src="https://github.com/IsaTunahan/Bootcamp/blob/19546f44ee2da286e0da06f3ad239d2957be677f/profil_yard%C4%B1m.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/2102fe227bc911d0ed5f86d1d76310f13cbcb0be/profil_ihtiyac%CC%A7.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/2cc3b618e2c5ed1d8a6b0af0d9a8fcab8c635bad/Ayarlarr.png" width="300"> |
+| <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/profilepage.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/profilepageneeed.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/settings.png" width="300"> |
+
+
+# Anasayfa Ekranı
+| Anasayfa | Yardım Et | İhtiyacım Var |
+|---------|---------|---------|
+| <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/homepage.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/helppage.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/needpage.png" width="300"> |
+
+
+# Kategoriler
+| Ana Kategoriler | Alt Kategori (Eğitim) | Alt Kategori (Temel İhtiyaçlar) |
+|---------|---------|---------|
+| <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/categories.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/_categori.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/_categoris.png" width="300"> |
+
 
 # Sprint Review
 *  Alınan kararlar: Uygulamanın büyük çoğunluğu reviewda gösterilmiş olup, sprint 3de firestore bağlantıları ve iterasyona odaklanılacaktır.
