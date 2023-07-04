@@ -47,10 +47,66 @@ class _ProfilBilgileriState extends State<ProfilBilgileri> {
     }
   }
 
+  Future<void> _fetchProfileImageURL() async {
+  final currentUser = FirebaseAuth.instance.currentUser;
+  if (currentUser != null) {
+    final userRef = FirebaseFirestore.instance.collection('users').doc(currentUser.uid);
+    final userSnapshot = await userRef.get();
+
+    if (userSnapshot.exists) {
+      final userData = userSnapshot.data();
+      final profileImageRef = FirebaseStorage.instance.ref().child('Profil_resimleri/${currentUser.uid}');
+      final profileImageURL = await profileImageRef.getDownloadURL();
+
+      setState(() {
+        _profileImageURL = profileImageURL;
+      });
+    }
+  }
+}
+
+
   @override
   void initState() {
     super.initState();
     _fetchUserData();
+    _fetchProfileImageURL();
+  }
+
+  Future<void> _pickImage(ImageSource source) async {
+    final pickedImage = await ImagePicker().pickImage(source: source);
+    if (pickedImage != null) {
+      setState(() {
+        _image = File(pickedImage.path);
+      });
+
+      await _uploadProfileImage();
+    }
+  }
+
+  Future<void> _uploadProfileImage() async {
+    try {
+      final currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser != null) {
+        final storage = FirebaseStorage.instance;
+        final storageRef = storage.ref();
+
+        final imageRef =
+            storageRef.child('Profil_resimleri/${currentUser.uid}');
+        final uploadTask = imageRef.putFile(_image!);
+
+        final snapshot = await uploadTask.whenComplete(() {});
+        final downloadURL = await snapshot.ref.getDownloadURL();
+
+        setState(() {
+          _profileImageURL = downloadURL;
+        });
+
+        await _updateUserData();
+      }
+    } catch (e) {
+      print('Hata: $e');
+    }
   }
 
   Future<void> _updateUserData() async {
@@ -63,18 +119,6 @@ class _ProfilBilgileriState extends State<ProfilBilgileri> {
       }
     } catch (e) {
       print('Hata: $e');
-    }
-  }
-
-  Future<void> _pickImage(ImageSource source) async {
-    final pickedImage = await ImagePicker().pickImage(source: source);
-    if (pickedImage != null) {
-      setState(() {
-        _image = File(pickedImage.path);
-      });
-
-      // Profil resmini Firebase Storage'a yükle
-      await _uploadProfileImage();
     }
   }
 
@@ -130,33 +174,6 @@ class _ProfilBilgileriState extends State<ProfilBilgileri> {
     );
   }
 
-  Future<void> _uploadProfileImage() async {
-    try {
-      // Firebase Storage referansı oluştur
-      final FirebaseStorage storage = FirebaseStorage.instance;
-      final Reference storageRef = storage.ref();
-
-      // Kullanıcının UID'sine göre bir klasör oluştur ve resmi yükle
-      final Reference imageRef = storageRef
-          .child('Profil_resimleri/${FirebaseAuth.instance.currentUser!.uid}');
-      final UploadTask uploadTask = imageRef.putFile(_image!);
-
-      // Yükleme işlemini tamamla ve indirme URL'sini al
-      final TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() {});
-      final String downloadURL = await taskSnapshot.ref.getDownloadURL();
-
-      // Profil resmi URL'sini kullanıcı verilerine kaydet
-      setState(() {
-        _profileImageURL = downloadURL;
-      });
-
-      // Kullanıcının verilerini güncelle
-      await _updateUserData();
-    } catch (e) {
-      print('Hata: $e');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -194,23 +211,27 @@ class _ProfilBilgileriState extends State<ProfilBilgileri> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Stack(children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: AppColors.purple,
-                        width: 2,
+                Stack(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: AppColors.purple,
+                          width: 2,
+                        ),
+                      ),
+                      child: CircleAvatar(
+                        backgroundColor: Colors.grey.shade50,
+                        backgroundImage: _profileImageURL != null
+                            ? NetworkImage(_profileImageURL!)
+                            : const AssetImage(
+                                    'assets/profile/user_profile.png')
+                                as ImageProvider<Object>?,
+                        radius: 40,
                       ),
                     ),
-                    child: CircleAvatar(
-                      backgroundColor: Colors.grey.shade50,
-                      backgroundImage:
-                          const AssetImage('assets/profile/user_profile.png'),
-                      radius: 40,
-                    ),
-                  ),
-                  Positioned(
+                    Positioned(
                       bottom: -10,
                       left: 45,
                       child: Container(
@@ -230,8 +251,10 @@ class _ProfilBilgileriState extends State<ProfilBilgileri> {
                             showImageSourceDialog();
                           },
                         ),
-                      )),
-                ]),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
             ListTile(
