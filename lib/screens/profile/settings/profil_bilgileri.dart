@@ -48,23 +48,25 @@ class _ProfilBilgileriState extends State<ProfilBilgileri> {
   }
 
   Future<void> _fetchProfileImageURL() async {
-  final currentUser = FirebaseAuth.instance.currentUser;
-  if (currentUser != null) {
-    final userRef = FirebaseFirestore.instance.collection('users').doc(currentUser.uid);
-    final userSnapshot = await userRef.get();
+    final currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      final userRef = FirebaseFirestore.instance.collection('pictures').doc(currentUser.uid);
 
-    if (userSnapshot.exists) {
-      final userData = userSnapshot.data();
-      final profileImageRef = FirebaseStorage.instance.ref().child('Profil_resimleri/${currentUser.uid}');
-      final profileImageURL = await profileImageRef.getDownloadURL();
+      try {
+        final userSnapshot = await userRef.get();
+        if (userSnapshot.exists) {
+          final userData = userSnapshot.data();
+          final profileImageURL = userData?['profileImageURL'];
 
-      setState(() {
-        _profileImageURL = profileImageURL;
-      });
+          setState(() {
+            _profileImageURL = profileImageURL;
+          });
+        }
+      } catch (e) {
+        print('Hata: $e');
+      }
     }
   }
-}
-
 
   @override
   void initState() {
@@ -91,8 +93,7 @@ class _ProfilBilgileriState extends State<ProfilBilgileri> {
         final storage = FirebaseStorage.instance;
         final storageRef = storage.ref();
 
-        final imageRef =
-            storageRef.child('Profil_resimleri/${currentUser.uid}');
+        final imageRef = storageRef.child('Profil_resimleri/${currentUser.uid}');
         final uploadTask = imageRef.putFile(_image!);
 
         final snapshot = await uploadTask.whenComplete(() {});
@@ -102,20 +103,19 @@ class _ProfilBilgileriState extends State<ProfilBilgileri> {
           _profileImageURL = downloadURL;
         });
 
-        await _updateUserData();
+        await _updateUserData(downloadURL);
       }
     } catch (e) {
       print('Hata: $e');
     }
   }
 
-  Future<void> _updateUserData() async {
+  Future<void> _updateUserData(String downloadURL) async {
     try {
       final currentUser = FirebaseAuth.instance.currentUser;
       if (currentUser != null) {
-        final userRef =
-            FirebaseFirestore.instance.collection('users').doc(currentUser.uid);
-        await userRef.update({'profileImageURL': _profileImageURL});
+        final userRef = FirebaseFirestore.instance.collection('pictures').doc(currentUser.uid);
+        await userRef.set({'profileImageURL': downloadURL}, SetOptions(merge: true));
       }
     } catch (e) {
       print('Hata: $e');
@@ -226,8 +226,7 @@ class _ProfilBilgileriState extends State<ProfilBilgileri> {
                         backgroundImage: _profileImageURL != null
                             ? NetworkImage(_profileImageURL!)
                             : const AssetImage(
-                                    'assets/profile/user_profile.png')
-                                as ImageProvider<Object>?,
+                                'assets/profile/user_profile.png') as ImageProvider<Object>?,
                         radius: 40,
                       ),
                     ),

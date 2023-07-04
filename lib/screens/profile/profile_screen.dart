@@ -26,16 +26,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? _profileImageURL;
   File? _image;
 
-  Future<void> _pickImage(ImageSource source) async {
-    final pickedImage = await ImagePicker().pickImage(source: source);
-    if (pickedImage != null) {
-      setState(() {
-        _image = File(pickedImage.path);
-      });
-
-      await _uploadProfileImage();
-    }
-  }
 
   Future<void> _fetchUserData() async {
     final user = FirebaseAuth.instance.currentUser;
@@ -54,21 +44,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
-  Future<void> _fetchProfileImageURL() async {
-    final currentUser = FirebaseAuth.instance.currentUser;
-    if (currentUser != null) {
-      final userRef =
-          FirebaseFirestore.instance.collection('users').doc(currentUser.uid);
-      final userSnapshot = await userRef.get();
 
-      if (userSnapshot.exists) {
-        final userData = userSnapshot.data();
-        setState(() {
-          _profileImageURL = userData?['profileImageURL'];
-        });
-      }
+  Future<void> _fetchProfileImageURL() async {
+  final currentUser = FirebaseAuth.instance.currentUser;
+  if (currentUser != null) {
+    final userRef = FirebaseFirestore.instance.collection('pictures').doc(currentUser.uid);
+    final userSnapshot = await userRef.get();
+
+    if (userSnapshot.exists) {
+      final userData = userSnapshot.data();
+      final profileImageRef = FirebaseStorage.instance.ref().child('Profil_resimleri/${currentUser.uid}');
+      final profileImageURL = await profileImageRef.getDownloadURL();
+
+      setState(() {
+        _profileImageURL = profileImageURL;
+      });
     }
   }
+}
+
 
   @override
   void initState() {
@@ -77,43 +71,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _fetchProfileImageURL();
   }
 
-  Future<void> _uploadProfileImage() async {
-    try {
-      final currentUser = FirebaseAuth.instance.currentUser;
-      if (currentUser != null) {
-        final storage = FirebaseStorage.instance;
-        final storageRef = storage.ref();
 
-        final imageRef =
-            storageRef.child('Profil_resimleri/${currentUser.uid}');
-        final uploadTask = imageRef.putFile(_image!);
-
-        final snapshot = await uploadTask.whenComplete(() {});
-        final downloadURL = await snapshot.ref.getDownloadURL();
-
-        setState(() {
-          _profileImageURL = downloadURL;
-        });
-
-        await _updateUserData();
-      }
-    } catch (e) {
-      print('Hata: $e');
-    }
-  }
-
-  Future<void> _updateUserData() async {
-    try {
-      final currentUser = FirebaseAuth.instance.currentUser;
-      if (currentUser != null) {
-        final userRef =
-            FirebaseFirestore.instance.collection('users').doc(currentUser.uid);
-        await userRef.update({'profileImageURL': _profileImageURL});
-      }
-    } catch (e) {
-      print('Hata: $e');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
