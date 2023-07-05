@@ -1,5 +1,5 @@
 import 'package:bootcamp/screens/auth/login/login_bolumleri/login_form.dart';
-import 'package:bootcamp/screens/auth/login/login_bolumleri/login_google_apple.dart';
+import 'package:bootcamp/screens/auth/login/login_bolumleri/login_google.dart';
 import 'package:bootcamp/style/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -88,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               // ya da
                               Padding(
                                 padding: EdgeInsets.symmetric(
-                                  vertical: screenHeight * 0.02,
+                                  vertical: screenHeight * 0.01,
                                   horizontal: screenWidth * 0.04,
                                 ),
                                 child: Row(

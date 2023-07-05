@@ -25,12 +25,12 @@ class _CategorySwitcherWidgetState extends State<CategorySwitcherWidget> {
       children: [
         Padding(
           padding: EdgeInsets.symmetric(
-              horizontal: screenWidth - (screenWidth - 40), vertical: 15),
+              horizontal: screenWidth - (screenWidth - 20), vertical: 15),
           child: Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            color: Colors.grey.shade50,
+            color: _selectedIndex == 1 ? AppColors.lightyellow : AppColors.lightpurple,
             elevation: 5,
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
@@ -59,12 +59,12 @@ class _CategorySwitcherWidgetState extends State<CategorySwitcherWidget> {
                         ),
                       ),
                       child: Text(
-                        'Yardımlar',
+                        'En Son İhtiyaçlar',
                         style: TextStyle(
                           color: _selectedIndex == 0
                               ? AppColors.white
                               : AppColors.purple,
-                          fontSize: 25,
+                          fontSize: 15,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -77,7 +77,6 @@ class _CategorySwitcherWidgetState extends State<CategorySwitcherWidget> {
                       });
                     },
                     child: Container(
-                     
                       decoration: BoxDecoration(
                         color: _selectedIndex == 1
                             ? Colors.yellow
@@ -92,21 +91,21 @@ class _CategorySwitcherWidgetState extends State<CategorySwitcherWidget> {
                       ),
                       child: Padding(
                         padding: EdgeInsets.symmetric(
-                            vertical: 5,
-                            horizontal: screenWidth*0.02),
+                            vertical: 5, horizontal: screenWidth * 0.02),
                         child: Text(
-                          'İhtiyaçlar',
+                          'En Son Yardımlar',
                           style: TextStyle(
                             color: _selectedIndex == 1
                                 ? AppColors.white
-                                : Colors.yellow,
-                            fontSize: 25,
+                                : AppColors.lightyellow,
+                            fontSize: 15,
                             fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-              )],
+                  )
+                ],
               ),
             ),
           ),
@@ -122,4 +121,3 @@ class _CategorySwitcherWidgetState extends State<CategorySwitcherWidget> {
     );
   }
 }
-

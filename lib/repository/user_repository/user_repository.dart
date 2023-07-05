@@ -1,7 +1,7 @@
 // TODO Implement this library.
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
-import '../../screens/auth/auth/models/user_models.dart';
+import '../../screens/auth/auth/models/user_model.dart';
 
 class UserRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -55,4 +55,6 @@ class UserRepository {
 
     );
   }
+
+
 }

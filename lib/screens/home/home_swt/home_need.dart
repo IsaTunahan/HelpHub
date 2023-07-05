@@ -28,7 +28,7 @@ class _HomeNeedScreenState extends State<HomeNeedScreen> {
     Query<Map<String, dynamic>> query = collection;
 
     if (selectedCategory != null && selectedCategory != 'Tüm Kategoriler') {
-      query = query.where('Ana Kategori', isEqualTo: selectedCategory);
+      query = query.where('anaKategori', isEqualTo: selectedCategory);
     }
 
     query = query.orderBy('createdAt', descending: true);
@@ -36,16 +36,18 @@ class _HomeNeedScreenState extends State<HomeNeedScreen> {
     final querySnapshot = await query.get();
 
     setState(() {
-      documents = querySnapshot.docs.where((doc) => doc.data() != null).toList();
+      documents = querySnapshot.docs.where((doc) => doc.exists).toList();
     });
   }
 
   Future<String> getUsername(String userId) async {
-    final userDoc =
-        await FirebaseFirestore.instance.collection('users').doc(userId).get();
+    final userQuerySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('userId', isEqualTo: userId)
+        .get();
 
-    if (userDoc.exists) {
-      final userData = userDoc.data() as Map<String, dynamic>;
+    if (userQuerySnapshot.docs.isNotEmpty) {
+      final userData = userQuerySnapshot.docs[0].data();
       final firstName = userData['firstName'] ?? '';
       final lastName = userData['lastName'] ?? '';
       return '$firstName $lastName';
@@ -63,46 +65,6 @@ class _HomeNeedScreenState extends State<HomeNeedScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Text(
-                'En Son Eklenen İhtiyaçlar (${selectedCategory ?? 'Tüm Kategoriler'})',
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Container(
-                width: screenWidth,
-                child: DropdownButton<String>(
-                  value: selectedCategory,
-                  hint: const Text('Kategori Seç'),
-                  onChanged: (value) {
-                    setState(() {
-                      selectedCategory = value;
-                      fetchData();
-                    });
-                  },
-                  items: <String>[
-                    'Tüm Kategoriler',
-                    'Temel İhtiyaçlar ve Barınma',
-                    'Giyim',
-                    'Sağlık',
-                    'Eğitim',
-                    'İletişim ve Ulaşım',
-                    'Kişisel Bakım',
-                  ].map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-              ),
-            ),
             if (documents.isEmpty)
               const Center(
                 child: Text(
@@ -117,7 +79,7 @@ class _HomeNeedScreenState extends State<HomeNeedScreen> {
                 itemCount: documents.length,
                 itemBuilder: (context, index) {
                   final data = documents[index].data();
-                  final anakategori = data['Ana Kategori'];
+                  final anakategori = data['anaKategori'];
                   final altkategori = data['Alt Kategori'];
                   final ihtiyac = data['İhtiyaç'];
                   final ihtiyacsahibiId = data['İhtiyaç Sahibi'];
@@ -156,7 +118,7 @@ class _HomeNeedScreenState extends State<HomeNeedScreen> {
                               ),
                               const SizedBox(height: 5),
                               Text(
-                                anakategori ?? '',
+                                ihtiyac ?? '',
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 18,
@@ -164,7 +126,7 @@ class _HomeNeedScreenState extends State<HomeNeedScreen> {
                               ),
                               const SizedBox(height: 5),
                               Text(
-                                ihtiyac ?? '',
+                                anakategori ?? '',
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 16,

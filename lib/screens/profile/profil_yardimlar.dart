@@ -67,7 +67,9 @@ class _ProfilYardimlarState extends State<ProfilYardimlar> {
                       final birim = data['Birim'];
                       final destek = data['Destek'];
                       final miktar = data['Miktar'];
-
+                      final il = data['city'];
+                          final ilce = data['district'];
+                          final tarih = data['createdAt'];
 
                       return Card(
                         elevation: 5,
@@ -81,19 +83,11 @@ class _ProfilYardimlarState extends State<ProfilYardimlar> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                widget.currentUserEmail,
+                                anakategori, 
                                 style: const TextStyle(
-                                  color: Colors.grey,
+                                  color: Colors.black,
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const SizedBox(height: 5),
-                              Text(
-                                anakategori ?? '',
-                                style: const TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 18,
                                 ),
                               ),
                               const SizedBox(height: 5),
@@ -101,12 +95,20 @@ class _ProfilYardimlarState extends State<ProfilYardimlar> {
                                 altkategori ?? '',
                                 style: const TextStyle(
                                   color: Colors.black,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                              Text(
+                                miktar+' '+birim+' '+destek ?? '',
+                                style: const TextStyle(
+                                  color: Colors.black,
                                   fontSize: 16,
                                 ),
                               ),
                               const SizedBox(height: 10),
                               Text(
-                                "$miktar $birim $destek" ,
+                                ilce+' , '+il,
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 14,

@@ -41,11 +41,13 @@ class _HomeHelpScreenState extends State<HomeHelpScreen> {
   }
 
   Future<String> getUsername(String userId) async {
-    final userDoc =
-        await FirebaseFirestore.instance.collection('users').doc(userId).get();
+    final userQuerySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('userId', isEqualTo: userId)
+        .get();
 
-    if (userDoc.exists) {
-      final userData = userDoc.data() as Map<String, dynamic>;
+    if (userQuerySnapshot.docs.isNotEmpty) {
+      final userData = userQuerySnapshot.docs[0].data();
       final firstName = userData['firstName'] ?? '';
       final lastName = userData['lastName'] ?? '';
       return '$firstName $lastName';
@@ -61,51 +63,12 @@ class _HomeHelpScreenState extends State<HomeHelpScreen> {
     return Expanded(
       child: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Text(
-                'En Son Eklenen Yardımlar (${selectedCategory ?? 'Tüm Kategoriler'})',
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Container(
-                width: screenWidth,
-                child: DropdownButton<String>(
-                  value: selectedCategory,
-                  hint: const Text('Kategori Seç'),
-                  onChanged: (value) {
-                    setState(() {
-                      selectedCategory = value;
-                      fetchData();
-                    });
-                  },
-                  items: <String>[
-                    'Tüm Kategoriler',
-                    'Temel İhtiyaçlar ve Barınma',
-                    'Giyim',
-                    'Sağlık',
-                    'Eğitim',
-                    'İletişim ve Ulaşım',
-                    'Kişisel Bakım',
-                  ].map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-              ),
-            ),
             if (documents.isEmpty)
               const Center(
                 child: Text(
-                  'Şu anda gösterilebilecek bir yardım bulunmuyor...',
+                  'Şu anda gösterilebilecek bir ihtiyaç bulunmuyor...',
                   style: TextStyle(fontSize: 16),
                 ),
               )
@@ -116,23 +79,25 @@ class _HomeHelpScreenState extends State<HomeHelpScreen> {
                 itemCount: documents.length,
                 itemBuilder: (context, index) {
                   final data = documents[index].data();
-                  final anakategori = data['anaKategori'];
+                  final anakategori = data['Ana Kategori'];
                   final altkategori = data['Alt Kategori'];
-                  final yardim = data['Yardım'];
-                  final yardimsahibiId = data['Yardım Sahibi'];
+                  final destek = data['Destek'];
+                  final birim = data['Birim'];
+                  final miktar = data['Miktar'];
+                  final desteksahibiId = data['Destek Sahibi'];
                   final il = data['city'];
                   final ilce = data['district'];
 
                   return FutureBuilder<String>(
-                    future: getUsername(yardimsahibiId),
+                    future: getUsername(desteksahibiId),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const SizedBox.shrink();
+                        return SizedBox.shrink();
                       }
                       if (snapshot.hasError) {
-                        return const Text('Hata oluştu');
+                        return Text('Hata oluştu: ${snapshot.error}');
                       }
-                      final yardimsahibimail = snapshot.data ?? '';
+                      final desteksahibiAdSoyad = snapshot.data ?? '';
 
                       return Card(
                         elevation: 5,
@@ -146,7 +111,7 @@ class _HomeHelpScreenState extends State<HomeHelpScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                yardimsahibimail,
+                                desteksahibiAdSoyad,
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 20,
@@ -155,7 +120,7 @@ class _HomeHelpScreenState extends State<HomeHelpScreen> {
                               ),
                               const SizedBox(height: 5),
                               Text(
-                                anakategori ?? '',
+                                miktar +' '+ birim +' ' +destek ?? '',
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 18,
@@ -163,7 +128,7 @@ class _HomeHelpScreenState extends State<HomeHelpScreen> {
                               ),
                               const SizedBox(height: 5),
                               Text(
-                                yardim ?? '',
+                                anakategori ?? '',
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 16,

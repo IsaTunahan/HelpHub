@@ -112,8 +112,8 @@ class _CategorySwitcherWidgetState extends State<CategorySwitcherWidget> {
         IndexedStack(
           index: _selectedIndex,
           children: [
-            ProfilYardimlar(currentUserEmail: user.email!),
-            ProfilIhtiyaclar(currentUserEmail: user.email!),
+            ProfilYardimlar(currentUserEmail: user.uid!),
+            ProfilIhtiyaclar(currentUserEmail: user.uid!),
           ],
         ),
       ],

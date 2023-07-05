@@ -69,6 +69,10 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
                           final anakategori = data['anaKategori'];
                           final altkategori = data['Alt Kategori'];
                           final ihtiyac = data['İhtiyaç'];
+                          final il = data['city'];
+                          final ilce = data['district'];
+                          final tarih = data['createdAt'];
+
 
                           return Card(
                             elevation: 5,
@@ -82,19 +86,11 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    widget.currentUserEmail,
-                                    style: const TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 5),
-                                  Text(
                                     anakategori ?? '',
                                     style: const TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 18,
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                   const SizedBox(height: 5),
@@ -102,12 +98,20 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
                                     altkategori ?? '',
                                     style: const TextStyle(
                                       color: Colors.black,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Text(
+                                     ihtiyac ?? '',
+                                    style: const TextStyle(
+                                      color: Colors.black,
                                       fontSize: 16,
                                     ),
                                   ),
                                   const SizedBox(height: 10),
                                   Text(
-                                    ihtiyac ?? '',
+                                    il +' , ' +ilce ?? '',
                                     style: const TextStyle(
                                       color: Colors.black,
                                       fontSize: 14,
