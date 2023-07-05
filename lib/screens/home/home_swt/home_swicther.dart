@@ -1,25 +1,31 @@
-
 import 'package:bootcamp/screens/home/home_swt/home_help.dart';
 import 'package:bootcamp/screens/home/home_swt/home_need.dart';
+import 'package:bootcamp/screens/profile/profil_ihtiyaclar.dart';
+import 'package:bootcamp/screens/profile/profil_yardimlar.dart';
+import 'package:bootcamp/style/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../../style/colors.dart';
 class CategorySwitcherWidget extends StatefulWidget {
-  const CategorySwitcherWidget({Key? key}) : super(key: key);
+  const CategorySwitcherWidget({super.key});
 
   @override
   _CategorySwitcherWidgetState createState() => _CategorySwitcherWidgetState();
 }
 
 class _CategorySwitcherWidgetState extends State<CategorySwitcherWidget> {
+  final user = FirebaseAuth.instance.currentUser!;
   int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+          padding: EdgeInsets.symmetric(
+              horizontal: screenWidth - (screenWidth - 40), vertical: 15),
           child: Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
@@ -53,7 +59,7 @@ class _CategorySwitcherWidgetState extends State<CategorySwitcherWidget> {
                         ),
                       ),
                       child: Text(
-                        'En Son Yardımlar',
+                        'Yardımlar',
                         style: TextStyle(
                           color: _selectedIndex == 0
                               ? AppColors.white
@@ -71,8 +77,7 @@ class _CategorySwitcherWidgetState extends State<CategorySwitcherWidget> {
                       });
                     },
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 20),
+                     
                       decoration: BoxDecoration(
                         color: _selectedIndex == 1
                             ? Colors.yellow
@@ -85,33 +90,36 @@ class _CategorySwitcherWidgetState extends State<CategorySwitcherWidget> {
                           width: 2,
                         ),
                       ),
-                      child: Text(
-                        'En Son İhtiyaçlar',
-                        style: TextStyle(
-                          color: _selectedIndex == 1
-                              ? AppColors.white
-                              : Colors.yellow,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 5,
+                            horizontal: screenWidth*0.02),
+                        child: Text(
+                          'İhtiyaçlar',
+                          style: TextStyle(
+                            color: _selectedIndex == 1
+                                ? AppColors.white
+                                : Colors.yellow,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                   ),
-                ],
+              )],
               ),
             ),
           ),
         ),
-        Expanded(
-          child: IndexedStack(
-            index: _selectedIndex,
-            children: [
-              HomeHelpScreen(),
-              HomeNeedScreen(),
-            ],
-          ),
+        IndexedStack(
+          index: _selectedIndex,
+          children: [
+            HomeNeedScreen(),
+            HomeHelpScreen(),
+          ],
         ),
       ],
     );
   }
 }
+

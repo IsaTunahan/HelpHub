@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../style/colors.dart';
+import 'home_swt/home_swicther.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -78,6 +80,7 @@ setState(() {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+           CategorySwitcherWidget(),
           Padding(
             padding: const EdgeInsets.all(5.0),
             child: Text(
