@@ -2,16 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../../style/colors.dart';
+import '../../../style/colors.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class HomeHelpScreen extends StatefulWidget {
+  const HomeHelpScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomeHelpScreen> createState() => _HomeHelpScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeHelpScreenState extends State<HomeHelpScreen> {
   final user = FirebaseAuth.instance.currentUser!;
   late CollectionReference<Map<String, dynamic>> collection;
   List<DocumentSnapshot<Map<String, dynamic>>> documents = [];
@@ -205,7 +205,6 @@ setState(() {
           ),
         ],
       ),
-      
     );
   }
 }
