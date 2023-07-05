@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:bootcamp/screens/profile/prf_yrd_ihtc.dart';
 import 'package:bootcamp/screens/profile/settings/settings_screen.dart';
 import 'package:bootcamp/style/colors.dart';
 import 'package:bootcamp/style/icons/helphub_icons.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 import '../../repository/user_repository/user_repository.dart';
@@ -18,6 +22,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String _username = '';
   String _firstName = '';
   String _lastName = '';
+  String? _profileImageURL;
+  File? _image;
 
   Future<void> _fetchUserData() async {
     final user = FirebaseAuth.instance.currentUser;
@@ -36,10 +42,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
+ 
+
+  Future<void> _fetchProfileImageURL() async {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      final userRef = FirebaseFirestore.instance
+          .collection('pictures')
+          .doc(currentUser.uid);
+      final userSnapshot = await userRef.get();
+
+      if (userSnapshot.exists) {
+        final userData = userSnapshot.data();
+        final profileImageRef = FirebaseStorage.instance
+            .ref()
+            .child('Profil_resimleri/${currentUser.uid}');
+        final profileImageURL = await profileImageRef.getDownloadURL();
+
+        setState(() {
+          _profileImageURL = profileImageURL;
+        });
+      }
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     _fetchUserData();
+    _fetchProfileImageURL();
   }
 
   @override
@@ -93,11 +124,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             width: 2,
                           ),
                         ),
-                        child: const CircleAvatar(
+                        child:  CircleAvatar(
                           radius: 45,
                           backgroundColor: Colors.transparent,
-                          backgroundImage:
-                              AssetImage('assets/profile/user_profile.png'),
+                          backgroundImage:_profileImageURL != null
+                              ? NetworkImage(_profileImageURL!)
+                              : const AssetImage(
+                                      'assets/profile/user_profile.png')
+                                  as ImageProvider<Object>?,
                         ),
                       ),
                       const SizedBox(width: 20),
