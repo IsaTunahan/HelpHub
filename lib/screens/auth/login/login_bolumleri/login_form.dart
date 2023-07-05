@@ -1,4 +1,5 @@
 import 'package:bootcamp/custom_widgets/alert.dart';
+import 'package:bootcamp/custom_widgets/bottom_nav_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -31,6 +32,10 @@ class _GirisFormState extends State<LoginForm> {
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
+       Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: (context) => const MyHomePage()),
+  );
     } on FirebaseAuthException catch (e) {
       print('Hata: $e');
       String errorMessage = 'Bilinmeyen bir hata oluştu';
@@ -62,8 +67,6 @@ class _GirisFormState extends State<LoginForm> {
           );
         },
       );
-
-
     } catch (e) {
       print('Hata: $e');
       const ErrorDialog(title: 'Hata', message: 'Bilinmeyen bir hata oluştu');
@@ -158,7 +161,9 @@ class _GirisFormState extends State<LoginForm> {
                       ? const SizedBox(
                           width: 24,
                           height: 24,
-                          child: CircularProgressIndicator(color: AppColors.white,),
+                          child: CircularProgressIndicator(
+                            color: AppColors.white,
+                          ),
                         )
                       : const Text(
                           'Giriş Yap',

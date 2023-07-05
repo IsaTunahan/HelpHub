@@ -1,4 +1,5 @@
 import 'package:bootcamp/custom_widgets/alert.dart';
+import 'package:bootcamp/custom_widgets/bottom_nav_bar.dart';
 import 'package:bootcamp/style/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,9 +8,7 @@ import '../../../../custom_widgets/_textformfield.dart';
 import '../../../../repository/user_repository/user_repository.dart';
 
 class RegisterForm extends StatefulWidget {
-  const RegisterForm({
-    Key? key,
-  }) : super(key: key);
+  const RegisterForm({Key? key}) : super(key: key);
 
   @override
   State<RegisterForm> createState() => _RegisterFormState();
@@ -43,7 +42,7 @@ class _RegisterFormState extends State<RegisterForm> {
         );
 
         final user = await userRepository.addStatus(
-          FirebaseAuth.instance.currentUser!.uid,
+          userCredential.user!.uid,
           usernameController.text.trim(),
           firstNameController.text.trim(),
           lastNameController.text.trim(),
@@ -51,6 +50,10 @@ class _RegisterFormState extends State<RegisterForm> {
           int.parse(phoneController.text.trim()),
 
         );
+        Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: (context) => const MyHomePage()),
+  );
         print('Veriler Firestore\'a gönderildi.');
       } on FirebaseAuthException catch (e) {
         String errorMessage = 'Bilinmeyen bir hata oluştu';
@@ -177,36 +180,33 @@ class _RegisterFormState extends State<RegisterForm> {
             ),
             SizedBox(height: screenHeight * 0.01),
             GestureDetector(
-              onTap: isLoading ? null : signUp,
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                margin: const EdgeInsets.symmetric(horizontal: 25),
-                decoration: BoxDecoration(
-                  color: isLoading ? AppColors.purple : AppColors.purple,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: isLoading
-                      ? const SizedBox(
-                          width: 24,
-                          height: 24,
-                          child: CircularProgressIndicator(
-                            color: AppColors.white,
-                          ),
-                        )
-                      : const Text(
-                          'Kayıt Ol',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                ),
+  onTap: isLoading ? null : signUp,
+  child: Container(
+    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+    margin: const EdgeInsets.symmetric(horizontal: 25),
+    decoration: BoxDecoration(
+      color: isLoading ? AppColors.purple : AppColors.purple,
+      borderRadius: BorderRadius.circular(15),
+    ),
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: isLoading
+          ? const CircularProgressIndicator(
+              color: AppColors.white,
+            )
+          : const Text(
+              'Kayıt Ol',
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
               ),
             ),
+    ),
+  ),
+),
+
+            
             SizedBox(height: screenHeight * 0.02),
           ],
         ),

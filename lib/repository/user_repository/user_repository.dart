@@ -1,7 +1,7 @@
-
-
+// TODO Implement this library.
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+
 import '../../screens/auth/auth/models/user_model.dart';
 
 class UserRepository {
@@ -10,7 +10,7 @@ class UserRepository {
   Future<UserModel?> getUserData(String userId) async {
     QuerySnapshot snapshot = await FirebaseFirestore.instance
       .collection('users')
-      .where('userId', isEqualTo: userId)
+      .where('userid', isEqualTo: userId)
       .limit(1)
       .get();
 
@@ -36,8 +36,8 @@ class UserRepository {
 
     var ref = _firestore.collection('users');
 
-    await ref.add({
-      'userId': uid,
+    await ref.doc(uid).set({
+      'userid': uid,
       'username': username,
       'firstName': firstName,
       'lastName': lastName,
@@ -57,6 +57,5 @@ class UserRepository {
     );
   }
 
-  
 
 }

@@ -28,6 +28,11 @@ class _ProfilBilgileriState extends State<ProfilBilgileri> {
   File? _image;
   String? _profileImageURL;
 
+  final lastNameController = TextEditingController();
+  final usernameController = TextEditingController();
+  final phoneController = TextEditingController();
+  final emailController = TextEditingController();
+
   Future<void> _fetchUserData() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
@@ -47,23 +52,34 @@ class _ProfilBilgileriState extends State<ProfilBilgileri> {
     }
   }
 
+  Future<void> _fetchProfileImageURL() async {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      final userRef = FirebaseFirestore.instance
+          .collection('pictures')
+          .doc(currentUser.uid);
+
+      try {
+        final userSnapshot = await userRef.get();
+        if (userSnapshot.exists) {
+          final userData = userSnapshot.data();
+          final profileImageURL = userData?['profileImageURL'];
+
+          setState(() {
+            _profileImageURL = profileImageURL;
+          });
+        }
+      } catch (e) {
+        print('Hata: $e');
+      }
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     _fetchUserData();
-  }
-
-  Future<void> _updateUserData() async {
-    try {
-      final currentUser = FirebaseAuth.instance.currentUser;
-      if (currentUser != null) {
-        final userRef =
-            FirebaseFirestore.instance.collection('users').doc(currentUser.uid);
-        await userRef.update({'profileImageURL': _profileImageURL});
-      }
-    } catch (e) {
-      print('Hata: $e');
-    }
+    _fetchProfileImageURL();
   }
 
   Future<void> _pickImage(ImageSource source) async {
@@ -73,10 +89,134 @@ class _ProfilBilgileriState extends State<ProfilBilgileri> {
         _image = File(pickedImage.path);
       });
 
-      // Profil resmini Firebase Storage'a yükle
       await _uploadProfileImage();
     }
   }
+
+  Future<void> _uploadProfileImage() async {
+    try {
+      final currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser != null) {
+        final storage = FirebaseStorage.instance;
+        final storageRef = storage.ref();
+
+        final imageRef =
+            storageRef.child('Profil_resimleri/${currentUser.uid}');
+        final uploadTask = imageRef.putFile(_image!);
+
+        final snapshot = await uploadTask.whenComplete(() {});
+        final downloadURL = await snapshot.ref.getDownloadURL();
+
+        setState(() {
+          _profileImageURL = downloadURL;
+        });
+
+        await _updateUserData(downloadURL);
+      }
+    } catch (e) {
+      print('Hata: $e');
+    }
+  }
+
+  Future<void> _updateUserData(String downloadURL) async {
+    try {
+      final currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser != null) {
+        final userRef = FirebaseFirestore.instance
+            .collection('pictures')
+            .doc(currentUser.uid);
+        await userRef
+            .set({'profileImageURL': downloadURL}, SetOptions(merge: true));
+      }
+    } catch (e) {
+      print('Hata: $e');
+    }
+  }
+
+  Future<void> _updateUsersData(String value) async {
+  try {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      final userRef =
+          FirebaseFirestore.instance.collection('users').doc(currentUser.uid);
+      await userRef.update({'username': value});
+    }
+  } catch (e) {
+    print('Hata: $e');
+  }
+}
+
+  void _editField(String title, String value, Function(String) updateFunction) {
+  final screenWidth = MediaQuery.of(context).size.width;
+  final screenHeight = MediaQuery.of(context).size.height;
+  showDialog(
+    context: context,
+    builder: (context) {
+      final textController = TextEditingController(text: value);
+
+      return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Container(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Yeni $title Giriniz',
+                style: const TextStyle(fontSize: 20),
+              ),
+              SizedBox(height: screenHeight * 0.02),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+                child: TextFormField(
+                  controller: textController,
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: const BorderSide(
+                        color: AppColors.yellow,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: const BorderSide(
+                        color: AppColors.purple,
+                      ),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 15),
+                    fillColor: AppColors.white,
+                    filled: true,
+                    hintText: 'Yeni $title Giriniz',
+                    hintStyle: const TextStyle(
+                      color: AppColors.darkGrey,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16.0),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.purple,
+                ),
+                onPressed: () {
+                  final newValue = textController.text;
+                  updateFunction(newValue);
+                  _updateUsersData(newValue); // Firebase'de güncelleme yapılıyor
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Güncelle'),
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
+
 
   Future<void> showImageSourceDialog() async {
     await showDialog(
@@ -130,33 +270,6 @@ class _ProfilBilgileriState extends State<ProfilBilgileri> {
     );
   }
 
-  Future<void> _uploadProfileImage() async {
-    try {
-      // Firebase Storage referansı oluştur
-      final FirebaseStorage storage = FirebaseStorage.instance;
-      final Reference storageRef = storage.ref();
-
-      // Kullanıcının UID'sine göre bir klasör oluştur ve resmi yükle
-      final Reference imageRef = storageRef
-          .child('Profil_resimleri/${FirebaseAuth.instance.currentUser!.uid}');
-      final UploadTask uploadTask = imageRef.putFile(_image!);
-
-      // Yükleme işlemini tamamla ve indirme URL'sini al
-      final TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() {});
-      final String downloadURL = await taskSnapshot.ref.getDownloadURL();
-
-      // Profil resmi URL'sini kullanıcı verilerine kaydet
-      setState(() {
-        _profileImageURL = downloadURL;
-      });
-
-      // Kullanıcının verilerini güncelle
-      await _updateUserData();
-    } catch (e) {
-      print('Hata: $e');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -194,23 +307,27 @@ class _ProfilBilgileriState extends State<ProfilBilgileri> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Stack(children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: AppColors.purple,
-                        width: 2,
+                Stack(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: AppColors.purple,
+                          width: 2,
+                        ),
+                      ),
+                      child: CircleAvatar(
+                        backgroundColor: Colors.grey.shade50,
+                        backgroundImage: _profileImageURL != null
+                            ? NetworkImage(_profileImageURL!)
+                            : const AssetImage(
+                                    'assets/profile/user_profile.png')
+                                as ImageProvider<Object>?,
+                        radius: 40,
                       ),
                     ),
-                    child: CircleAvatar(
-                      backgroundColor: Colors.grey.shade50,
-                      backgroundImage:
-                          const AssetImage('assets/profile/user_profile.png'),
-                      radius: 40,
-                    ),
-                  ),
-                  Positioned(
+                    Positioned(
                       bottom: -10,
                       left: 45,
                       child: Container(
@@ -230,8 +347,10 @@ class _ProfilBilgileriState extends State<ProfilBilgileri> {
                             showImageSourceDialog();
                           },
                         ),
-                      )),
-                ]),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
             ListTile(
@@ -252,7 +371,13 @@ class _ProfilBilgileriState extends State<ProfilBilgileri> {
                   Icons.edit,
                   color: AppColors.purple,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  _editField('Kullanıcı Adı', _username, (newValue) {
+                    setState(() {
+                      _username = newValue;
+                    });
+                  });
+                },
               ),
             ),
             ListTile(
