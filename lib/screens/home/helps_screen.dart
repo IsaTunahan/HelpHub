@@ -1,11 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bootcamp/style/colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+
 import 'maps.dart';
 
 class HelpsScreen extends StatefulWidget {
-  const HelpsScreen();
+  const HelpsScreen({super.key});
 
   @override
   _HelpsScreenState createState() => _HelpsScreenState();
@@ -39,7 +40,7 @@ class _HelpsScreenState extends State<HelpsScreen> {
         child: AppBar(
           backgroundColor: AppColors.lightGrey,
           elevation: 0,
-          flexibleSpace: Container(
+          flexibleSpace: SizedBox(
             width: double.infinity,
             child: Image.asset(
               'assets/logos/HelpHub.png',
@@ -57,17 +58,17 @@ class _HelpsScreenState extends State<HelpsScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Kategori Seçin',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   DropdownButton<String>(
                     value: selectedCategory,
-                    hint: Text('Kategori Seçin'),
+                    hint: const Text('Kategori Seçin'),
                     isExpanded: true,
                     onChanged: (newValue) {
                       setState(() {
@@ -80,23 +81,23 @@ class _HelpsScreenState extends State<HelpsScreen> {
                         value: category,
                         child: Text(
                           category,
-                          style: TextStyle(color: AppColors.darkGrey),
+                          style: const TextStyle(color: AppColors.darkGrey),
                         ),
                       );
                     }).toList(),
                   ),
-                  SizedBox(height: 20),
-                  Text(
+                  const SizedBox(height: 20),
+                  const Text(
                     'Alt Kategori Seçin',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   DropdownButton<String>(
                     value: selectedSubcategory,
-                    hint: Text('Alt Kategori Seçin'),
+                    hint: const Text('Alt Kategori Seçin'),
                     isExpanded: true,
                     onChanged: (newValue) {
                       setState(() {
@@ -109,7 +110,7 @@ class _HelpsScreenState extends State<HelpsScreen> {
                               value: subcategory,
                               child: Text(
                                 subcategory,
-                                style: TextStyle(color: AppColors.midGrey),
+                                style: const TextStyle(color: AppColors.midGrey),
                               ),
                             );
                           }).toList()
@@ -117,21 +118,21 @@ class _HelpsScreenState extends State<HelpsScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Şehir Seçin',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   DropdownButton<String>(
                     value: selectedCity,
-                    hint: Text('Şehir Seçin'),
+                    hint: const Text('Şehir Seçin'),
                     isExpanded: true,
                     onChanged: (newValue) {
                       setState(() {
@@ -144,36 +145,36 @@ class _HelpsScreenState extends State<HelpsScreen> {
                         value: city,
                         child: Text(
                           city,
-                          style: TextStyle(color: AppColors.darkGrey),
+                          style: const TextStyle(color: AppColors.darkGrey),
                         ),
                       );
                     }).toList(),
                   ),
-                  SizedBox(height: 20),
-                  Text(
+                  const SizedBox(height: 20),
+                  const Text(
                     'İlçe Seçin',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   DropdownButton<String>(
                     value: selectedDistrict,
-                    hint: Text('İlçe Seçin'),
+                    hint: const Text('İlçe Seçin'),
                     isExpanded: true,
                     onChanged: (newValue) {
                       setState(() {
                         selectedDistrict = newValue;
                       });
                     },
-                    items: ilceler != null && ilceler[selectedCity] != null
+                    items: ilceler[selectedCity] != null
                         ? ilceler[selectedCity]!.map((ilceler) {
                             return DropdownMenuItem<String>(
                               value: ilceler,
                               child: Text(
                                 ilceler,
-                                style: TextStyle(color: AppColors.midGrey),
+                                style: const TextStyle(color: AppColors.midGrey),
                               ),
                             );
                           }).toList()
@@ -181,19 +182,19 @@ class _HelpsScreenState extends State<HelpsScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 'Adres',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextFormField(
                 controller: addressController,
-                style: TextStyle(color: AppColors.purple),
-                decoration: InputDecoration(
+                style: const TextStyle(color: AppColors.purple),
+                decoration: const InputDecoration(
                   hintText: 'Adresinizi Girin',
                   border: OutlineInputBorder(),
                   focusedBorder: OutlineInputBorder(
@@ -202,18 +203,18 @@ class _HelpsScreenState extends State<HelpsScreen> {
                 ),
                 maxLines: null,
               ),
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 'Birim',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               DropdownButton<String>(
                 value: selectedUnit,
-                hint: Text('Birim Seçin'),
+                hint: const Text('Birim Seçin'),
                 isExpanded: true,
                 onChanged: (newValue) {
                   setState(() {
@@ -227,19 +228,19 @@ class _HelpsScreenState extends State<HelpsScreen> {
                   );
                 }).toList(),
               ),
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 'Miktar',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextFormField(
                 controller: miktarController,
-                style: TextStyle(color: AppColors.purple),
-                decoration: InputDecoration(
+                style: const TextStyle(color: AppColors.purple),
+                decoration: const InputDecoration(
                   hintText: 'Miktar Girin',
                   border: OutlineInputBorder(),
                   focusedBorder: OutlineInputBorder(
@@ -248,19 +249,19 @@ class _HelpsScreenState extends State<HelpsScreen> {
                 ),
                 maxLines: null,
               ),
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 'Ne Konuda Destek Olabilirsin?',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextFormField(
                 controller: destekController,
-                style: TextStyle(color: AppColors.purple),
-                decoration: InputDecoration(
+                style: const TextStyle(color: AppColors.purple),
+                decoration: const InputDecoration(
                   hintText: 'İhtiyacınızı Yazın',
                   border: OutlineInputBorder(),
                   focusedBorder: OutlineInputBorder(
@@ -269,7 +270,7 @@ class _HelpsScreenState extends State<HelpsScreen> {
                 ),
                 maxLines: null,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () async {
                   String category = selectedCategory ?? '';
@@ -322,9 +323,9 @@ class _HelpsScreenState extends State<HelpsScreen> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: AppColors.purple,
+                  backgroundColor: AppColors.purple,
                 ),
-                child: Text(
+                child: const Text(
                   'Gönder',
                   style: TextStyle(color: AppColors.white),
                 ),

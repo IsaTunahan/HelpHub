@@ -21,7 +21,7 @@ class _CategorySwitcherWidgetState extends State<CategorySwitcherWidget> {
       children: [
         Padding(
           padding: EdgeInsets.symmetric(
-              horizontal: screenWidth - (screenWidth - 40), vertical: 15),
+              horizontal: screenWidth - (screenWidth - 35), vertical: 15),
           child: Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),

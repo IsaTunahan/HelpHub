@@ -1,10 +1,11 @@
 import 'package:bootcamp/style/colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'maps.dart';
 class NeedsScreen extends StatefulWidget {
-  const NeedsScreen();
+  const NeedsScreen({super.key});
 
   @override
   _NeedsScreenState createState() => _NeedsScreenState();
@@ -36,7 +37,7 @@ class _NeedsScreenState extends State<NeedsScreen> {
         child: AppBar(
           backgroundColor: AppColors.lightGrey,
           elevation: 0,
-          flexibleSpace: Container(
+          flexibleSpace: SizedBox(
             width: double.infinity,
             child: Image.asset(
               'assets/logos/HelpHub.png',
@@ -51,17 +52,17 @@ class _NeedsScreenState extends State<NeedsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
+              const Text(
                 'Kategori Seçin',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               DropdownButton<String>(
                 value: selectedCategory,
-                hint: Text('Kategori Seçin'),
+                hint: const Text('Kategori Seçin'),
                 isExpanded: true,
                 onChanged: (newValue) {
                   setState(() {
@@ -74,23 +75,23 @@ class _NeedsScreenState extends State<NeedsScreen> {
                     value: category,
                     child: Text(
                       category,
-                      style: TextStyle(color: AppColors.darkGrey),
+                      style: const TextStyle(color: AppColors.darkGrey),
                     ),
                   );
                 }).toList(),
               ),
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 'Alt Kategori Seçin',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               DropdownButton<String>(
                 value: selectedSubcategory,
-                hint: Text('Alt Kategori Seçin'),
+                hint: const Text('Alt Kategori Seçin'),
                 isExpanded: true,
                 onChanged: (newValue) {
                   setState(() {
@@ -103,27 +104,27 @@ class _NeedsScreenState extends State<NeedsScreen> {
                           value: subcategory,
                           child: Text(
                             subcategory,
-                            style: TextStyle(color: AppColors.midGrey),
+                            style: const TextStyle(color: AppColors.midGrey),
                           ),
                         );
                       }).toList()
                     : [],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
             Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Şehir Seçin',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     DropdownButton<String>(
                       value: selectedCity,
-                      hint: Text('Şehir Seçin'),
+                      hint: const Text('Şehir Seçin'),
                       isExpanded: true,
                       onChanged: (newValue) {
                         setState(() {
@@ -136,36 +137,36 @@ class _NeedsScreenState extends State<NeedsScreen> {
                           value: city,
                           child: Text(
                             city,
-                            style: TextStyle(color: AppColors.darkGrey),
+                            style: const TextStyle(color: AppColors.darkGrey),
                           ),
                         );
                       }).toList(),
                     ),
-                    SizedBox(height: 20),
-                    Text(
+                    const SizedBox(height: 20),
+                    const Text(
                       'İlçe Seçin',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     DropdownButton<String>(
                       value: selectedDistrict,
-                      hint: Text('İlçe Seçin'),
+                      hint: const Text('İlçe Seçin'),
                       isExpanded: true,
                       onChanged: (newValue) {
                         setState(() {
                           selectedDistrict = newValue;
                         });
                       },
-                      items: ilceler != null && ilceler[selectedCity] != null
+                      items: ilceler[selectedCity] != null
                           ? ilceler[selectedCity]!.map((ilceler) {
                               return DropdownMenuItem<String>(
                                 value: ilceler,
                                 child: Text(
                                   ilceler,
-                                  style: TextStyle(color: AppColors.midGrey),
+                                  style: const TextStyle(color: AppColors.midGrey),
                                 ),
                               );
                             }).toList()
@@ -173,19 +174,19 @@ class _NeedsScreenState extends State<NeedsScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
-            Text(
+                const SizedBox(height: 20),
+            const Text(
               'Adres',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextFormField(
               controller: addressController,
-              style: TextStyle(color: AppColors.purple),
-              decoration: InputDecoration(
+              style: const TextStyle(color: AppColors.purple),
+              decoration: const InputDecoration(
                 hintText: 'Adresinizi Girin',
                 border: OutlineInputBorder(),
                 focusedBorder: OutlineInputBorder(
@@ -194,19 +195,19 @@ class _NeedsScreenState extends State<NeedsScreen> {
               ),
               maxLines: null,
             ),
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 'İhtiyacınızı Yazın',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextFormField(
                 controller: ihtiyacController,
-                style: TextStyle(color: AppColors.purple),
-                decoration: InputDecoration(
+                style: const TextStyle(color: AppColors.purple),
+                decoration: const InputDecoration(
                   hintText: 'İhtiyacınızı Yazın',
                   border: OutlineInputBorder(),
                   focusedBorder: OutlineInputBorder(
@@ -215,7 +216,7 @@ class _NeedsScreenState extends State<NeedsScreen> {
                 ),
                 maxLines: null,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () async {
                   String category = selectedCategory ?? '';
@@ -262,9 +263,9 @@ class _NeedsScreenState extends State<NeedsScreen> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: AppColors.purple,
+                  backgroundColor: AppColors.purple,
                 ),
-                child: Text(
+                child: const Text(
                   'Gönder',
                   style: TextStyle(color: AppColors.white),
                 ),

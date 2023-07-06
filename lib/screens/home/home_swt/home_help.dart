@@ -2,8 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../../../style/colors.dart';
-
 class HomeHelpScreen extends StatefulWidget {
   const HomeHelpScreen({Key? key}) : super(key: key);
 
@@ -75,7 +73,7 @@ class _HomeHelpScreenState extends State<HomeHelpScreen> {
             else
               ListView.builder(
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: documents.length,
                 itemBuilder: (context, index) {
                   final data = documents[index].data();
@@ -92,7 +90,7 @@ class _HomeHelpScreenState extends State<HomeHelpScreen> {
                     future: getUsername(desteksahibiId),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return SizedBox.shrink();
+                        return const SizedBox.shrink();
                       }
                       if (snapshot.hasError) {
                         return Text('Hata oluştu: ${snapshot.error}');
