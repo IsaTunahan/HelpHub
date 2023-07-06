@@ -29,18 +29,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(
-                    height: 80,
-                  ),
+                  
                   //Logo
-                  Image.asset(
-                    'assets/logos/HelpHub.png',
-                    height: screenHeight * 0.2,
-                    width: screenWidth * 0.8,
+                  Padding(
+                    padding:  EdgeInsets.symmetric(vertical: screenHeight*0.03),
+                    child: Image.asset(
+                      'assets/logos/HelpHub.png',
+                      height: screenHeight * 0.3,
+                      width: screenWidth * 0.8,
+                    ),
                   ),
-                  const SizedBox(
-                    height: 51,
-                  ),
+                  
 
                   Container(
                         decoration: BoxDecoration(

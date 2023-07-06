@@ -1,12 +1,13 @@
-import 'package:bootcamp/style/colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../../repository/user_repository/user_repository.dart';
-import '../auth/auth/models/user_model.dart';
+import '../../style/colors.dart';
+import 'home_swt/home_swicther.dart';
+
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -14,141 +15,75 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final user = FirebaseAuth.instance.currentUser!;
-  String userId = FirebaseAuth.instance.currentUser?.uid ?? '';
+  late CollectionReference<Map<String, dynamic>> collection;
+  List<DocumentSnapshot<Map<String, dynamic>>> documents = [];
+  String? selectedCategory;
+
+  @override
+  void initState() {
+    super.initState();
+    collection = FirebaseFirestore.instance.collection('needs');
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    Query<Map<String, dynamic>> query = collection;
+  
+    if (selectedCategory != null && selectedCategory != 'Tüm Kategoriler') {
+      query = query.where('Ana Kategori', isEqualTo: selectedCategory);
+    }
+
+    query = query.orderBy('createdAt', descending: true);
+
+   final querySnapshot = await query.get();
+
+setState(() {
+  documents = querySnapshot.docs.where((doc) => doc.data() != null).toList();
+});
+
+  }
+
+  Future<String> getUsername(String userId) async {
+  final userDoc =
+      await FirebaseFirestore.instance.collection('users').doc(userId).get();
+
+  if (userDoc.exists) {
+    final userData = userDoc.data() as Map<String, dynamic>;
+    final firstName = userData['firstName'] ?? '';
+    final lastName = userData['lastName'] ?? '';
+    return '$firstName $lastName';
+  } else {
+    return '';
+  }
+}
+
+
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Giriş yapıldı: ${user.email!}'),
-            ElevatedButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
-              },
-              child: const Text('Çıkış Yap'),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(screenHeight * 0.08),
+        child: AppBar(
+          backgroundColor: AppColors.lightGrey,
+          elevation: 0,
+          flexibleSpace: Container(
+            width: double.infinity,
+            child: Image.asset(
+              'assets/logos/HelpHub.png',
+              fit: BoxFit.contain,
             ),
-            const SizedBox(
-              height: 15,
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                if (userId.isNotEmpty) {
-                  UserRepository userRepository = UserRepository();
-                  UserModel? user = await userRepository.getUserData(userId);
-
-                  if (user != null) {
-                    // Verileri kullanın veya gösterin
-                    print('username: ${user.username}');
-                    print('firstName: ${user.firstName}');
-                    print('lastName: ${user.lastName}');
-                    print('phone: ${user.phone}');
-                    print('email: ${user.email}');
-                  } else {
-                    print('Veriler bulunamadı');
-                  }
-                }
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return Dialog(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Container(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Text(
-                              'Hata',
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 16.0),
-                            const Text(
-                              'Bilinmeyen bir hata oluştu',
-                              style: TextStyle(fontSize: 16.0),
-                            ),
-                            const SizedBox(height: 16.0),
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.purple),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text('Tamam'),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                );
-              },
-              child: const Text('Alert'),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      height: 50,
-                      width: 50,
-                      color: AppColors.purple,
-                    ),
-                    Container(
-                      height: 50,
-                      width: 50,
-                      color: AppColors.lightpurple,
-                    ),
-                    Container(
-                      height: 50,
-                      width: 50,
-                      color: AppColors.yellow,
-                    ),
-                    Container(
-                      height: 50,
-                      width: 50,
-                      color: AppColors.lightyellow,
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      height: 50,
-                      width: 50,
-                      color: AppColors.grey1,
-                    ),
-                    Container(
-                      height: 50,
-                      width: 50,
-                      color: AppColors.grey2,
-                    ),
-                    Container(
-                      height: 50,
-                      width: 50,
-                      color: AppColors.grey3,
-                    ),
-                  ],
-                )
-              ],
-            )
-          ],
+          ),
         ),
       ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+           CategorySwitcherWidget(),
+        ],
+      ),
+      
     );
   }
 }

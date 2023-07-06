@@ -25,7 +25,6 @@ class _RegisterFormState extends State<RegisterForm> {
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
-
   bool isLoading = false;
 
   Future<void> signUp() async {
@@ -48,12 +47,11 @@ class _RegisterFormState extends State<RegisterForm> {
           lastNameController.text.trim(),
           emailController.text.trim(),
           int.parse(phoneController.text.trim()),
-
         );
         Navigator.pushReplacement(
-    context,
-    MaterialPageRoute(builder: (context) => const MyHomePage()),
-  );
+          context,
+          MaterialPageRoute(builder: (context) => const MyHomePage()),
+        );
         print('Veriler Firestore\'a gönderildi.');
       } on FirebaseAuthException catch (e) {
         String errorMessage = 'Bilinmeyen bir hata oluştu';
@@ -126,6 +124,7 @@ class _RegisterFormState extends State<RegisterForm> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Card(
@@ -143,16 +142,66 @@ class _RegisterFormState extends State<RegisterForm> {
               obscureText: false,
             ),
             SizedBox(height: screenHeight * 0.01),
-            AppTextFormField(
-              controller: firstNameController,
-              hintText: 'İsim',
-              obscureText: false,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+              child: TextFormField(
+                controller: firstNameController,
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: const BorderSide(
+                      color: AppColors.yellow,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: const BorderSide(
+                      color: AppColors.purple,
+                    ),
+                  ),
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  fillColor: AppColors.white,
+                  filled: true,
+                  hintText: 'İsim',
+                  hintStyle: const TextStyle(
+                    color: AppColors.darkGrey,
+                  ),
+                ),
+                autocorrect: false,
+                textCapitalization: TextCapitalization.words,
+              ),
             ),
             SizedBox(height: screenHeight * 0.01),
-            AppTextFormField(
-              controller: lastNameController,
-              hintText: 'Soyisim',
-              obscureText: false,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+              child: TextFormField(
+                controller: lastNameController,
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: const BorderSide(
+                      color: AppColors.yellow,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: const BorderSide(
+                      color: AppColors.purple,
+                    ),
+                  ),
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  fillColor: AppColors.white,
+                  filled: true,
+                  hintText: 'Soyisim',
+                  hintStyle: const TextStyle(
+                    color: AppColors.darkGrey,
+                  ),
+                ),
+                autocorrect: false,
+                textCapitalization: TextCapitalization.words,
+              ),
             ),
             SizedBox(height: screenHeight * 0.01),
             AppTextFormField(
@@ -180,33 +229,32 @@ class _RegisterFormState extends State<RegisterForm> {
             ),
             SizedBox(height: screenHeight * 0.01),
             GestureDetector(
-  onTap: isLoading ? null : signUp,
-  child: Container(
-    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-    margin: const EdgeInsets.symmetric(horizontal: 25),
-    decoration: BoxDecoration(
-      color: isLoading ? AppColors.purple : AppColors.purple,
-      borderRadius: BorderRadius.circular(15),
-    ),
-    child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: isLoading
-          ? const CircularProgressIndicator(
-              color: AppColors.white,
-            )
-          : const Text(
-              'Kayıt Ol',
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+              onTap: isLoading ? null : signUp,
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                margin: const EdgeInsets.symmetric(horizontal: 25),
+                decoration: BoxDecoration(
+                  color: isLoading ? AppColors.purple : AppColors.purple,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: isLoading
+                      ? const CircularProgressIndicator(
+                          color: AppColors.white,
+                        )
+                      : const Text(
+                          'Kayıt Ol',
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                ),
               ),
             ),
-    ),
-  ),
-),
-
-            
             SizedBox(height: screenHeight * 0.02),
           ],
         ),
