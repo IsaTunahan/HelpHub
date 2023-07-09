@@ -64,11 +64,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-    return Scaffold(backgroundColor: AppColors.white,
+    return Scaffold(
+      backgroundColor: AppColors.white,
       appBar: AppBar(
         title: Text(
-            _selectedIndex == 0 ? 'En Son Yardımlar' : 'En Son İhtiyaçlar',style: const TextStyle(fontSize: 25),),
-        backgroundColor: AppColors.purple,
+          _selectedIndex == 0 ? 'En Son Yardımlar' : 'En Son İhtiyaçlar',
+          style: const TextStyle(fontSize: 25),
+        ),
+        backgroundColor:
+            _selectedIndex == 0 ? AppColors.purple : AppColors.yellow,
         elevation: 0,
       ),
       body: Column(
@@ -79,7 +83,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               children: const [HomeHelpScreen(), HomeNeedScreen()],
             ),
           ),
-          Container(color: Colors.transparent,
+          Container(
+            color: Colors.transparent,
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
               child: Row(

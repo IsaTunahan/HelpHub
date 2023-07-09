@@ -1,6 +1,7 @@
 import 'package:bootcamp/screens/profile/profil_ihtiyaclar.dart';
 import 'package:bootcamp/screens/profile/profil_yardimlar.dart';
 import 'package:bootcamp/style/colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class CategorySwitcherWidget extends StatefulWidget {
@@ -11,6 +12,7 @@ class CategorySwitcherWidget extends StatefulWidget {
 }
 
 class _CategorySwitcherWidgetState extends State<CategorySwitcherWidget> {
+  final user = FirebaseAuth.instance.currentUser!;
   int _selectedIndex = 0;
 
   @override
@@ -55,8 +57,7 @@ class _CategorySwitcherWidgetState extends State<CategorySwitcherWidget> {
                       ),
                       child: Padding(
                         padding: EdgeInsets.symmetric(
-                            vertical: 5,
-                            horizontal: screenWidth*0.02),
+                            vertical: 5, horizontal: screenWidth * 0.02),
                         child: Text(
                           'Yardımlar',
                           style: TextStyle(
@@ -77,7 +78,6 @@ class _CategorySwitcherWidgetState extends State<CategorySwitcherWidget> {
                       });
                     },
                     child: Container(
-                     
                       decoration: BoxDecoration(
                         color: _selectedIndex == 1
                             ? Colors.yellow
@@ -92,8 +92,7 @@ class _CategorySwitcherWidgetState extends State<CategorySwitcherWidget> {
                       ),
                       child: Padding(
                         padding: EdgeInsets.symmetric(
-                            vertical: 5,
-                            horizontal: screenWidth*0.02),
+                            vertical: 5, horizontal: screenWidth * 0.02),
                         child: Text(
                           'İhtiyaçlar',
                           style: TextStyle(
@@ -114,7 +113,12 @@ class _CategorySwitcherWidgetState extends State<CategorySwitcherWidget> {
         ),
         IndexedStack(
           index: _selectedIndex,
-          children: const [ProfilYardimlar(), ProfilIhtiyaclar()],
+          children: [
+            ProfilYardimlar(currentUserEmail: user.uid),
+            ProfilIhtiyaclar(
+              currentUserEmail: user.uid,
+            )
+          ],
         ),
       ],
     );

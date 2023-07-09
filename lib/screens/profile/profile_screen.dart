@@ -42,8 +42,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
- 
-
   Future<void> _fetchProfileImageURL() async {
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
@@ -76,7 +74,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeith = MediaQuery.of(context).size.height;
+    final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       backgroundColor: AppColors.white,
@@ -113,7 +111,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: screenWidth * 0.02,
-                      vertical: screenHeith * 0.01),
+                      vertical: screenHeight * 0.01),
                   child: Row(
                     children: [
                       Container(
@@ -121,13 +119,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           shape: BoxShape.circle,
                           border: Border.all(
                             color: AppColors.purple,
-                            width: 2,
+                            width: 3,
                           ),
                         ),
-                        child:  CircleAvatar(
+                        child: CircleAvatar(
                           radius: 45,
                           backgroundColor: Colors.transparent,
-                          backgroundImage:_profileImageURL != null
+                          backgroundImage: _profileImageURL != null
                               ? NetworkImage(_profileImageURL!)
                               : const AssetImage(
                                       'assets/profile/user_profile.png')
@@ -167,7 +165,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
           ),
-          const CategorySwitcherWidget()
+          const CategorySwitcherWidget(),
+          
         ],
       ),
     );

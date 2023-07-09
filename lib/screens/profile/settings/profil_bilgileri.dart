@@ -503,7 +503,7 @@ class _ProfilBilgileriState extends State<ProfilBilgileri> {
                         shape: BoxShape.circle,
                         border: Border.all(
                           color: AppColors.purple,
-                          width: 2,
+                          width: 3,
                         ),
                       ),
                       child: CircleAvatar(

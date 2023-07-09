@@ -1,145 +1,342 @@
-import 'package:bootcamp/style/colors.dart';
-import 'package:flutter/material.dart';
+import 'dart:io';
 
-class ProfilIhtiyaclar extends StatelessWidget {
-  const ProfilIhtiyaclar({super.key});
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+import '../../repository/user_repository/user_repository.dart';
+import '../../style/colors.dart';
+
+class ProfilIhtiyaclar extends StatefulWidget {
+  final String currentUserEmail;
+
+  const ProfilIhtiyaclar({Key? key, required this.currentUserEmail})
+      : super(key: key);
+
+  @override
+  State<ProfilIhtiyaclar> createState() => _ProfilIhtiyaclarState();
+}
+
+class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
+  late CollectionReference<Map<String, dynamic>> collection;
+  List<DocumentSnapshot<Map<String, dynamic>>> documents = [];
+  bool isLoading = true;
+  String _username = '';
+  String _firstName = '';
+  String _lastName = '';
+  String? _profileImageURL;
+  File? _image;
+
+  Future<void> fetchData() async {
+    final querySnapshot = await collection
+        .where('İhtiyaç Sahibi', isEqualTo: widget.currentUserEmail)
+        .get();
+
+    setState(() {
+      documents = querySnapshot.docs;
+      isLoading = false;
+    });
+  }
+
+  Future<void> _fetchUserData() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final userId = user.uid;
+      final userRepository = UserRepository();
+      final userData = await userRepository.getUserData(userId);
+
+      if (userData != null) {
+        setState(() {
+          _username = userData.username;
+          _firstName = userData.firstName;
+          _lastName = userData.lastName;
+        });
+      }
+    }
+  }
+
+  Future<void> _fetchProfileImageURL() async {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      final userRef = FirebaseFirestore.instance
+          .collection('pictures')
+          .doc(currentUser.uid);
+      final userSnapshot = await userRef.get();
+
+      if (userSnapshot.exists) {
+        final userData = userSnapshot.data();
+        final profileImageRef = FirebaseStorage.instance
+            .ref()
+            .child('Profil_resimleri/${currentUser.uid}');
+        final profileImageURL = await profileImageRef.getDownloadURL();
+
+        setState(() {
+          _profileImageURL = profileImageURL;
+        });
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    collection = FirebaseFirestore.instance.collection('needs');
+    _fetchUserData();
+    _fetchProfileImageURL();
+    fetchData();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: Container(
-            decoration: const BoxDecoration(
-                border: Border.symmetric(
-                    horizontal: BorderSide(width: 3, color: AppColors.yellow))),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 35),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      const Expanded(
-                        child: Text(
-                          "7 Nisan 2023",
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.more_vert),
-                      )
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15),
-                    child: Card(
-                      elevation: 5,
-                      color: Colors.grey.shade50,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Column(
-                          children: [
-                            const Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    "Beşiktaş, İstanbul",
-                                    style: TextStyle(
-                                      color: AppColors.purple,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  "Cuma",
-                                  style: TextStyle(color: AppColors.grey3),
-                                )
-                              ],
-                            ),
-                            const Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    "Bebek Bezi",
-                                    style: TextStyle(
-                                        color: AppColors.darkGrey,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                Text(
-                                  "10:00",
-                                  style: TextStyle(
-                                    color: AppColors.darkGrey,
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                )
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            const Divider(
-                              color: Colors.white,
-                              thickness: 1.5,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Row(children: [
-                              const Row(
-                                children: [
-                                  CircleAvatar(
-                                    backgroundImage:
-                                        AssetImage("assets/profile/isa.jpg"),
-                                    radius: 15,
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    "1 kişi destek veriyor",
-                                    style: TextStyle(
-                                        color: AppColors.darkGrey,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500),
-                                  )
-                                ],
-                              ),
-                              Expanded(
-                                child: Align(
-                                  alignment: Alignment.centerRight,
-                                  child: ElevatedButton(
-                                    onPressed: () {},
-                                    style: ElevatedButton.styleFrom(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        backgroundColor: Colors.purple),
-                                    child: const Text(
-                                      "Detay",
-                                      style: TextStyle(color: AppColors.white),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ])
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
-                ],
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: screenHeight * 0.001),
+              child: const Divider(
+                color: AppColors.grey1,
+                thickness: 1.5,
               ),
             ),
-          ),
+            isLoading
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : documents.isEmpty
+                    ? const Center(
+                        child: Text(
+                          'Daha önce ihtiyaç girmediniz...',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      )
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: documents.length,
+                        itemBuilder: (context, index) {
+                          final data =
+                              documents[index].data() as Map<String, dynamic>;
+                          final anakategori = data['anaKategori'];
+                          final altkategori = data['Alt Kategori'];
+                          final ihtiyac = data['İhtiyaç'];
+                          final il = data['city'];
+                          final ilce = data['district'];
+                          final tarih = data['createdAt'] as Timestamp;
+
+                          DateTime dateTime = tarih.toDate();
+
+                          final formattedDate =
+                              DateFormat('dd MMMM y - HH:mm', 'tr_TR')
+                                  .format(dateTime);
+                          String dayName =
+                              DateFormat.EEEE('tr_TR').format(dateTime);
+
+                          return Column(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: screenWidth - (screenWidth - 25),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            formattedDate,
+                                            style: const TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ),
+                                        IconButton(
+                                          onPressed: () {},
+                                          icon: const Icon(Icons.more_vert),
+                                        )
+                                      ],
+                                    ),
+                                    Card(
+                                      elevation: 5,
+                                      color: Colors.grey.shade50,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Expanded(
+                                                  child: Text(
+                                                    "$ilce, $il",
+                                                    style: const TextStyle(
+                                                      color: AppColors.purple,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  dayName,
+                                                  style: const TextStyle(
+                                                      color: AppColors.grey3),
+                                                )
+                                              ],
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical:
+                                                      screenHeight * 0.01),
+                                              child: Row(
+                                                children: [
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        anakategori +
+                                                            '/ ' +
+                                                            altkategori,
+                                                        style: const TextStyle(
+                                                            color: AppColors
+                                                                .darkGrey,
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      SizedBox(
+                                                        height:
+                                                            screenHeight * 0.01,
+                                                      ),
+                                                      Text(
+                                                        ihtiyac,
+                                                        style: const TextStyle(
+                                                            color: AppColors
+                                                                .purple,
+                                                            fontSize: 20,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical:
+                                                      screenHeight * 0.001),
+                                              child: const Divider(
+                                                color: AppColors.grey1,
+                                                thickness: 1.5,
+                                              ),
+                                            ),
+                                            Row(
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Container(
+                                                      decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        border: Border.all(
+                                                          color:
+                                                              AppColors.purple,
+                                                          width: 2,
+                                                        ),
+                                                      ),
+                                                      child: CircleAvatar(
+                                                        backgroundColor:
+                                                            Colors.grey.shade50,
+                                                        backgroundImage: _profileImageURL !=
+                                                                null
+                                                            ? NetworkImage(
+                                                                _profileImageURL!)
+                                                            : const AssetImage(
+                                                                    'assets/profile/user_profile.png')
+                                                                as ImageProvider<
+                                                                    Object>?,
+                                                        radius: 15,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    const Text(
+                                                      '@',
+                                                      style: TextStyle(
+                                                          color:
+                                                              AppColors.purple,
+                                                          fontSize: 17),
+                                                    ),
+                                                    Text(
+                                                      _username,
+                                                      style: const TextStyle(
+                                                          color: AppColors
+                                                              .darkGrey,
+                                                          fontSize: 17,
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Expanded(
+                                                  child: Align(
+                                                    alignment:
+                                                        Alignment.centerRight,
+                                                    child: ElevatedButton(
+                                                      onPressed: () {},
+                                                      style: ElevatedButton.styleFrom(
+                                                          shape: RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10)),
+                                                          backgroundColor:
+                                                              AppColors.purple),
+                                                      child: const Text(
+                                                        "Detay",
+                                                        style: TextStyle(
+                                                            color: AppColors
+                                                                .white),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: screenHeight * 0.005),
+                                child: const Divider(
+                                  color: AppColors.grey1,
+                                  thickness: 1.5,
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
