@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bootcamp/screens/profile/settings/delete_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -23,8 +25,10 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
   List<DocumentSnapshot<Map<String, dynamic>>> documents = [];
   bool isLoading = true;
   String _username = '';
+  String _firstName = '';
+  String _lastName = '';
   String? _profileImageURL;
-
+  File? _image;
 
   Future<void> fetchData() async {
     final querySnapshot = await collection
@@ -47,11 +51,12 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
       if (userData != null) {
         setState(() {
           _username = userData.username;
+          _firstName = userData.firstName;
+          _lastName = userData.lastName;
         });
       }
     }
   }
-
 
   Future<void> _fetchProfileImageURL() async {
     final currentUser = FirebaseAuth.instance.currentUser;
@@ -62,6 +67,7 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
       final userSnapshot = await userRef.get();
 
       if (userSnapshot.exists) {
+        final userData = userSnapshot.data();
         final profileImageRef = FirebaseStorage.instance
             .ref()
             .child('Profil_resimleri/${currentUser.uid}');
@@ -95,10 +101,10 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
           children: [
             Padding(
               padding: EdgeInsets.symmetric(vertical: screenHeight * 0.001),
-              child: const Divider(
-                color: AppColors.grey1,
-                thickness: 1.5,
-              ),
+            ),
+            const Divider(
+              color: AppColors.grey1,
+              thickness: 1.5,
             ),
             isLoading
                 ? const Center(
@@ -153,125 +159,130 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
                                                 fontWeight: FontWeight.w500),
                                           ),
                                         ),
-                                       PopupMenuButton(
-                                    itemBuilder: (BuildContext context) =>
-                                        <PopupMenuEntry>[
-                                      PopupMenuItem(
-                                        child: Card(
-                                          color: Colors.grey.shade50, 
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: ListTile(
-                                              onTap: () {
-                                                Navigator.of(context).pop();
-                                                showDialog(
-                                                  context: context,
-                                                  builder:
-                                                      (BuildContext context) {
-                                                    return AlertDialog(
-                                                      title: const Text(
-                                                          'İhtiyacı Sil'),
-                                                      content: const Text(
-                                                          'Bu ihtiyacı silmek istediğinize emin misiniz?'),
-                                                      actions: [
-                                                        ElevatedButton(
-                                                          style: ElevatedButton
-                                                              .styleFrom(
-                                                            shape:
-                                                                RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10),
-                                                            ),
-                                                            backgroundColor:
-                                                                AppColors
-                                                                    .purple,
-                                                          ),
-                                                          onPressed: () {
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop();
-                                                          },
-                                                          child: const Text(
-                                                            'İptal',
-                                                            style: TextStyle(
-                                                                color: AppColors
-                                                                    .white),
-                                                          ),
-                                                        ),
-                                                        ElevatedButton(
-                                                          style: ElevatedButton
-                                                              .styleFrom(
-                                                            shape:
-                                                                RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10),
-                                                            ),
-                                                            backgroundColor:
-                                                                AppColors
-                                                                    .purple,
-                                                          ),
-                                                          onPressed: () async {
-                                                            String
-                                                                collectionName =
-                                                                'helps';
-                                                            String documentId =
-                                                                documents[index]
-                                                                    .id;
-                                                            await deleteDataFromFirestore(
-                                                                collectionName,
-                                                                documentId);
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop();
-                                                            setState(() {
-                                                              fetchData();
-                                                              _fetchUserData();
-                                                              _fetchProfileImageURL();
-                                                            });
-                                                          },
-                                                          child: const Text(
-                                                            'Sil',
-                                                            style: TextStyle(
-                                                                color: AppColors
-                                                                    .white),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    );
-                                                  },
-                                                );
-                                              },
-                                              leading: const Icon(
-                                                Icons.delete,
-                                                color: AppColors
-                                                    .purple, 
-                                              ),
-                                              title: const Text(
-                                                'Sil',
-                                                style: TextStyle(
-                                                  color: AppColors
-                                                      .purple, 
+                                        PopupMenuButton(
+                                          itemBuilder: (BuildContext context) =>
+                                              <PopupMenuEntry>[
+                                            PopupMenuItem(
+                                              child: Card(
+                                                color: Colors.grey.shade50,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      10.0),
+                                                  child: ListTile(
+                                                    onTap: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                      showDialog(
+                                                        context: context,
+                                                        builder: (BuildContext
+                                                            context) {
+                                                          return AlertDialog(
+                                                            title: const Text(
+                                                                'İhtiyacı Sil'),
+                                                            content: const Text(
+                                                                'Bu ihtiyacı silmek istediğinize emin misiniz?'),
+                                                            actions: [
+                                                              ElevatedButton(
+                                                                style: ElevatedButton
+                                                                    .styleFrom(
+                                                                  shape:
+                                                                      RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            10),
+                                                                  ),
+                                                                  backgroundColor:
+                                                                      AppColors
+                                                                          .purple,
+                                                                ),
+                                                                onPressed: () {
+                                                                  Navigator.of(
+                                                                          context)
+                                                                      .pop();
+                                                                },
+                                                                child:
+                                                                    const Text(
+                                                                  'İptal',
+                                                                  style: TextStyle(
+                                                                      color: AppColors
+                                                                          .white),
+                                                                ),
+                                                              ),
+                                                              ElevatedButton(
+                                                                style: ElevatedButton
+                                                                    .styleFrom(
+                                                                  shape:
+                                                                      RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            10),
+                                                                  ),
+                                                                  backgroundColor:
+                                                                      AppColors
+                                                                          .purple,
+                                                                ),
+                                                                onPressed:
+                                                                    () async {
+                                                                  String
+                                                                      collectionName =
+                                                                      'needs';
+                                                                  String
+                                                                      documentId =
+                                                                      documents[
+                                                                              index]
+                                                                          .id;
+                                                                  await deleteDataFromFirestore(
+                                                                      collectionName,
+                                                                      documentId);
+                                                                  Navigator.of(
+                                                                          context)
+                                                                      .pop();
+                                                                  setState(() {
+                                                                    fetchData();
+                                                                    _fetchUserData();
+                                                                    _fetchProfileImageURL();
+                                                                  });
+                                                                },
+                                                                child:
+                                                                    const Text(
+                                                                  'Sil',
+                                                                  style: TextStyle(
+                                                                      color: AppColors
+                                                                          .white),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          );
+                                                        },
+                                                      );
+                                                    },
+                                                    leading: const Icon(
+                                                      Icons.delete,
+                                                      color: AppColors
+                                                          .purple, // Sil butonunun rengi
+                                                    ),
+                                                    title: const Text(
+                                                      'Sil',
+                                                      style: TextStyle(
+                                                        color: AppColors
+                                                            .purple, // Sil butonunun rengi
+                                                      ),
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
                                             ),
+                                          ],
+                                          child: const Icon(
+                                            Icons.more_vert,
+                                            color: AppColors
+                                                .purple, // Üç nokta ikonunun rengi
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                    child: const Icon(
-                                      Icons.more_vert,
-                                      color: AppColors
-                                          .purple, 
-                                    ),
-                                  ),
                                       ],
                                     ),
                                     Card(
@@ -347,84 +358,76 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
                                               padding: EdgeInsets.symmetric(
                                                   vertical:
                                                       screenHeight * 0.001),
-                                              child: const Divider(
-                                                color: AppColors.grey1,
-                                                thickness: 1.5,
-                                              ),
                                             ),
-                                            Row(
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    Container(
-                                                      decoration: BoxDecoration(
-                                                        shape: BoxShape.circle,
-                                                        border: Border.all(
-                                                          color:
-                                                              AppColors.purple,
-                                                          width: 2,
-                                                        ),
-                                                      ),
-                                                      child: CircleAvatar(
-                                                        backgroundColor:
-                                                            Colors.grey.shade50,
-                                                        backgroundImage: _profileImageURL !=
-                                                                null
-                                                            ? NetworkImage(
-                                                                _profileImageURL!)
-                                                            : const AssetImage(
-                                                                    'assets/profile/user_profile.png')
-                                                                as ImageProvider<
-                                                                    Object>?,
-                                                        radius: 15,
+                                            Row(children: [
+                                              Row(
+                                                children: [
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      border: Border.all(
+                                                        color: AppColors.purple,
+                                                        width: 2,
                                                       ),
                                                     ),
-                                                    const SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    const Text(
-                                                      '@',
-                                                      style: TextStyle(
-                                                          color:
-                                                              AppColors.purple,
-                                                          fontSize: 17),
-                                                    ),
-                                                    Text(
-                                                      _username,
-                                                      style: const TextStyle(
-                                                          color: AppColors
-                                                              .darkGrey,
-                                                          fontSize: 17,
-                                                          fontWeight:
-                                                              FontWeight.w500),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Expanded(
-                                                  child: Align(
-                                                    alignment:
-                                                        Alignment.centerRight,
-                                                    child: ElevatedButton(
-                                                      onPressed: () {},
-                                                      style: ElevatedButton.styleFrom(
-                                                          shape: RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10)),
-                                                          backgroundColor:
-                                                              AppColors.purple),
-                                                      child: const Text(
-                                                        "Detay",
-                                                        style: TextStyle(
-                                                            color: AppColors
-                                                                .white),
-                                                      ),
+                                                    child: CircleAvatar(
+                                                      backgroundColor:
+                                                          Colors.grey.shade50,
+                                                      backgroundImage: _profileImageURL !=
+                                                              null
+                                                          ? NetworkImage(
+                                                              _profileImageURL!)
+                                                          : const AssetImage(
+                                                                  'assets/profile/user_profile.png')
+                                                              as ImageProvider<
+                                                                  Object>?,
+                                                      radius: 15,
                                                     ),
                                                   ),
-                                                )
-                                              ],
-                                            )
+                                                  const SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  const Text(
+                                                    '@',
+                                                    style: TextStyle(
+                                                        color: AppColors.purple,
+                                                        fontSize: 17),
+                                                  ),
+                                                  Text(
+                                                    _username,
+                                                    style: const TextStyle(
+                                                        color:
+                                                            AppColors.darkGrey,
+                                                        fontSize: 17,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
+                                                ],
+                                              ),
+                                              Expanded(
+                                                child: Align(
+                                                  alignment:
+                                                      Alignment.centerRight,
+                                                  child: ElevatedButton(
+                                                    onPressed: () {},
+                                                    style: ElevatedButton.styleFrom(
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10)),
+                                                        backgroundColor:
+                                                            AppColors.purple),
+                                                    child: const Text(
+                                                      "Detay",
+                                                      style: TextStyle(
+                                                          color:
+                                                              AppColors.white),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ])
                                           ],
                                         ),
                                       ),
@@ -435,10 +438,6 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
                               Padding(
                                 padding: EdgeInsets.symmetric(
                                     vertical: screenHeight * 0.005),
-                                child: const Divider(
-                                  color: AppColors.grey1,
-                                  thickness: 1.5,
-                                ),
                               ),
                             ],
                           );

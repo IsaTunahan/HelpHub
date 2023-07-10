@@ -5,7 +5,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 import '../../../style/colors.dart';
-import 'details/detail_screen.dart';
+import 'details/help_detail_screen.dart';
 
 class HomeHelpScreen extends StatefulWidget {
   const HomeHelpScreen({Key? key}) : super(key: key);

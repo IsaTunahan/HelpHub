@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../style/colors.dart';
+import 'details/need_detail_screen.dart';
 
 class HomeNeedScreen extends StatefulWidget {
   const HomeNeedScreen({Key? key}) : super(key: key);
@@ -136,6 +137,9 @@ class _HomeNeedScreenState extends State<HomeNeedScreen> {
               itemCount: documents.length,
               itemBuilder: (context, index) {
                 final data = documents[index].data();
+                final doc = documents[index];
+                final need = doc.data();
+                final needId = doc.id;
                 final anakategori = data['anaKategori'];
                 final altkategori = data['Alt Kategori'];
                 final ihtiyac = data['İhtiyaç'];
@@ -308,10 +312,18 @@ class _HomeNeedScreenState extends State<HomeNeedScreen> {
                                           ),
                                           Expanded(
                                             child: Align(
-                                              alignment:
-                                                  Alignment.centerRight,
+                                              alignment: Alignment.centerRight,
                                               child: ElevatedButton(
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          NeedDetailScreen(
+                                                              needId: needId),
+                                                    ),
+                                                  );
+                                                },
                                                 style: ElevatedButton.styleFrom(
                                                     shape:
                                                         RoundedRectangleBorder(
