@@ -1,4 +1,5 @@
 import 'package:bootcamp/custom_widgets/alert.dart';
+import 'package:bootcamp/custom_widgets/bottom_nav_bar.dart';
 import 'package:bootcamp/style/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,9 +8,7 @@ import '../../../../custom_widgets/_textformfield.dart';
 import '../../../../repository/user_repository/user_repository.dart';
 
 class RegisterForm extends StatefulWidget {
-  const RegisterForm({
-    Key? key,
-  }) : super(key: key);
+  const RegisterForm({Key? key}) : super(key: key);
 
   @override
   State<RegisterForm> createState() => _RegisterFormState();
@@ -25,7 +24,6 @@ class _RegisterFormState extends State<RegisterForm> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
-
 
   bool isLoading = false;
 
@@ -43,13 +41,16 @@ class _RegisterFormState extends State<RegisterForm> {
         );
 
         final user = await userRepository.addStatus(
-          FirebaseAuth.instance.currentUser!.uid,
+          userCredential.user!.uid,
           usernameController.text.trim(),
           firstNameController.text.trim(),
           lastNameController.text.trim(),
           emailController.text.trim(),
           int.parse(phoneController.text.trim()),
-
+        );
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const MyHomePage()),
         );
         print('Veriler Firestore\'a gönderildi.');
       } on FirebaseAuthException catch (e) {
@@ -123,6 +124,7 @@ class _RegisterFormState extends State<RegisterForm> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Card(
@@ -140,16 +142,66 @@ class _RegisterFormState extends State<RegisterForm> {
               obscureText: false,
             ),
             SizedBox(height: screenHeight * 0.01),
-            AppTextFormField(
-              controller: firstNameController,
-              hintText: 'İsim',
-              obscureText: false,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+              child: TextFormField(
+                controller: firstNameController,
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: const BorderSide(
+                      color: AppColors.yellow,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: const BorderSide(
+                      color: AppColors.purple,
+                    ),
+                  ),
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  fillColor: AppColors.white,
+                  filled: true,
+                  hintText: 'İsim',
+                  hintStyle: const TextStyle(
+                    color: AppColors.darkGrey,
+                  ),
+                ),
+                autocorrect: false,
+                textCapitalization: TextCapitalization.words,
+              ),
             ),
             SizedBox(height: screenHeight * 0.01),
-            AppTextFormField(
-              controller: lastNameController,
-              hintText: 'Soyisim',
-              obscureText: false,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+              child: TextFormField(
+                controller: lastNameController,
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: const BorderSide(
+                      color: AppColors.yellow,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: const BorderSide(
+                      color: AppColors.purple,
+                    ),
+                  ),
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  fillColor: AppColors.white,
+                  filled: true,
+                  hintText: 'Soyisim',
+                  hintStyle: const TextStyle(
+                    color: AppColors.darkGrey,
+                  ),
+                ),
+                autocorrect: false,
+                textCapitalization: TextCapitalization.words,
+              ),
             ),
             SizedBox(height: screenHeight * 0.01),
             AppTextFormField(
@@ -189,12 +241,8 @@ class _RegisterFormState extends State<RegisterForm> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: isLoading
-                      ? const SizedBox(
-                          width: 24,
-                          height: 24,
-                          child: CircularProgressIndicator(
-                            color: AppColors.white,
-                          ),
+                      ? const CircularProgressIndicator(
+                          color: AppColors.white,
                         )
                       : const Text(
                           'Kayıt Ol',

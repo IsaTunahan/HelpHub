@@ -42,6 +42,9 @@ dependencies:
   google_sign_in: ^6.1.4
   image_picker: ^1.0.0
   firebase_storage: ^11.2.4
+  get: ^4.6.5
+  intl: ^0.18.1
+  localization: ^2.1.0
 
 
 

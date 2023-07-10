@@ -63,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     : const Icon(
                         Helphub.help_outline,
                       ),
-                label: 'Yardım Et',
+                label: 'Yardım',
               ),
               BottomNavigationBarItem(
                 icon: _selectedIndex == 2
@@ -73,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     : const Icon(
                         Helphub.need_outline,
                       ),
-                label: 'İhtiyacım Var',
+                label: 'İhtiyaç',
               ),
               BottomNavigationBarItem(
                 icon: _selectedIndex == 3

@@ -8,12 +8,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 
 import '../../repository/user_repository/user_repository.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({super.key});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -25,7 +24,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String _lastName = '';
   String? _profileImageURL;
   File? _image;
-
 
   Future<void> _fetchUserData() async {
     final user = FirebaseAuth.instance.currentUser;
@@ -44,25 +42,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
-
   Future<void> _fetchProfileImageURL() async {
-  final currentUser = FirebaseAuth.instance.currentUser;
-  if (currentUser != null) {
-    final userRef = FirebaseFirestore.instance.collection('pictures').doc(currentUser.uid);
-    final userSnapshot = await userRef.get();
+    final currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      final userRef = FirebaseFirestore.instance
+          .collection('pictures')
+          .doc(currentUser.uid);
+      final userSnapshot = await userRef.get();
 
-    if (userSnapshot.exists) {
-      final userData = userSnapshot.data();
-      final profileImageRef = FirebaseStorage.instance.ref().child('Profil_resimleri/${currentUser.uid}');
-      final profileImageURL = await profileImageRef.getDownloadURL();
+      if (userSnapshot.exists) {
+        final userData = userSnapshot.data();
+        final profileImageRef = FirebaseStorage.instance
+            .ref()
+            .child('Profil_resimleri/${currentUser.uid}');
+        final profileImageURL = await profileImageRef.getDownloadURL();
 
-      setState(() {
-        _profileImageURL = profileImageURL;
-      });
+        setState(() {
+          _profileImageURL = profileImageURL;
+        });
+      }
     }
   }
-}
-
 
   @override
   void initState() {
@@ -70,8 +70,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _fetchUserData();
     _fetchProfileImageURL();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -90,21 +88,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
         leading: GestureDetector(
           onTap: () {
             Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const SettingsScreen()),
-            );
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const SettingsScreen()));
           },
-          child: const Icon(
-            Helphub.settings,
-            color: AppColors.purple,
-            size: 35,
-          ),
+          child:
+              const Icon(Helphub.settings, color: AppColors.purple, size: 35),
         ),
       ),
       body: Column(
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25),
+            padding: EdgeInsets.symmetric(
+                horizontal: screenWidth - (screenWidth - 25)),
             child: Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
@@ -114,9 +110,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: SingleChildScrollView(
                 child: Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: screenWidth * 0.02,
-                    vertical: screenHeight * 0.01,
-                  ),
+                      horizontal: screenWidth * 0.02,
+                      vertical: screenHeight * 0.01),
                   child: Row(
                     children: [
                       Container(
@@ -124,17 +119,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           shape: BoxShape.circle,
                           border: Border.all(
                             color: AppColors.purple,
-                            width: 2,
+                            width: 3,
                           ),
                         ),
                         child: CircleAvatar(
-                          backgroundColor: Colors.grey.shade50,
+                          radius: 45,
+                          backgroundColor: Colors.transparent,
                           backgroundImage: _profileImageURL != null
                               ? NetworkImage(_profileImageURL!)
                               : const AssetImage(
                                       'assets/profile/user_profile.png')
                                   as ImageProvider<Object>?,
-                          radius: 40,
                         ),
                       ),
                       const SizedBox(width: 20),
@@ -149,24 +144,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 fontSize: 25,
                               ),
                             ),
-                            const SizedBox(height: 5),
+                            const SizedBox(
+                              height: 5,
+                            ),
                             Text(
                               '@$_username',
                               style: const TextStyle(
                                 color: AppColors.purple,
                               ),
                             ),
-                            const SizedBox(height: 15),
+                            const SizedBox(
+                              height: 15,
+                            )
                           ],
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ),
               ),
             ),
           ),
-          const CategorySwitcherWidget(),
+             const CategorySwitcherWidget(),
+
         ],
       ),
     );

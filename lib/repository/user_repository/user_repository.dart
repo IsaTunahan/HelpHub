@@ -1,6 +1,7 @@
 // TODO Implement this library.
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+
 import '../../screens/auth/auth/models/user_model.dart';
 
 class UserRepository {
@@ -35,7 +36,7 @@ class UserRepository {
 
     var ref = _firestore.collection('users');
 
-    await ref.add({
+    await ref.doc(uid).set({
       'userId': uid,
       'username': username,
       'firstName': firstName,
