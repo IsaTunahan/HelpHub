@@ -7,8 +7,8 @@ class UserModel {
   final String lastName;
   final int phone;
   final String email;
- String? profileImageURL;
- 
+  String? profileImageURL;
+
   UserModel({
     this.uid,
     required this.username,
@@ -16,19 +16,18 @@ class UserModel {
     required this.lastName,
     required this.phone,
     required this.email,
-this.profileImageURL,  
-  }); 
+    this.profileImageURL,
+  });
 
   factory UserModel.fromSnapshot(DocumentSnapshot snapshot) {
     Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
     return UserModel(
-      uid: data['userid'],
+      uid: data['userId'],
       username: data['username'],
       firstName: data['firstName'],
       lastName: data['lastName'],
       phone: data['phone'],
       email: data['email'],
-
     );
   }
 }

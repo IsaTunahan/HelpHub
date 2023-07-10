@@ -5,6 +5,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 import '../../../style/colors.dart';
+import 'details/detail_screen.dart';
 
 class HomeHelpScreen extends StatefulWidget {
   const HomeHelpScreen({Key? key}) : super(key: key);
@@ -18,39 +19,12 @@ class _HomeHelpScreenState extends State<HomeHelpScreen> {
   late CollectionReference<Map<String, dynamic>> collection;
   List<QueryDocumentSnapshot<Map<String, dynamic>>> documents = [];
   String? selectedCategory;
-  String _username = '';
-  String _firstName = '';
-  String _lastName = '';
-  String? _profileImageURL;
-
-  Future<void> _fetchUserData() async {
-    final user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      final userId = user.uid;
-      final userData = await getUserData(userId);
-
-      setState(() {
-        _username = userData['username']!;
-        _firstName = userData['firstName']!;
-        _lastName = userData['lastName']!;
-      });
-    }
-  }
-
-  Future<void> _fetchProfileImageURL(int index) async {
-    final desteksahibiId = documents[index].data()['Destek Sahibi'];
-    final profileImageURL = await getProfileImageURL(desteksahibiId);
-
-    setState(() {
-      _profileImageURL = profileImageURL;
-    });
-  }
 
   @override
   void initState() {
     super.initState();
+    print('initState called');
     initializeDateFormatting('tr_TR', null);
-    _fetchUserData();
 
     collection = FirebaseFirestore.instance.collection('helps');
     fetchData();
@@ -127,20 +101,22 @@ class _HomeHelpScreenState extends State<HomeHelpScreen> {
             )
           else
             ListView.separated(
-              key: UniqueKey(),
-              separatorBuilder: (context, index) =>  Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: screenHeight * 0.005),
-                          child: const Divider(
-                            color: AppColors.grey1,
-                            thickness: 1.5,
-                          ),
-                        ),
+
+              separatorBuilder: (context, index) => Padding(
+                padding: EdgeInsets.symmetric(vertical: screenHeight * 0.005),
+                child: const Divider(
+                  color: AppColors.grey1,
+                  thickness: 1.5,
+                ),
+              ),
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: documents.length,
               itemBuilder: (context, index) {
                 final data = documents[index].data();
+                final doc = documents[index];
+                final help = doc.data();
+                final helpId = doc.id;
                 final anakategori = data['Ana Kategori'];
                 final altkategori = data['Alt Kategori'];
                 final destek = data['Destek'];
@@ -318,7 +294,16 @@ class _HomeHelpScreenState extends State<HomeHelpScreen> {
                                             child: Align(
                                               alignment: Alignment.centerRight,
                                               child: ElevatedButton(
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          HelpDetailScreen(
+                                                              helpId: helpId),
+                                                    ),
+                                                  );
+                                                },
                                                 style: ElevatedButton.styleFrom(
                                                     shape:
                                                         RoundedRectangleBorder(

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -24,10 +22,8 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
   List<DocumentSnapshot<Map<String, dynamic>>> documents = [];
   bool isLoading = true;
   String _username = '';
-  String _firstName = '';
-  String _lastName = '';
   String? _profileImageURL;
-  File? _image;
+
 
   Future<void> fetchData() async {
     final querySnapshot = await collection
@@ -50,8 +46,6 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
       if (userData != null) {
         setState(() {
           _username = userData.username;
-          _firstName = userData.firstName;
-          _lastName = userData.lastName;
         });
       }
     }
@@ -66,7 +60,6 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
       final userSnapshot = await userRef.get();
 
       if (userSnapshot.exists) {
-        final userData = userSnapshot.data();
         final profileImageRef = FirebaseStorage.instance
             .ref()
             .child('Profil_resimleri/${currentUser.uid}');

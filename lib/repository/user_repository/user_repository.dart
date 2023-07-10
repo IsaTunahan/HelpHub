@@ -10,7 +10,7 @@ class UserRepository {
   Future<UserModel?> getUserData(String userId) async {
     QuerySnapshot snapshot = await FirebaseFirestore.instance
       .collection('users')
-      .where('userid', isEqualTo: userId)
+      .where('userId', isEqualTo: userId)
       .limit(1)
       .get();
 
@@ -37,7 +37,7 @@ class UserRepository {
     var ref = _firestore.collection('users');
 
     await ref.doc(uid).set({
-      'userid': uid,
+      'userId': uid,
       'username': username,
       'firstName': firstName,
       'lastName': lastName,

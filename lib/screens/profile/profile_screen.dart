@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bootcamp/screens/profile/prf_yrd_ihtc.dart';
 import 'package:bootcamp/screens/profile/settings/settings_screen.dart';
 import 'package:bootcamp/style/colors.dart';
@@ -23,7 +21,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String _firstName = '';
   String _lastName = '';
   String? _profileImageURL;
-  File? _image;
+
 
   Future<void> _fetchUserData() async {
     final user = FirebaseAuth.instance.currentUser;
@@ -76,6 +74,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
+
     return Scaffold(
       backgroundColor: AppColors.white,
       appBar: AppBar(
@@ -107,60 +106,58 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               elevation: 5,
               color: Colors.grey.shade50,
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: screenWidth * 0.02,
-                      vertical: screenHeight * 0.01),
-                  child: Row(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: AppColors.purple,
-                            width: 3,
-                          ),
-                        ),
-                        child: CircleAvatar(
-                          radius: 45,
-                          backgroundColor: Colors.transparent,
-                          backgroundImage: _profileImageURL != null
-                              ? NetworkImage(_profileImageURL!)
-                              : const AssetImage(
-                                      'assets/profile/user_profile.png')
-                                  as ImageProvider<Object>?,
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: screenWidth * 0.02,
+                    vertical: screenHeight * 0.01),
+                child: Row(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: AppColors.purple,
+                          width: 3,
                         ),
                       ),
-                      const SizedBox(width: 20),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '$_firstName $_lastName',
-                              style: const TextStyle(
-                                color: AppColors.darkGrey,
-                                fontSize: 25,
-                              ),
+                      child: CircleAvatar(
+                        radius: 45,
+                        backgroundColor: Colors.transparent,
+                        backgroundImage: _profileImageURL != null
+                            ? NetworkImage(_profileImageURL!)
+                            : const AssetImage(
+                                    'assets/profile/user_profile.png')
+                                as ImageProvider<Object>?,
+                      ),
+                    ),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '$_firstName $_lastName',
+                            style: const TextStyle(
+                              color: AppColors.darkGrey,
+                              fontSize: 25,
                             ),
-                            const SizedBox(
-                              height: 5,
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            '@$_username',
+                            style: const TextStyle(
+                              color: AppColors.purple,
                             ),
-                            Text(
-                              '@$_username',
-                              style: const TextStyle(
-                                color: AppColors.purple,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          )
+                        ],
+                      ),
+                    )
+                  ],
                 ),
               ),
             ),
