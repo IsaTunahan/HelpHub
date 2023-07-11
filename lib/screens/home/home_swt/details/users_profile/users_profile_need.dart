@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bootcamp/screens/home/home_swt/details/need_detail_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -8,6 +9,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../../repository/user_repository/user_repository.dart';
 import '../../../../../style/colors.dart';
+
 
 class UsersProfilIhtiyaclar extends StatefulWidget {
   final String currentUser;
@@ -285,7 +287,15 @@ class _UsersProfilIhtiyaclarState extends State<UsersProfilIhtiyaclar> {
                                                 alignment:
                                                     Alignment.centerRight,
                                                 child: ElevatedButton(
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          NeedDetailScreen(
+                                                              needId: documents[index].id,),
+                                                    ),
+                                                  );},
                                                   style: ElevatedButton.styleFrom(
                                                       shape:
                                                           RoundedRectangleBorder(

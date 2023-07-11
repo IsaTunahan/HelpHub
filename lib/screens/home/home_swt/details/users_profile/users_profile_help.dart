@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../../repository/user_repository/user_repository.dart';
 import '../../../../../style/colors.dart';
+import '../help_detail_screen.dart';
 
 class UsersProfilYardimlar extends StatefulWidget {
   final String currentUser;
@@ -276,7 +277,15 @@ class _UsersProfilYardimlarState extends State<UsersProfilYardimlar> {
                                           child: Align(
                                             alignment: Alignment.centerRight,
                                             child: ElevatedButton(
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          HelpDetailScreen(
+                                                              helpId: documents[index].id),
+                                                    ),
+                                                  );},
                                               style: ElevatedButton.styleFrom(
                                                   shape: RoundedRectangleBorder(
                                                       borderRadius:
