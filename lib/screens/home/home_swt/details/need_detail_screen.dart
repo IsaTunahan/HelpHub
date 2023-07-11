@@ -1,3 +1,4 @@
+import 'package:bootcamp/screens/home/home_swt/details/users_profile/users_profile.dart';
 import 'package:bootcamp/style/colors.dart';
 import 'package:bootcamp/style/icons/helphub_icons.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -120,6 +121,7 @@ class _NeedDetailScreenState extends State<NeedDetailScreen> {
       final anakategori = needData!['anaKategori'];
       final altkategori = needData!['Alt Kategori'];
       final ihtiyac = needData!['İhtiyaç'];
+      final ihtiyacsahibiId = needData!['İhtiyaç Sahibi'];
       final il = needData!['city'];
       final ilce = needData!['district'];
       final adres = needData!['address'];
@@ -385,25 +387,41 @@ class _NeedDetailScreenState extends State<NeedDetailScreen> {
                               SizedBox(
                                 width: screenWidth * 0.03,
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    '$ihtiyacSahibiIsim $ihtiyacSahibiSoyad',
-                                    style: const TextStyle(
-                                        color: AppColors.darkGrey,
-                                        fontSize: 20),
-                                  ),
-                                  SizedBox(
-                                    height: screenHeight * 0.005,
-                                  ),
-                                  Text(
-                                    '@$ihtiyacSahibiKullaniciAdi',
-                                    style: const TextStyle(
-                                        color: AppColors.purple, fontSize: 15),
-                                  ),
-                                ],
-                              )
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '$ihtiyacSahibiIsim $ihtiyacSahibiSoyad',
+                                      style: const TextStyle(
+                                          color: AppColors.darkGrey,
+                                          fontSize: 20),
+                                    ),
+                                    SizedBox(
+                                      height: screenHeight * 0.005,
+                                    ),
+                                    Text( 
+                                      '@$ihtiyacSahibiKullaniciAdi',
+                                      style: const TextStyle(
+                                          color: AppColors.purple, fontSize: 15),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => UsersProfile(
+                                            userId: ihtiyacsahibiId)),
+                                  );
+                                },
+                                child: const Icon(
+                                  Helphub.next,
+                                  color: AppColors.purple,
+                                ),
+                              ),
                             ],
                           ),
                         ),

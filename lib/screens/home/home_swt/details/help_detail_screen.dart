@@ -285,7 +285,8 @@ class _HelpDetailScreenState extends State<HelpDetailScreen> {
                     child: Column(
                       children: [
                         ClipRRect(
-                          borderRadius: const BorderRadius.all(Radius.circular(10)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10)),
                           child: SizedBox(
                             height: screenHeight * 0.2,
                             child: GoogleMap(
@@ -414,18 +415,19 @@ class _HelpDetailScreenState extends State<HelpDetailScreen> {
                                 ),
                               ),
                               GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => UsersProfile(
-                                              userId: desteksahibiId)),
-                                    );
-                                  },
-                                  child: const Icon(
-                                    Helphub.next,
-                                    color: AppColors.purple,
-                                  )),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => UsersProfile(
+                                            userId: desteksahibiId)),
+                                  );
+                                },
+                                child: const Icon(
+                                  Helphub.next,
+                                  color: AppColors.purple,
+                                ),
+                              ),
                             ],
                           ),
                         ),

@@ -28,6 +28,7 @@ class _UsersProfilYardimlarState extends State<UsersProfilYardimlar> {
   String _lastName = '';
   String? _profileImageURL;
   File? _image;
+  bool isLoading = true;
 
   Future<void> fetchData() async {
     final querySnapshot = await collection
@@ -36,13 +37,13 @@ class _UsersProfilYardimlarState extends State<UsersProfilYardimlar> {
 
     setState(() {
       documents = querySnapshot.docs;
+      isLoading = false;
     });
   }
 
   Future<void> _fetchUserData() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-
       final userRepository = UserRepository();
       final userData = await userRepository.getUserData(widget.currentUser);
 
@@ -57,7 +58,6 @@ class _UsersProfilYardimlarState extends State<UsersProfilYardimlar> {
   }
 
   Future<void> _fetchProfileImageURL() async {
-
     final userRef = FirebaseFirestore.instance
         .collection('pictures')
         .doc(widget.currentUser);
@@ -83,6 +83,7 @@ class _UsersProfilYardimlarState extends State<UsersProfilYardimlar> {
     _fetchUserData();
     _fetchProfileImageURL();
     fetchData();
+
   }
 
   @override
@@ -93,15 +94,24 @@ class _UsersProfilYardimlarState extends State<UsersProfilYardimlar> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        
-        documents.isEmpty
-            ? const Center(
-                child: Text(
-                  'Kullanıcıya ait yardım bulunmuyor...',
-                  style: TextStyle(fontSize: 16),
-                ),
-              )
-            : ListView.separated(
+        isLoading
+              ? const Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.yellow,
+                    backgroundColor: AppColors.purple,
+                  ),
+                )
+              : documents.isEmpty
+                  ? const Center(
+                      child: Text(
+                        'Kullanıcıya ait yardım bulunmuyor...',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    )
+                  : ListView.separated(
                 key: UniqueKey(),
                 separatorBuilder: (context, index) => Padding(
                   padding: EdgeInsets.symmetric(vertical: screenHeight * 0.005),
@@ -150,10 +160,10 @@ class _UsersProfilYardimlarState extends State<UsersProfilYardimlar> {
                                         fontWeight: FontWeight.w500),
                                   ),
                                 ),
-                                 const Icon(
-                                    Icons.more_vert,
-                                    color: AppColors.purple,
-                                  ),
+                                const Icon(
+                                  Icons.more_vert,
+                                  color: AppColors.purple,
+                                ),
                               ],
                             ),
                             Card(
@@ -278,14 +288,17 @@ class _UsersProfilYardimlarState extends State<UsersProfilYardimlar> {
                                             alignment: Alignment.centerRight,
                                             child: ElevatedButton(
                                               onPressed: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          HelpDetailScreen(
-                                                              helpId: documents[index].id),
-                                                    ),
-                                                  );},
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        HelpDetailScreen(
+                                                            helpId:
+                                                                documents[index]
+                                                                    .id),
+                                                  ),
+                                                );
+                                              },
                                               style: ElevatedButton.styleFrom(
                                                   shape: RoundedRectangleBorder(
                                                       borderRadius:

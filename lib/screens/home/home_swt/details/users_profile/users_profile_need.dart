@@ -100,13 +100,19 @@ class _UsersProfilIhtiyaclarState extends State<UsersProfilIhtiyaclar> {
           
           isLoading
               ? const Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator(
+                    color: AppColors.yellow,
+                    backgroundColor: AppColors.purple,
+                  ),
                 )
               : documents.isEmpty
                   ? const Center(
                       child: Text(
                         'Kullanıcıya ait ihtiyaç bulunmuyor...',
-                        style: TextStyle(fontSize: 16),
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     )
                   : ListView.separated(
@@ -259,7 +265,7 @@ class _UsersProfilIhtiyaclarState extends State<UsersProfilIhtiyaclar> {
                                                             : const AssetImage(
                                                                     'assets/profile/user_profile.png')
                                                                 as ImageProvider<
-                                                                    Object>?,
+                                                                    Object>?, 
                                                     radius: 15,
                                                   ),
                                                 ),
