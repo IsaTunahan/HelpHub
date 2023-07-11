@@ -284,17 +284,20 @@ class _HelpDetailScreenState extends State<HelpDetailScreen> {
                         vertical: screenHeight * 0.01),
                     child: Column(
                       children: [
-                        SizedBox(
-                          height: screenHeight * 0.2,
-                          child: GoogleMap(
-                            initialCameraPosition: CameraPosition(
-                              target: helpLocation!,
-                              zoom: 10,
+                        ClipRRect(
+                          borderRadius: const BorderRadius.all(Radius.circular(10)),
+                          child: SizedBox(
+                            height: screenHeight * 0.2,
+                            child: GoogleMap(
+                              initialCameraPosition: CameraPosition(
+                                target: helpLocation!,
+                                zoom: 10,
+                              ),
+                              markers: _createMarkers(),
+                              myLocationButtonEnabled: false,
+                              myLocationEnabled: false,
+                              mapType: MapType.normal,
                             ),
-                            markers: _createMarkers(),
-                            myLocationButtonEnabled: false,
-                            myLocationEnabled: false,
-                            mapType: MapType.normal,
                           ),
                         ),
                         SizedBox(
@@ -415,7 +418,8 @@ class _HelpDetailScreenState extends State<HelpDetailScreen> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => UsersProfile(userId: desteksahibiId)),
+                                          builder: (context) => UsersProfile(
+                                              userId: desteksahibiId)),
                                     );
                                   },
                                   child: const Icon(

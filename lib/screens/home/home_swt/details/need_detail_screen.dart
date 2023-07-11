@@ -181,7 +181,7 @@ class _NeedDetailScreenState extends State<NeedDetailScreen> {
                           height: screenHeight * 0.03,
                         ),
                         Text(
-                         ihtiyac,
+                          ihtiyac,
                           style: const TextStyle(
                               color: AppColors.purple,
                               fontSize: 20,
@@ -280,17 +280,20 @@ class _NeedDetailScreenState extends State<NeedDetailScreen> {
                         vertical: screenHeight * 0.01),
                     child: Column(
                       children: [
-                        SizedBox(
-                          height: screenHeight * 0.2,
-                          child: GoogleMap(
-                            initialCameraPosition: CameraPosition(
-                              target: needLocation!,
-                              zoom: 10,
+                        ClipRRect(
+                          borderRadius: const BorderRadius.all(Radius.circular(10)),
+                          child: SizedBox(
+                            height: screenHeight * 0.2,
+                            child: GoogleMap(
+                              initialCameraPosition: CameraPosition(
+                                target: needLocation!,
+                                zoom: 10,
+                              ),
+                              markers: _createMarkers(),
+                              myLocationButtonEnabled: false,
+                              myLocationEnabled: false,
+                              mapType: MapType.normal,
                             ),
-                            markers: _createMarkers(),
-                            myLocationButtonEnabled: false,
-                            myLocationEnabled: false,
-                            mapType: MapType.normal,
                           ),
                         ),
                         SizedBox(
