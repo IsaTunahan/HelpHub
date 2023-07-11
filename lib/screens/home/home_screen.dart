@@ -14,6 +14,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+  bool _isLoading = true;
   final user = FirebaseAuth.instance.currentUser!;
   late CollectionReference<Map<String, dynamic>> collection;
   List<DocumentSnapshot<Map<String, dynamic>>> documents = [];
@@ -25,8 +26,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     collection = FirebaseFirestore.instance.collection('needs');
-    fetchData();
     _tabController = TabController(length: 2, vsync: this);
+    fetchData();
   }
 
   Future<void> fetchData() async {
@@ -39,10 +40,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     query = query.orderBy('createdAt', descending: true);
 
     final querySnapshot = await query.get();
-
     setState(() {
       documents =
           querySnapshot.docs.where((doc) => doc.data() != null).toList();
+      _isLoading = false;
     });
   }
 
@@ -64,133 +65,134 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-    return Scaffold(
-      backgroundColor: AppColors.white,
-      appBar: AppBar(
-        title: Text(
-          _selectedIndex == 0 ? 'En Son Yardımlar' : 'En Son İhtiyaçlar',
-          style: const TextStyle(fontSize: 25),
-        ),
-        backgroundColor:
-            _selectedIndex == 0 ? AppColors.purple : AppColors.yellow,
-        elevation: 0,
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: IndexedStack(
-              index: _selectedIndex,
-              children: const [HomeHelpScreen(), HomeNeedScreen()],
-            ),
+    
+      return Scaffold(
+        backgroundColor: AppColors.white,
+        appBar: AppBar(
+          title: Text(
+            _selectedIndex == 0 ? 'En Son Yardımlar' : 'En Son İhtiyaçlar',
+            style: const TextStyle(fontSize: 25),
           ),
-          Container(
-            color: Colors.transparent,
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    color: Colors.grey.shade50,
-                    elevation: 5,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: screenWidth - (screenWidth - 10),
-                          vertical: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _selectedIndex = 0;
-                              });
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 3),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: _selectedIndex == 0
-                                      ? AppColors.purple
-                                      : Colors.transparent,
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                    color: _selectedIndex == 0
-                                        ? Colors.transparent
-                                        : Colors.grey.shade300,
-                                    width: 2,
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 5,
-                                      horizontal: screenWidth * 0.02),
-                                  child: Text(
-                                    'En Son Yardımlar',
-                                    style: TextStyle(
-                                      color: _selectedIndex == 0
-                                          ? AppColors.white
-                                          : AppColors.purple,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _selectedIndex = 1;
-                              });
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 3),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: _selectedIndex == 1
-                                      ? Colors.yellow
-                                      : Colors.transparent,
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                    color: _selectedIndex == 0
-                                        ? Colors.grey.shade300
-                                        : Colors.transparent,
-                                    width: 2,
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 5,
-                                      horizontal: screenWidth * 0.02),
-                                  child: Text(
-                                    'En Son İhtiyaçlar',
-                                    style: TextStyle(
-                                      color: _selectedIndex == 1
-                                          ? AppColors.white
-                                          : Colors.yellow,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+          backgroundColor:
+              _selectedIndex == 0 ? AppColors.purple : AppColors.yellow,
+          elevation: 0,
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              child: IndexedStack(
+                index: _selectedIndex,
+                children: const [HomeHelpScreen(), HomeNeedScreen()],
               ),
             ),
-          )
-        ],
-      ),
-    );
+            Container(
+              color: Colors.transparent,
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      color: Colors.grey.shade50,
+                      elevation: 5,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth - (screenWidth - 10),
+                            vertical: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _selectedIndex = 0;
+                                });
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 3),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: _selectedIndex == 0
+                                        ? AppColors.purple
+                                        : Colors.transparent,
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                      color: _selectedIndex == 0
+                                          ? Colors.transparent
+                                          : Colors.grey.shade300,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 5,
+                                        horizontal: screenWidth * 0.02),
+                                    child: Text(
+                                      'En Son Yardımlar',
+                                      style: TextStyle(
+                                        color: _selectedIndex == 0
+                                            ? AppColors.white
+                                            : AppColors.purple,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _selectedIndex = 1;
+                                });
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 3),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: _selectedIndex == 1
+                                        ? Colors.yellow
+                                        : Colors.transparent,
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                      color: _selectedIndex == 0
+                                          ? Colors.grey.shade300
+                                          : Colors.transparent,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 5,
+                                        horizontal: screenWidth * 0.02),
+                                    child: Text(
+                                      'En Son İhtiyaçlar',
+                                      style: TextStyle(
+                                        color: _selectedIndex == 1
+                                            ? AppColors.white
+                                            : Colors.yellow,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      );
+    }
   }
-}

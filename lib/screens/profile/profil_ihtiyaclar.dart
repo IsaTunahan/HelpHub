@@ -101,13 +101,19 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
         children: [
           isLoading
               ? const Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator(
+                    color: AppColors.yellow,
+                    backgroundColor: AppColors.purple,
+                  ),
                 )
               : documents.isEmpty
                   ? const Center(
                       child: Text(
-                        'Daha önce ihtiyaç girmediniz...',
-                        style: TextStyle(fontSize: 16),
+                        'İhtiyaç bulunmuyor',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     )
                   : ListView.separated(
@@ -165,6 +171,7 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
                                         itemBuilder: (BuildContext context) =>
                                             <PopupMenuEntry>[
                                           PopupMenuItem(
+                                            height: 1,
                                             child: Card(
                                               color: Colors.grey.shade50,
                                               shape: RoundedRectangleBorder(
@@ -173,7 +180,7 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
                                               ),
                                               child: Padding(
                                                 padding:
-                                                    const EdgeInsets.all(10.0),
+                                                    const EdgeInsets.all(0),
                                                 child: ListTile(
                                                   onTap: () {
                                                     Navigator.of(context).pop();
@@ -408,14 +415,18 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
                                                     Alignment.centerRight,
                                                 child: ElevatedButton(
                                                   onPressed: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          NeedDetailScreen(
-                                                              needId: documents[index].id,),
-                                                    ),
-                                                  );},
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            NeedDetailScreen(
+                                                          needId:
+                                                              documents[index]
+                                                                  .id,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
                                                   style: ElevatedButton.styleFrom(
                                                       shape:
                                                           RoundedRectangleBorder(
