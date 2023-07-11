@@ -22,7 +22,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String _lastName = '';
   String? _profileImageURL;
 
-
   Future<void> _fetchUserData() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
@@ -73,7 +72,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-
 
     return Scaffold(
       backgroundColor: AppColors.white,
@@ -163,7 +161,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
           const CategorySwitcherWidget(),
-          
         ],
       ),
     );

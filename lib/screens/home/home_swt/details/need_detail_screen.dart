@@ -194,7 +194,7 @@ class _NeedDetailScreenState extends State<NeedDetailScreen> {
                 ),
               ),
               SizedBox(
-                height: screenHeight * 0.03,
+                height: screenHeight * 0.02,
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
@@ -261,6 +261,9 @@ class _NeedDetailScreenState extends State<NeedDetailScreen> {
                     ),
                   ),
                 ),
+              ),
+              SizedBox(
+                height: screenHeight * 0.02,
               ),
               Padding(
                 padding: EdgeInsets.symmetric(

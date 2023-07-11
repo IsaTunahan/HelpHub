@@ -1,3 +1,4 @@
+import 'package:bootcamp/screens/home/home_swt/details/users_profile/users_profile.dart';
 import 'package:bootcamp/style/colors.dart';
 import 'package:bootcamp/style/icons/helphub_icons.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -196,7 +197,7 @@ class _HelpDetailScreenState extends State<HelpDetailScreen> {
                 ),
               ),
               SizedBox(
-                height: screenHeight * 0.03,
+                height: screenHeight * 0.02,
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
@@ -263,6 +264,9 @@ class _HelpDetailScreenState extends State<HelpDetailScreen> {
                     ),
                   ),
                 ),
+              ),
+              SizedBox(
+                height: screenHeight * 0.02,
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
@@ -381,25 +385,42 @@ class _HelpDetailScreenState extends State<HelpDetailScreen> {
                               SizedBox(
                                 width: screenWidth * 0.03,
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    '$destekSahibiIsim $destekSahibiSoyad',
-                                    style: const TextStyle(
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '$destekSahibiIsim $destekSahibiSoyad',
+                                      style: const TextStyle(
                                         color: AppColors.darkGrey,
-                                        fontSize: 20),
-                                  ),
-                                  SizedBox(
-                                    height: screenHeight * 0.005,
-                                  ),
-                                  Text(
-                                    '@$destekSahibiKullaniciAdi',
-                                    style: const TextStyle(
-                                        color: AppColors.purple, fontSize: 15),
-                                  ),
-                                ],
-                              )
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: screenHeight * 0.005,
+                                    ),
+                                    Text(
+                                      '@$destekSahibiKullaniciAdi',
+                                      style: const TextStyle(
+                                        color: AppColors.purple,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => UsersProfile()),
+                                    );
+                                  },
+                                  child: const Icon(
+                                    Helphub.next,
+                                    color: AppColors.purple,
+                                  )),
                             ],
                           ),
                         ),
