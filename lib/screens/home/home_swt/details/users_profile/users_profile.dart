@@ -1,14 +1,13 @@
-import 'package:bootcamp/screens/profile/prf_yrd_ihtc.dart';
+import 'package:bootcamp/screens/home/home_swt/details/users_profile/users_category_switcher.dart';
 import 'package:bootcamp/style/colors.dart';
+import 'package:bootcamp/style/icons/helphub_icons.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../repository/user_repository/user_repository.dart';
-
 class UsersProfile extends StatefulWidget {
-  const UsersProfile({super.key});
+  final String userId;
+  const UsersProfile({super.key, required this.userId});
 
   @override
   State<UsersProfile> createState() => _UsersProfileState();
@@ -18,45 +17,35 @@ class _UsersProfileState extends State<UsersProfile> {
   String _username = '';
   String _firstName = '';
   String _lastName = '';
+  String _profiluserId = '';
   String? _profileImageURL;
 
   Future<void> _fetchUserData() async {
-    final user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      final userId = user.uid;
-      final userRepository = UserRepository();
-      final userData = await userRepository.getUserData(userId);
+    final userData = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.userId)
+        .get();
 
-      if (userData != null) {
-        setState(() {
-          _username = userData.username;
-          _firstName = userData.firstName;
-          _lastName = userData.lastName;
-        });
-      }
+    if (userData.exists) {
+      setState(() {
+        _username = userData['username'];
+        _firstName = userData['firstName'];
+        _lastName = userData['lastName'];
+        _profiluserId = userData['userId'];
+      });
     }
   }
 
   Future<void> _fetchProfileImageURL() async {
-    final currentUser = FirebaseAuth.instance.currentUser;
-    if (currentUser != null) {
-      final userRef = FirebaseFirestore.instance
-          .collection('pictures')
-          .doc(currentUser.uid);
-      final userSnapshot = await userRef.get();
+    final profileImageRef = FirebaseStorage.instance
+        .ref()
+        .child('Profil_resimleri/${widget.userId}');
 
-      if (userSnapshot.exists) {
-        final userData = userSnapshot.data();
-        final profileImageRef = FirebaseStorage.instance
-            .ref()
-            .child('Profil_resimleri/${currentUser.uid}');
-        final profileImageURL = await profileImageRef.getDownloadURL();
+    final profileImageURL = await profileImageRef.getDownloadURL();
 
-        setState(() {
-          _profileImageURL = profileImageURL;
-        });
-      }
-    }
+    setState(() {
+      _profileImageURL = profileImageURL;
+    });
   }
 
   @override
@@ -78,6 +67,11 @@ class _UsersProfileState extends State<UsersProfile> {
           'Profil',
           style: TextStyle(color: AppColors.purple, fontSize: 40),
         ),
+        leading: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: const Icon(Helphub.back,color: AppColors.purple,)),
         backgroundColor: AppColors.white,
         elevation: 0,
       ),
@@ -148,7 +142,7 @@ class _UsersProfileState extends State<UsersProfile> {
               ),
             ),
           ),
-          const CategorySwitcherWidget(),
+            UsersCategorySwitcherWidget(userId: widget.userId),
         ],
       ),
     );

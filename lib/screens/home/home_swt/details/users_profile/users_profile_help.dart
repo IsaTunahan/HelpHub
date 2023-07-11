@@ -1,26 +1,25 @@
 import 'dart:io';
 
-import 'package:bootcamp/screens/profile/settings/delete_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../repository/user_repository/user_repository.dart';
-import '../../style/colors.dart';
+import '../../../../../repository/user_repository/user_repository.dart';
+import '../../../../../style/colors.dart';
 
-class ProfilYardimlar extends StatefulWidget {
-  final String currentUserEmail;
+class UsersProfilYardimlar extends StatefulWidget {
+  final String currentUser;
 
-  const ProfilYardimlar({Key? key, required this.currentUserEmail})
+  const UsersProfilYardimlar({Key? key, required this.currentUser})
       : super(key: key);
 
   @override
-  State<ProfilYardimlar> createState() => _ProfilYardimlarState();
+  State<UsersProfilYardimlar> createState() => _UsersProfilYardimlarState();
 }
 
-class _ProfilYardimlarState extends State<ProfilYardimlar> {
+class _UsersProfilYardimlarState extends State<UsersProfilYardimlar> {
   late CollectionReference<Map<String, dynamic>> collection;
   List<DocumentSnapshot<Map<String, dynamic>>> documents = [];
   String _username = '';
@@ -31,7 +30,7 @@ class _ProfilYardimlarState extends State<ProfilYardimlar> {
 
   Future<void> fetchData() async {
     final querySnapshot = await collection
-        .where('Destek Sahibi', isEqualTo: widget.currentUserEmail)
+        .where('Destek Sahibi', isEqualTo: widget.currentUser)
         .get();
 
     setState(() {
@@ -42,9 +41,9 @@ class _ProfilYardimlarState extends State<ProfilYardimlar> {
   Future<void> _fetchUserData() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      final userId = user.uid;
+
       final userRepository = UserRepository();
-      final userData = await userRepository.getUserData(userId);
+      final userData = await userRepository.getUserData(widget.currentUser);
 
       if (userData != null) {
         setState(() {
@@ -57,24 +56,22 @@ class _ProfilYardimlarState extends State<ProfilYardimlar> {
   }
 
   Future<void> _fetchProfileImageURL() async {
-    final currentUser = FirebaseAuth.instance.currentUser;
-    if (currentUser != null) {
-      final userRef = FirebaseFirestore.instance
-          .collection('pictures')
-          .doc(currentUser.uid);
-      final userSnapshot = await userRef.get();
 
-      if (userSnapshot.exists) {
-        final userData = userSnapshot.data();
-        final profileImageRef = FirebaseStorage.instance
-            .ref()
-            .child('Profil_resimleri/${currentUser.uid}');
-        final profileImageURL = await profileImageRef.getDownloadURL();
+    final userRef = FirebaseFirestore.instance
+        .collection('pictures')
+        .doc(widget.currentUser);
+    final userSnapshot = await userRef.get();
 
-        setState(() {
-          _profileImageURL = profileImageURL;
-        });
-      }
+    if (userSnapshot.exists) {
+      final userData = userSnapshot.data();
+      final profileImageRef = FirebaseStorage.instance
+          .ref()
+          .child('Profil_resimleri/${widget.currentUser}');
+      final profileImageURL = await profileImageRef.getDownloadURL();
+
+      setState(() {
+        _profileImageURL = profileImageURL;
+      });
     }
   }
 
@@ -95,11 +92,11 @@ class _ProfilYardimlarState extends State<ProfilYardimlar> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-       
+        
         documents.isEmpty
             ? const Center(
                 child: Text(
-                  'Daha önce yardım girmediniz...',
+                  'Kullanıcıya ait yardım bulunmuyor...',
                   style: TextStyle(fontSize: 16),
                 ),
               )
@@ -152,118 +149,10 @@ class _ProfilYardimlarState extends State<ProfilYardimlar> {
                                         fontWeight: FontWeight.w500),
                                   ),
                                 ),
-                                PopupMenuButton(
-                                  itemBuilder: (BuildContext context) =>
-                                      <PopupMenuEntry>[
-                                    PopupMenuItem(
-                                      child: Card(
-                                        color: Colors.grey.shade50,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: ListTile(
-                                            onTap: () {
-                                              Navigator.of(context).pop();
-                                              showDialog(
-                                                context: context,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return AlertDialog(
-                                                    title: const Text(
-                                                        'Yardımı Sil'),
-                                                    content: const Text(
-                                                        'Bu yardımı silmek istediğinize emin misiniz?'),
-                                                    actions: [
-                                                      ElevatedButton(
-                                                        style: ElevatedButton
-                                                            .styleFrom(
-                                                          shape:
-                                                              RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10),
-                                                          ),
-                                                          backgroundColor:
-                                                              AppColors.purple,
-                                                        ),
-                                                        onPressed: () {
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                        },
-                                                        child: const Text(
-                                                          'İptal',
-                                                          style: TextStyle(
-                                                              color: AppColors
-                                                                  .white),
-                                                        ),
-                                                      ),
-                                                      ElevatedButton(
-                                                        style: ElevatedButton
-                                                            .styleFrom(
-                                                          shape:
-                                                              RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10),
-                                                          ),
-                                                          backgroundColor:
-                                                              AppColors.purple,
-                                                        ),
-                                                        onPressed: () async {
-                                                          String
-                                                              collectionName =
-                                                              'helps';
-                                                          String documentId =
-                                                              documents[index]
-                                                                  .id;
-                                                          await deleteDataFromFirestore(
-                                                              collectionName,
-                                                              documentId);
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                          setState(() {
-                                                            fetchData();
-                                                            _fetchUserData();
-                                                            _fetchProfileImageURL();
-                                                          });
-                                                        },
-                                                        child: const Text(
-                                                          'Sil',
-                                                          style: TextStyle(
-                                                              color: AppColors
-                                                                  .white),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  );
-                                                },
-                                              );
-                                            },
-                                            leading: const Icon(
-                                              Icons.delete,
-                                              color: AppColors.purple,
-                                            ),
-                                            title: const Text(
-                                              'Sil',
-                                              style: TextStyle(
-                                                color: AppColors.purple,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                  child: const Icon(
+                                 const Icon(
                                     Icons.more_vert,
                                     color: AppColors.purple,
                                   ),
-                                ),
                               ],
                             ),
                             Card(
@@ -310,24 +199,22 @@ class _ProfilYardimlarState extends State<ProfilYardimlar> {
                                                     fontSize: 16,
                                                     fontWeight:
                                                         FontWeight.bold),
-                                               
                                               ),
-                                                SizedBox(
-                                                  height: screenHeight * 0.01,
-                                                ),
-                                                Text(
-                                                  miktar +
-                                                      ' ' +
-                                                      birim +
-                                                      ' ' +
-                                                      destek,
-                                                  style: const TextStyle(
-                                                      color: AppColors.purple,
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                              
+                                              SizedBox(
+                                                height: screenHeight * 0.01,
+                                              ),
+                                              Text(
+                                                miktar +
+                                                    ' ' +
+                                                    birim +
+                                                    ' ' +
+                                                    destek,
+                                                style: const TextStyle(
+                                                    color: AppColors.purple,
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
                                             ],
                                           ),
                                         ],

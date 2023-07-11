@@ -1,26 +1,25 @@
 import 'dart:io';
 
-import 'package:bootcamp/screens/profile/settings/delete_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../repository/user_repository/user_repository.dart';
-import '../../style/colors.dart';
+import '../../../../../repository/user_repository/user_repository.dart';
+import '../../../../../style/colors.dart';
 
-class ProfilIhtiyaclar extends StatefulWidget {
-  final String currentUserEmail;
+class UsersProfilIhtiyaclar extends StatefulWidget {
+  final String currentUser;
 
-  const ProfilIhtiyaclar({Key? key, required this.currentUserEmail})
+  const UsersProfilIhtiyaclar({Key? key, required this.currentUser})
       : super(key: key);
 
   @override
-  State<ProfilIhtiyaclar> createState() => _ProfilIhtiyaclarState();
+  State<UsersProfilIhtiyaclar> createState() => _UsersProfilIhtiyaclarState();
 }
 
-class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
+class _UsersProfilIhtiyaclarState extends State<UsersProfilIhtiyaclar> {
   late CollectionReference<Map<String, dynamic>> collection;
   List<DocumentSnapshot<Map<String, dynamic>>> documents = [];
   bool isLoading = true;
@@ -32,7 +31,7 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
 
   Future<void> fetchData() async {
     final querySnapshot = await collection
-        .where('İhtiyaç Sahibi', isEqualTo: widget.currentUserEmail)
+        .where('İhtiyaç Sahibi', isEqualTo: widget.currentUser)
         .get();
 
     setState(() {
@@ -44,9 +43,9 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
   Future<void> _fetchUserData() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      final userId = user.uid;
+
       final userRepository = UserRepository();
-      final userData = await userRepository.getUserData(userId);
+      final userData = await userRepository.getUserData(widget.currentUser);
 
       if (userData != null) {
         setState(() {
@@ -60,23 +59,21 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
 
   Future<void> _fetchProfileImageURL() async {
     final currentUser = FirebaseAuth.instance.currentUser;
-    if (currentUser != null) {
-      final userRef = FirebaseFirestore.instance
-          .collection('pictures')
-          .doc(currentUser.uid);
-      final userSnapshot = await userRef.get();
+    final userRef = FirebaseFirestore.instance
+        .collection('pictures')
+        .doc(widget.currentUser);
+    final userSnapshot = await userRef.get();
 
-      if (userSnapshot.exists) {
-        final userData = userSnapshot.data();
-        final profileImageRef = FirebaseStorage.instance
-            .ref()
-            .child('Profil_resimleri/${currentUser.uid}');
-        final profileImageURL = await profileImageRef.getDownloadURL();
+    if (userSnapshot.exists) {
+      final userData = userSnapshot.data();
+      final profileImageRef = FirebaseStorage.instance
+          .ref()
+          .child('Profil_resimleri/${widget.currentUser}');
+      final profileImageURL = await profileImageRef.getDownloadURL();
 
-        setState(() {
-          _profileImageURL = profileImageURL;
-        });
-      }
+      setState(() {
+        _profileImageURL = profileImageURL;
+      });
     }
   }
 
@@ -106,7 +103,7 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
               : documents.isEmpty
                   ? const Center(
                       child: Text(
-                        'Daha önce ihtiyaç girmediniz...',
+                        'Kullanıcıya ait ihtiyaç bulunmuyor...',
                         style: TextStyle(fontSize: 16),
                       ),
                     )
@@ -160,128 +157,10 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
                                               fontWeight: FontWeight.w500),
                                         ),
                                       ),
-                                      PopupMenuButton(
-                                        itemBuilder: (BuildContext context) =>
-                                            <PopupMenuEntry>[
-                                          PopupMenuItem(
-                                            child: Card(
-                                              color: Colors.grey.shade50,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              ),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(10.0),
-                                                child: ListTile(
-                                                  onTap: () {
-                                                    Navigator.of(context).pop();
-                                                    showDialog(
-                                                      context: context,
-                                                      builder: (BuildContext
-                                                          context) {
-                                                        return AlertDialog(
-                                                          title: const Text(
-                                                              'İhtiyacı Sil'),
-                                                          content: const Text(
-                                                              'Bu ihtiyacı silmek istediğinize emin misiniz?'),
-                                                          actions: [
-                                                            ElevatedButton(
-                                                              style:
-                                                                  ElevatedButton
-                                                                      .styleFrom(
-                                                                shape:
-                                                                    RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              10),
-                                                                ),
-                                                                backgroundColor:
-                                                                    AppColors
-                                                                        .purple,
-                                                              ),
-                                                              onPressed: () {
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pop();
-                                                              },
-                                                              child: const Text(
-                                                                'İptal',
-                                                                style: TextStyle(
-                                                                    color: AppColors
-                                                                        .white),
-                                                              ),
-                                                            ),
-                                                            ElevatedButton(
-                                                              style:
-                                                                  ElevatedButton
-                                                                      .styleFrom(
-                                                                shape:
-                                                                    RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              10),
-                                                                ),
-                                                                backgroundColor:
-                                                                    AppColors
-                                                                        .purple,
-                                                              ),
-                                                              onPressed:
-                                                                  () async {
-                                                                String
-                                                                    collectionName =
-                                                                    'needs';
-                                                                String
-                                                                    documentId =
-                                                                    documents[
-                                                                            index]
-                                                                        .id;
-                                                                await deleteDataFromFirestore(
-                                                                    collectionName,
-                                                                    documentId);
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pop();
-                                                                setState(() {
-                                                                  fetchData();
-                                                                  _fetchUserData();
-                                                                  _fetchProfileImageURL();
-                                                                });
-                                                              },
-                                                              child: const Text(
-                                                                'Sil',
-                                                                style: TextStyle(
-                                                                    color: AppColors
-                                                                        .white),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        );
-                                                      },
-                                                    );
-                                                  },
-                                                  leading: const Icon(
-                                                    Icons.delete,
-                                                    color: AppColors.purple,
-                                                  ),
-                                                  title: const Text(
-                                                    'Sil',
-                                                    style: TextStyle(
-                                                      color: AppColors.purple,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                        child: const Icon(
-                                          Icons.more_vert,
-                                          color: AppColors.purple,
-                                        ),
-                                      ),
+                                      const Icon(
+                                    Icons.more_vert,
+                                    color: AppColors.purple,
+                                  ),
                                     ],
                                   ),
                                   Card(

@@ -123,6 +123,7 @@ class _HelpDetailScreenState extends State<HelpDetailScreen> {
       final destek = helpData!['Destek'];
       final birim = helpData!['Birim'];
       final miktar = helpData!['Miktar'];
+      final desteksahibiId = helpData!['Destek Sahibi'];
       final il = helpData!['city'];
       final ilce = helpData!['district'];
       final adres = helpData!['address'];
@@ -414,7 +415,7 @@ class _HelpDetailScreenState extends State<HelpDetailScreen> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => UsersProfile()),
+                                          builder: (context) => UsersProfile(userId: desteksahibiId)),
                                     );
                                   },
                                   child: const Icon(

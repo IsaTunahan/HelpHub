@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 import '../../../style/colors.dart';
 import 'details/need_detail_screen.dart';
+import 'details/users_profile/users_profile.dart';
 
 class HomeNeedScreen extends StatefulWidget {
   const HomeNeedScreen({Key? key}) : super(key: key);
@@ -124,14 +125,13 @@ class _HomeNeedScreenState extends State<HomeNeedScreen> {
           else
             ListView.separated(
               key: UniqueKey(),
-              separatorBuilder: (context, index) =>  Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: screenHeight * 0.005),
-                          child: const Divider(
-                            color: AppColors.grey1,
-                            thickness: 1.5,
-                          ),
-                        ),
+              separatorBuilder: (context, index) => Padding(
+                padding: EdgeInsets.symmetric(vertical: screenHeight * 0.005),
+                child: const Divider(
+                  color: AppColors.grey1,
+                  thickness: 1.5,
+                ),
+              ),
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: documents.length,
@@ -147,15 +147,13 @@ class _HomeNeedScreenState extends State<HomeNeedScreen> {
                 final il = data['city'];
                 final ilce = data['district'];
                 final tarih = data['createdAt'] as Timestamp;
-            
+
                 DateTime dateTime = tarih.toDate();
-            
+
                 final formattedDate =
                     DateFormat('dd MMMM y - HH:mm', 'tr_TR').format(dateTime);
                 String dayName = DateFormat.EEEE('tr_TR').format(dateTime);
-            
-            
-                
+
                 return FutureBuilder<Map<String, String>>(
                   future: getUsername(ihtiyacsahibiId),
                   builder: (context, snapshot) {
@@ -167,8 +165,8 @@ class _HomeNeedScreenState extends State<HomeNeedScreen> {
                     }
                     final ihtiyacsahibimail = snapshot.data ?? '';
                     final userData = snapshot.data!;
-                  final destekSahibiKullaniciAdi = userData['username']!;
-                  final profileImageURL = userData['profileImageURL']!;
+                    final destekSahibiKullaniciAdi = userData['username']!;
+                    final profileImageURL = userData['profileImageURL']!;
                     return Column(
                       children: [
                         Padding(
@@ -235,8 +233,7 @@ class _HomeNeedScreenState extends State<HomeNeedScreen> {
                                                       '/ ' +
                                                       altkategori,
                                                   style: const TextStyle(
-                                                      color:
-                                                          AppColors.darkGrey,
+                                                      color: AppColors.darkGrey,
                                                       fontSize: 16,
                                                       fontWeight:
                                                           FontWeight.bold),
@@ -294,19 +291,37 @@ class _HomeNeedScreenState extends State<HomeNeedScreen> {
                                               const SizedBox(
                                                 width: 10,
                                               ),
-                                              const Text(
-                                                '@',
-                                                style: TextStyle(
-                                                    color: AppColors.purple,
-                                                    fontSize: 17),
-                                              ),
-                                              Text(
-                                                destekSahibiKullaniciAdi,
-                                                style: const TextStyle(
-                                                    color: AppColors.darkGrey,
-                                                    fontSize: 17,
-                                                    fontWeight:
-                                                        FontWeight.w500),
+                                              GestureDetector(
+                                                onTap: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            UsersProfile(
+                                                                userId:
+                                                                    ihtiyacsahibiId)),
+                                                  );
+                                                },
+                                                child: Row(
+                                                  children: [
+                                                    const Text(
+                                                      '@',
+                                                      style: TextStyle(
+                                                          color:
+                                                              AppColors.purple,
+                                                          fontSize: 17),
+                                                    ),
+                                                    Text(
+                                                      destekSahibiKullaniciAdi,
+                                                      style: const TextStyle(
+                                                          color: AppColors
+                                                              .darkGrey,
+                                                          fontSize: 17,
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -350,7 +365,6 @@ class _HomeNeedScreenState extends State<HomeNeedScreen> {
                             ],
                           ),
                         ),
-                        
                       ],
                     );
                   },

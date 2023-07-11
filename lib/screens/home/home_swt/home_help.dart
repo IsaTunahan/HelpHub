@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 
 import '../../../style/colors.dart';
 import 'details/help_detail_screen.dart';
+import 'details/users_profile/users_profile.dart';
 
 class HomeHelpScreen extends StatefulWidget {
   const HomeHelpScreen({Key? key}) : super(key: key);
@@ -101,7 +102,6 @@ class _HomeHelpScreenState extends State<HomeHelpScreen> {
             )
           else
             ListView.separated(
-
               separatorBuilder: (context, index) => Padding(
                 padding: EdgeInsets.symmetric(vertical: screenHeight * 0.005),
                 child: const Divider(
@@ -274,19 +274,36 @@ class _HomeHelpScreenState extends State<HomeHelpScreen> {
                                               const SizedBox(
                                                 width: 10,
                                               ),
-                                              const Text(
-                                                '@',
-                                                style: TextStyle(
-                                                    color: AppColors.purple,
-                                                    fontSize: 17),
-                                              ),
-                                              Text(
-                                                destekSahibiKullaniciAdi,
-                                                style: const TextStyle(
-                                                    color: AppColors.darkGrey,
-                                                    fontSize: 17,
-                                                    fontWeight:
-                                                        FontWeight.w500),
+                                              GestureDetector(
+                                                onTap: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            UsersProfile(
+                                                                userId:
+                                                                    desteksahibiId)),
+                                                  );
+                                                },
+                                                child: Row(
+                                                  children: [
+                                                    const Text(
+                                                      '@',
+                                                      style: TextStyle(
+                                                          color: AppColors.purple,
+                                                          fontSize: 17),
+                                                    ),
+                                                    Text(
+                                                      destekSahibiKullaniciAdi,
+                                                      style: const TextStyle(
+                                                          color:
+                                                              AppColors.darkGrey,
+                                                          fontSize: 17,
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                             ],
                                           ),
