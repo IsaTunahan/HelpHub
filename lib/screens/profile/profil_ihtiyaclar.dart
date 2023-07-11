@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bootcamp/screens/home/home_swt/details/need_detail_screen.dart';
 import 'package:bootcamp/screens/profile/settings/delete_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -98,7 +99,6 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          
           isLoading
               ? const Center(
                   child: CircularProgressIndicator(),
@@ -111,17 +111,18 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
                       ),
                     )
                   : ListView.separated(
-                key: UniqueKey(),
-                separatorBuilder: (context, index) => Padding(
-                  padding: EdgeInsets.symmetric(vertical: screenHeight * 0.005),
-                  child: const Divider(
-                    color: AppColors.grey1,
-                    thickness: 1.5,
-                  ),
-                ),
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: documents.length,
+                      key: UniqueKey(),
+                      separatorBuilder: (context, index) => Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: screenHeight * 0.005),
+                        child: const Divider(
+                          color: AppColors.grey1,
+                          thickness: 1.5,
+                        ),
+                      ),
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: documents.length,
                       itemBuilder: (context, index) {
                         final data =
                             documents[index].data() as Map<String, dynamic>;
@@ -406,7 +407,15 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
                                                 alignment:
                                                     Alignment.centerRight,
                                                 child: ElevatedButton(
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          NeedDetailScreen(
+                                                              needId: documents[index].id,),
+                                                    ),
+                                                  );},
                                                   style: ElevatedButton.styleFrom(
                                                       shape:
                                                           RoundedRectangleBorder(
@@ -432,7 +441,6 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
                                 ],
                               ),
                             ),
-                            
                           ],
                         );
                       },

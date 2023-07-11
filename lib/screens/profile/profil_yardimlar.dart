@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bootcamp/screens/home/home_swt/details/help_detail_screen.dart';
 import 'package:bootcamp/screens/profile/settings/delete_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -95,7 +96,6 @@ class _ProfilYardimlarState extends State<ProfilYardimlar> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-       
         documents.isEmpty
             ? const Center(
                 child: Text(
@@ -156,6 +156,7 @@ class _ProfilYardimlarState extends State<ProfilYardimlar> {
                                   itemBuilder: (BuildContext context) =>
                                       <PopupMenuEntry>[
                                     PopupMenuItem(
+                                      height: 1,
                                       child: Card(
                                         color: Colors.grey.shade50,
                                         shape: RoundedRectangleBorder(
@@ -163,7 +164,7 @@ class _ProfilYardimlarState extends State<ProfilYardimlar> {
                                               BorderRadius.circular(10),
                                         ),
                                         child: Padding(
-                                          padding: const EdgeInsets.all(10.0),
+                                          padding: const EdgeInsets.all(0),
                                           child: ListTile(
                                             onTap: () {
                                               Navigator.of(context).pop();
@@ -310,24 +311,22 @@ class _ProfilYardimlarState extends State<ProfilYardimlar> {
                                                     fontSize: 16,
                                                     fontWeight:
                                                         FontWeight.bold),
-                                               
                                               ),
-                                                SizedBox(
-                                                  height: screenHeight * 0.01,
-                                                ),
-                                                Text(
-                                                  miktar +
-                                                      ' ' +
-                                                      birim +
-                                                      ' ' +
-                                                      destek,
-                                                  style: const TextStyle(
-                                                      color: AppColors.purple,
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                              
+                                              SizedBox(
+                                                height: screenHeight * 0.01,
+                                              ),
+                                              Text(
+                                                miktar +
+                                                    ' ' +
+                                                    birim +
+                                                    ' ' +
+                                                    destek,
+                                                style: const TextStyle(
+                                                    color: AppColors.purple,
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
                                             ],
                                           ),
                                         ],
@@ -389,7 +388,18 @@ class _ProfilYardimlarState extends State<ProfilYardimlar> {
                                           child: Align(
                                             alignment: Alignment.centerRight,
                                             child: ElevatedButton(
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        HelpDetailScreen(
+                                                      helpId:
+                                                          documents[index].id,
+                                                    ),
+                                                  ),
+                                                );
+                                              },
                                               style: ElevatedButton.styleFrom(
                                                   shape: RoundedRectangleBorder(
                                                       borderRadius:
