@@ -105,7 +105,7 @@ class _ProfilYardimlarState extends State<ProfilYardimlar> {
         : documents.isEmpty
             ? const Center(
                 child: Text(
-                  'Daha önce yardım girmediniz...',
+                  'Yardımınız bulunmuyor',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,

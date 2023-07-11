@@ -109,7 +109,7 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
               : documents.isEmpty
                   ? const Center(
                       child: Text(
-                        'İhtiyaç bulunmuyor',
+                        'İhtiyacınız bulunmuyor',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
