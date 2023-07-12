@@ -257,27 +257,27 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
                                                                   _fetchUserData();
                                                                   _fetchProfileImageURL();
                                                                 });
-                                                                ScaffoldMessenger
-                                                                      .of(context)
-                                                                  .showSnackBar(
-                                                                const SnackBar(
-                                                                  backgroundColor:
-                                                                      Colors
-                                                                          .green,
-                                                                  content: Text(
-                                                                    'İhtiyacınız başarılı bir şekilde silindi',
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            15,
-                                                                        fontWeight:
-                                                                            FontWeight.bold),
+                                                                ScaffoldMessenger.of(
+                                                                        context)
+                                                                    .showSnackBar(
+                                                                  const SnackBar(
+                                                                    backgroundColor:
+                                                                        Colors
+                                                                            .green,
+                                                                    content:
+                                                                        Text(
+                                                                      'İhtiyacınız başarılı bir şekilde silindi',
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              15,
+                                                                          fontWeight:
+                                                                              FontWeight.bold),
+                                                                    ),
+                                                                    duration: Duration(
+                                                                        seconds:
+                                                                            2),
                                                                   ),
-                                                                  duration:
-                                                                      Duration(
-                                                                          seconds:
-                                                                              2),
-                                                                ),
-                                                              );
+                                                                );
                                                               },
                                                               child: const Text(
                                                                 'Sil',
@@ -345,35 +345,41 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
                                                 vertical: screenHeight * 0.01),
                                             child: Row(
                                               children: [
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      anakategori +
-                                                          '/ ' +
-                                                          altkategori,
-                                                      style: const TextStyle(
-                                                          color: AppColors
-                                                              .darkGrey,
-                                                          fontSize: 16,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                    SizedBox(
-                                                      height:
-                                                          screenHeight * 0.01,
-                                                    ),
-                                                    Text(
-                                                      ihtiyac,
-                                                      style: const TextStyle(
-                                                          color:
-                                                              AppColors.purple,
-                                                          fontSize: 20,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                  ],
+                                                Expanded(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                          anakategori +
+                                                              '/ ' +
+                                                              altkategori,
+                                                          style: const TextStyle(
+                                                              color: AppColors
+                                                                  .darkGrey,
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                          overflow: TextOverflow
+                                                              .ellipsis),
+                                                      SizedBox(
+                                                        height:
+                                                            screenHeight * 0.01,
+                                                      ),
+                                                      Text(ihtiyac,
+                                                          style: const TextStyle(
+                                                              color: AppColors
+                                                                  .purple,
+                                                              fontSize: 20,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                          overflow: TextOverflow
+                                                              .ellipsis),
+                                                    ],
+                                                  ),
                                                 ),
                                               ],
                                             ),

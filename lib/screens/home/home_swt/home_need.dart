@@ -53,7 +53,6 @@ class _HomeNeedScreenState extends State<HomeNeedScreen> {
     super.initState();
     collection = FirebaseFirestore.instance.collection('needs');
     fetchData();
-    
   }
 
   Future<void> fetchData() async {
@@ -222,35 +221,41 @@ class _HomeNeedScreenState extends State<HomeNeedScreen> {
                                                 vertical: screenHeight * 0.01),
                                             child: Row(
                                               children: [
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      anakategori +
-                                                          '/ ' +
-                                                          altkategori,
-                                                      style: const TextStyle(
-                                                          color: AppColors
-                                                              .darkGrey,
-                                                          fontSize: 16,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                    SizedBox(
-                                                      height:
-                                                          screenHeight * 0.01,
-                                                    ),
-                                                    Text(
-                                                      ihtiyac,
-                                                      style: const TextStyle(
-                                                          color:
-                                                              AppColors.purple,
-                                                          fontSize: 20,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                  ],
+                                                Expanded(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                          anakategori +
+                                                              '/ ' +
+                                                              altkategori,
+                                                          style: const TextStyle(
+                                                              color: AppColors
+                                                                  .darkGrey,
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                          overflow: TextOverflow
+                                                              .ellipsis),
+                                                      SizedBox(
+                                                        height:
+                                                            screenHeight * 0.01,
+                                                      ),
+                                                      Text(ihtiyac,
+                                                          style: const TextStyle(
+                                                              color: AppColors
+                                                                  .purple,
+                                                              fontSize: 20,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                          overflow: TextOverflow
+                                                              .ellipsis),
+                                                    ],
+                                                  ),
                                                 ),
                                               ],
                                             ),

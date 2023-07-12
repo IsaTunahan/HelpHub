@@ -236,7 +236,7 @@ class _NeedDetailScreenState extends State<NeedDetailScreen> {
                           ],
                         ),
                         SizedBox(
-                          height: screenHeight * 0.02,
+                          height: screenHeight * 0.01,
                         ),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -265,7 +265,7 @@ class _NeedDetailScreenState extends State<NeedDetailScreen> {
                 ),
               ),
               SizedBox(
-                height: screenHeight * 0.02,
+                height: screenHeight * 0.01,
               ),
               Padding(
                 padding: EdgeInsets.symmetric(

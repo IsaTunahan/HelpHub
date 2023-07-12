@@ -344,37 +344,45 @@ class _ProfilYardimlarState extends State<ProfilYardimlar> {
                                               vertical: screenHeight * 0.01),
                                           child: Row(
                                             children: [
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    anakategori +
-                                                        '/ ' +
-                                                        altkategori,
-                                                    style: const TextStyle(
-                                                        color:
-                                                            AppColors.darkGrey,
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                  SizedBox(
-                                                    height: screenHeight * 0.01,
-                                                  ),
-                                                  Text(
-                                                    miktar +
-                                                        ' ' +
-                                                        birim +
-                                                        ' ' +
-                                                        destek,
-                                                    style: const TextStyle(
-                                                        color: AppColors.purple,
-                                                        fontSize: 20,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                ],
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                        anakategori +
+                                                            '/ ' +
+                                                            altkategori,
+                                                        style: const TextStyle(
+                                                            color: AppColors
+                                                                .darkGrey,
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                        overflow: TextOverflow
+                                                            .ellipsis),
+                                                    SizedBox(
+                                                      height:
+                                                          screenHeight * 0.01,
+                                                    ),
+                                                    Text(
+                                                        miktar +
+                                                            ' ' +
+                                                            birim +
+                                                            ' ' +
+                                                            destek,
+                                                        style: const TextStyle(
+                                                            color: AppColors
+                                                                .purple,
+                                                            fontSize: 20,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                        overflow: TextOverflow
+                                                            .ellipsis),
+                                                  ],
+                                                ),
                                               ),
                                             ],
                                           ),

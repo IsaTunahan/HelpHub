@@ -238,7 +238,7 @@ class _HelpDetailScreenState extends State<HelpDetailScreen> {
                           ],
                         ),
                         SizedBox(
-                          height: screenHeight * 0.02,
+                          height: screenHeight * 0.01,
                         ),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -267,7 +267,7 @@ class _HelpDetailScreenState extends State<HelpDetailScreen> {
                 ),
               ),
               SizedBox(
-                height: screenHeight * 0.02,
+                height: screenHeight * 0.01,
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
