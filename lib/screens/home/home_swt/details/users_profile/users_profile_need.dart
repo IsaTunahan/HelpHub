@@ -197,52 +197,49 @@ class _UsersProfilIhtiyaclarState extends State<UsersProfilIhtiyaclar> {
                                             ],
                                           ),
                                           Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: screenHeight * 0.01),
-                                            child: Row(
-                                              children: [
-                                                Expanded(
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        anakategori +
-                                                            '/ ' +
-                                                            altkategori,
-                                                        style: const TextStyle(
-                                                            color: AppColors
-                                                                .darkGrey,
-                                                            fontSize: 16,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                      ),
-                                                      SizedBox(
-                                                        height:
-                                                            screenHeight * 0.01,
-                                                      ),
-                                                      Text(
-                                                        ihtiyac,
-                                                        style: const TextStyle(
-                                                            color: AppColors
-                                                                .purple,
-                                                            fontSize: 20,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                      ),
-                                                    ],
-                                                  ),
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: screenHeight * 0.01),
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      anakategori +
+                                                          '/ ' +
+                                                          altkategori,
+                                                      style: const TextStyle(
+                                                          color: AppColors
+                                                              .darkGrey,
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    ),
+                                                    SizedBox(
+                                                      height:
+                                                          screenHeight * 0.01,
+                                                    ),
+                                                    Text(
+                                                      ihtiyac,
+                                                      style: const TextStyle(
+                                                          color:
+                                                              AppColors.purple,
+                                                          fontSize: 20,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    ),
+                                                  ],
                                                 ),
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
+                                        ),
                                           Padding(
                                             padding: EdgeInsets.symmetric(
                                                 vertical: screenHeight * 0.001),
