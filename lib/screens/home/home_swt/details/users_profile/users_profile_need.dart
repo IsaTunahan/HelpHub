@@ -10,7 +10,6 @@ import 'package:intl/intl.dart';
 import '../../../../../repository/user_repository/user_repository.dart';
 import '../../../../../style/colors.dart';
 
-
 class UsersProfilIhtiyaclar extends StatefulWidget {
   final String currentUser;
 
@@ -45,7 +44,6 @@ class _UsersProfilIhtiyaclarState extends State<UsersProfilIhtiyaclar> {
   Future<void> _fetchUserData() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-
       final userRepository = UserRepository();
       final userData = await userRepository.getUserData(widget.currentUser);
 
@@ -97,7 +95,6 @@ class _UsersProfilIhtiyaclarState extends State<UsersProfilIhtiyaclar> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          
           isLoading
               ? const Center(
                   child: CircularProgressIndicator(
@@ -116,17 +113,18 @@ class _UsersProfilIhtiyaclarState extends State<UsersProfilIhtiyaclar> {
                       ),
                     )
                   : ListView.separated(
-                key: UniqueKey(),
-                separatorBuilder: (context, index) => Padding(
-                  padding: EdgeInsets.symmetric(vertical: screenHeight * 0.005),
-                  child: const Divider(
-                    color: AppColors.grey1,
-                    thickness: 1.5,
-                  ),
-                ),
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: documents.length,
+                      key: UniqueKey(),
+                      separatorBuilder: (context, index) => Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: screenHeight * 0.005),
+                        child: const Divider(
+                          color: AppColors.grey1,
+                          thickness: 1.5,
+                        ),
+                      ),
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: documents.length,
                       itemBuilder: (context, index) {
                         final data =
                             documents[index].data() as Map<String, dynamic>;
@@ -166,9 +164,9 @@ class _UsersProfilIhtiyaclarState extends State<UsersProfilIhtiyaclar> {
                                         ),
                                       ),
                                       const Icon(
-                                    Icons.more_vert,
-                                    color: AppColors.purple,
-                                  ),
+                                        Icons.more_vert,
+                                        color: AppColors.purple,
+                                      ),
                                     ],
                                   ),
                                   Card(
@@ -203,35 +201,44 @@ class _UsersProfilIhtiyaclarState extends State<UsersProfilIhtiyaclar> {
                                                 vertical: screenHeight * 0.01),
                                             child: Row(
                                               children: [
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      anakategori +
-                                                          '/ ' +
-                                                          altkategori,
-                                                      style: const TextStyle(
-                                                          color: AppColors
-                                                              .darkGrey,
-                                                          fontSize: 16,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                    SizedBox(
-                                                      height:
-                                                          screenHeight * 0.01,
-                                                    ),
-                                                    Text(
-                                                      ihtiyac,
-                                                      style: const TextStyle(
-                                                          color:
-                                                              AppColors.purple,
-                                                          fontSize: 20,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                  ],
+                                                Expanded(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        anakategori +
+                                                            '/ ' +
+                                                            altkategori,
+                                                        style: const TextStyle(
+                                                            color: AppColors
+                                                                .darkGrey,
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
+                                                      SizedBox(
+                                                        height:
+                                                            screenHeight * 0.01,
+                                                      ),
+                                                      Text(
+                                                        ihtiyac,
+                                                        style: const TextStyle(
+                                                            color: AppColors
+                                                                .purple,
+                                                            fontSize: 20,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ],
                                             ),
@@ -265,7 +272,7 @@ class _UsersProfilIhtiyaclarState extends State<UsersProfilIhtiyaclar> {
                                                             : const AssetImage(
                                                                     'assets/profile/user_profile.png')
                                                                 as ImageProvider<
-                                                                    Object>?, 
+                                                                    Object>?,
                                                     radius: 15,
                                                   ),
                                                 ),
@@ -294,14 +301,18 @@ class _UsersProfilIhtiyaclarState extends State<UsersProfilIhtiyaclar> {
                                                     Alignment.centerRight,
                                                 child: ElevatedButton(
                                                   onPressed: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          NeedDetailScreen(
-                                                              needId: documents[index].id,),
-                                                    ),
-                                                  );},
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            NeedDetailScreen(
+                                                          needId:
+                                                              documents[index]
+                                                                  .id,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
                                                   style: ElevatedButton.styleFrom(
                                                       shape:
                                                           RoundedRectangleBorder(
@@ -327,7 +338,6 @@ class _UsersProfilIhtiyaclarState extends State<UsersProfilIhtiyaclar> {
                                 ],
                               ),
                             ),
-                            
                           ],
                         );
                       },

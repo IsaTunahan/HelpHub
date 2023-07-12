@@ -68,7 +68,9 @@ class _ProfilBilgileriState extends State<ProfilBilgileri> {
           setState(() {
             _profileImageURL = profileImageURL;
           });
+          
         }
+        
       } catch (e) {
         print('Hata: $e');
       }
@@ -113,6 +115,16 @@ class _ProfilBilgileriState extends State<ProfilBilgileri> {
 
         await _updateUserPictureData(downloadURL);
         await _updateUsersPictureData(downloadURL);
+        ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        backgroundColor: Colors.green,
+        content: Text(
+          'Profil resminiz başarılı bir şekilde güncellendi',
+          style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+        ),
+        duration: Duration(seconds: 2),
+      ),
+    );
       }
     } catch (e) {
       print('Hata: $e');
@@ -518,23 +530,26 @@ class _ProfilBilgileriState extends State<ProfilBilgileri> {
                     ),
                     Positioned(
                       bottom: -10,
-                      left: 45,
-                      child: Container(
-                        height: 38,
-                        width: 38,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.grey.shade50,
-                        ),
-                        child: IconButton(
-                          iconSize: 22,
-                          icon: const Icon(
-                            Helphub.image,
-                            color: AppColors.purple,
+                      left: 50,
+                      right: 0,
+                      child: GestureDetector(
+                        onTap: () {
+                          showImageSourceDialog();
+                        },
+                        child: Container(
+                          width: 38,
+                          height: 38,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.grey.shade50,
                           ),
-                          onPressed: () {
-                            showImageSourceDialog();
-                          },
+                          child: const Center(
+                            child: Icon(
+                              Helphub.image,
+                              color: AppColors.purple,
+                              size: 20,
+                            ),
+                          ),
                         ),
                       ),
                     ),

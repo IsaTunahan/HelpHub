@@ -165,33 +165,35 @@ class _HelpDetailScreenState extends State<HelpDetailScreen> {
                     padding: EdgeInsets.symmetric(
                         horizontal: screenWidth * 0.02,
                         vertical: screenHeight * 0.02),
-                    child: Column(
+                    child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              anakategori + '/ ' + altkategori,
-                              style: const TextStyle(
-                                  color: AppColors.darkGrey,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.start,
-                            ),
-                          ],
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                anakategori + '/ ' + altkategori,
+                                style: const TextStyle(
+                                    color: AppColors.darkGrey,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.start,
+                              ),
+                           
+                          SizedBox(
+                            height: screenHeight * 0.01,
+                          ),
+                          Text(
+                            miktar + ' ' + birim + ' ' + destek,
+                            style: const TextStyle(
+                                color: AppColors.purple,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.start,
+                          ) ],
+                          ),
                         ),
-                        SizedBox(
-                          height: screenHeight * 0.03,
-                        ),
-                        Text(
-                          miktar + ' ' + birim + ' ' + destek,
-                          style: const TextStyle(
-                              color: AppColors.purple,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.start,
-                        )
                       ],
                     ),
                   ),

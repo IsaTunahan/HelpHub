@@ -163,10 +163,10 @@ class _NeedDetailScreenState extends State<NeedDetailScreen> {
                     padding: EdgeInsets.symmetric(
                         horizontal: screenWidth * 0.02,
                         vertical: screenHeight * 0.02),
-                    child: Column(
+                    child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
@@ -175,12 +175,11 @@ class _NeedDetailScreenState extends State<NeedDetailScreen> {
                                   color: AppColors.darkGrey,
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.start,
+                              textAlign: TextAlign.start,overflow: TextOverflow.ellipsis,
                             ),
-                          ],
-                        ),
+                         
                         SizedBox(
-                          height: screenHeight * 0.03,
+                          height: screenHeight * 0.01,
                         ),
                         Text(
                           ihtiyac,
@@ -189,7 +188,8 @@ class _NeedDetailScreenState extends State<NeedDetailScreen> {
                               fontSize: 20,
                               fontWeight: FontWeight.bold),
                           textAlign: TextAlign.start,
-                        )
+                        ) ],
+                        ),
                       ],
                     ),
                   ),
