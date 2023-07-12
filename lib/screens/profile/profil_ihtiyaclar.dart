@@ -257,6 +257,27 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
                                                                   _fetchUserData();
                                                                   _fetchProfileImageURL();
                                                                 });
+                                                                ScaffoldMessenger
+                                                                      .of(context)
+                                                                  .showSnackBar(
+                                                                const SnackBar(
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .green,
+                                                                  content: Text(
+                                                                    'İhtiyacınız başarılı bir şekilde silindi',
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            15,
+                                                                        fontWeight:
+                                                                            FontWeight.bold),
+                                                                  ),
+                                                                  duration:
+                                                                      Duration(
+                                                                          seconds:
+                                                                              2),
+                                                                ),
+                                                              );
                                                               },
                                                               child: const Text(
                                                                 'Sil',
