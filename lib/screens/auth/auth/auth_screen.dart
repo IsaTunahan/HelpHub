@@ -31,10 +31,10 @@ class _AuthScreenState extends State<AuthScreen> {
 Future<void> checkUserLoggedIn() async {
     final User? user = await FirebaseAuth.instance.authStateChanges().first;
 
-    if (user != null) {
-      setState(() {
-        _showSplash = false; // Oturum açık ise splash ekranı gösterme
-      });
+
+      setState() {
+        _showSplash = false; 
+
     }
   }
   @override

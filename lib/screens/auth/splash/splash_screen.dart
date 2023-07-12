@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatelessWidget {
-  const SplashScreen({super.key});
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -9,7 +9,7 @@ class SplashScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 50),
         child: Center(
-          child: Image.asset('assets/logos/HelpHub.png',height: 350,),
+          child: Image.asset('assets/logos/HelpHub.png', height: 350),
         ),
       ),
     );
