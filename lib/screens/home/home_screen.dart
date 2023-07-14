@@ -1,9 +1,12 @@
+import 'package:bootcamp/screens/chat_screen/chat_list_screen.dart';
 import 'package:bootcamp/screens/home/home_swt/home_help.dart';
 import 'package:bootcamp/screens/home/home_swt/home_need.dart';
+import 'package:bootcamp/style/icons/helphub_icons.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../repository/user_repository/messaging_service.dart';
 import '../../style/colors.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -65,134 +68,146 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-    
-      return Scaffold(
-        backgroundColor: AppColors.white,
-        appBar: AppBar(
-          title: Text(
-            _selectedIndex == 0 ? 'En Son Yardımlar' : 'En Son İhtiyaçlar',
-            style: const TextStyle(fontSize: 25),
-          ),
-          backgroundColor:
-              _selectedIndex == 0 ? AppColors.purple : AppColors.yellow,
-          elevation: 0,
+    final MessagingService messagingService = MessagingService();
+    return Scaffold(
+      backgroundColor: AppColors.white,
+      appBar: AppBar(
+        title: Text(
+          _selectedIndex == 0 ? 'En Son Yardımlar' : 'En Son İhtiyaçlar',
+          style: const TextStyle(fontSize: 25),
         ),
-        body: Column(
-          children: [
-            Expanded(
-              child: IndexedStack(
-                index: _selectedIndex,
-                children: const [HomeHelpScreen(), HomeNeedScreen()],
-              ),
+        backgroundColor:
+            _selectedIndex == 0 ? AppColors.purple : AppColors.yellow,
+        elevation: 0,
+        actions: [
+          GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          ChatListScreen()),
+                );
+              },
+              child: const Icon(Helphub.pages))
+        ],
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: IndexedStack(
+              index: _selectedIndex,
+              children: const [HomeHelpScreen(), HomeNeedScreen()],
             ),
-            Container(
-              color: Colors.transparent,
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      color: Colors.grey.shade50,
-                      elevation: 5,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth - (screenWidth - 10),
-                            vertical: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _selectedIndex = 0;
-                                });
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 3),
-                                child: Container(
-                                  decoration: BoxDecoration(
+          ),
+          Container(
+            color: Colors.transparent,
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    color: Colors.grey.shade50,
+                    elevation: 5,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: screenWidth - (screenWidth - 10),
+                          vertical: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _selectedIndex = 0;
+                              });
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 3),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: _selectedIndex == 0
+                                      ? AppColors.purple
+                                      : Colors.transparent,
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
                                     color: _selectedIndex == 0
-                                        ? AppColors.purple
-                                        : Colors.transparent,
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                      color: _selectedIndex == 0
-                                          ? Colors.transparent
-                                          : Colors.grey.shade300,
-                                      width: 2,
-                                    ),
+                                        ? Colors.transparent
+                                        : Colors.grey.shade300,
+                                    width: 2,
                                   ),
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 5,
-                                        horizontal: screenWidth * 0.02),
-                                    child: Text(
-                                      'En Son Yardımlar',
-                                      style: TextStyle(
-                                        color: _selectedIndex == 0
-                                            ? AppColors.white
-                                            : AppColors.purple,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 5,
+                                      horizontal: screenWidth * 0.02),
+                                  child: Text(
+                                    'En Son Yardımlar',
+                                    style: TextStyle(
+                                      color: _selectedIndex == 0
+                                          ? AppColors.white
+                                          : AppColors.purple,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _selectedIndex = 1;
-                                });
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 3),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: _selectedIndex == 1
-                                        ? Colors.yellow
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _selectedIndex = 1;
+                              });
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 3),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: _selectedIndex == 1
+                                      ? Colors.yellow
+                                      : Colors.transparent,
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    color: _selectedIndex == 0
+                                        ? Colors.grey.shade300
                                         : Colors.transparent,
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                      color: _selectedIndex == 0
-                                          ? Colors.grey.shade300
-                                          : Colors.transparent,
-                                      width: 2,
-                                    ),
+                                    width: 2,
                                   ),
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 5,
-                                        horizontal: screenWidth * 0.02),
-                                    child: Text(
-                                      'En Son İhtiyaçlar',
-                                      style: TextStyle(
-                                        color: _selectedIndex == 1
-                                            ? AppColors.white
-                                            : Colors.yellow,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 5,
+                                      horizontal: screenWidth * 0.02),
+                                  child: Text(
+                                    'En Son İhtiyaçlar',
+                                    style: TextStyle(
+                                      color: _selectedIndex == 1
+                                          ? AppColors.white
+                                          : Colors.yellow,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            )
-          ],
-        ),
-      );
-    }
+            ),
+          )
+        ],
+      ),
+    );
   }
+}

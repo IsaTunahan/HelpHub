@@ -36,5 +36,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyD-9CVbepspkUKoGKNSbZJBu64o2IdjOOA"/>
+            <service android:name="com.dexterous.flutterlocalnotifications.ForegroundService" android:foregroundServiceType="data" />
+
     </application>
 </manifest>

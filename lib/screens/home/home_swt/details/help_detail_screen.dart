@@ -1,3 +1,4 @@
+import 'package:bootcamp/screens/chat_screen/chat_screen.dart';
 import 'package:bootcamp/screens/home/home_swt/details/users_profile/users_profile.dart';
 import 'package:bootcamp/style/colors.dart';
 import 'package:bootcamp/style/icons/helphub_icons.dart';
@@ -7,6 +8,8 @@ import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../../../repository/user_repository/messaging_service.dart';
 
 class HelpDetailScreen extends StatefulWidget {
   final String helpId;
@@ -24,6 +27,7 @@ class _HelpDetailScreenState extends State<HelpDetailScreen> {
   String destekSahibiSoyad = '';
   String destekSahibiProfilResmi = '';
   LatLng? helpLocation;
+  final MessagingService _messagingService = MessagingService();
 
   @override
   void initState() {
@@ -180,18 +184,18 @@ class _HelpDetailScreenState extends State<HelpDetailScreen> {
                                     fontWeight: FontWeight.bold),
                                 textAlign: TextAlign.start,
                               ),
-                           
-                          SizedBox(
-                            height: screenHeight * 0.01,
-                          ),
-                          Text(
-                            miktar + ' ' + birim + ' ' + destek,
-                            style: const TextStyle(
-                                color: AppColors.purple,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.start,
-                          ) ],
+                              SizedBox(
+                                height: screenHeight * 0.01,
+                              ),
+                              Text(
+                                miktar + ' ' + birim + ' ' + destek,
+                                style: const TextStyle(
+                                    color: AppColors.purple,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.start,
+                              )
+                            ],
                           ),
                         ),
                       ],
@@ -445,7 +449,25 @@ class _HelpDetailScreenState extends State<HelpDetailScreen> {
                         children: [
                           Expanded(
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () async {
+                                final helpId = widget.helpId;
+                                // const message = 'Yardım talebi gönderildi.';
+
+                                // await _messagingService.sendMessage(
+                                //   message,
+                                //   desteksahibiId,
+                                // );
+
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ChatScreen(
+                                      recipientId: desteksahibiId,
+                                      helpId: helpId,
+                                    ),
+                                  ),
+                                );
+                              },
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: AppColors.white,
                                 backgroundColor: AppColors.purple,
@@ -458,7 +480,9 @@ class _HelpDetailScreenState extends State<HelpDetailScreen> {
                                 child: Text(
                                   "Talep et",
                                   style: TextStyle(
-                                      color: AppColors.white, fontSize: 25),
+                                    color: AppColors.white,
+                                    fontSize: 25,
+                                  ),
                                 ),
                               ),
                             ),
