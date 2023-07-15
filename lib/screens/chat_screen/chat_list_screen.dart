@@ -25,8 +25,8 @@ class ChatListScreen extends StatelessWidget {
               title: const Text('Önceki Sohbetler'),
             ),
             body: FutureBuilder<List<Chat>>(
-              future: Provider.of<MessagingService>(context)
-                  .getPreviousChats(currentUserId, context),
+              // future: Provider.of<MessagingService>(context)
+              //     .getPreviousChats(currentUserId, context),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   final previousChats = snapshot.data!;
@@ -52,7 +52,7 @@ class ChatListScreen extends StatelessWidget {
                               builder: (context) => ChatScreen(
                                 recipientId: chat.recipientId,
                                 helpId:
-                                    '', // Help ID'si gerekiyorsa buraya ekleyin
+                                    '', 
                               ),
                             ),
                           );

@@ -169,12 +169,15 @@ class _ProfilYardimlarState extends State<ProfilYardimlar> {
                                       ),
                                     ),
                                     PopupMenuButton(
+                                      color: Colors.transparent,
+                                      elevation: 0,
                                       itemBuilder: (BuildContext context) =>
                                           <PopupMenuEntry>[
                                         PopupMenuItem(
                                           height: 1,
                                           child: Card(
-                                            color: Colors.grey.shade50,
+                                            elevation: 3,
+                                            color: AppColors.purple,
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(10),
@@ -282,8 +285,12 @@ class _ProfilYardimlarState extends State<ProfilYardimlar> {
                                                             child: const Text(
                                                               'Sil',
                                                               style: TextStyle(
-                                                                  color: AppColors
-                                                                      .white),
+                                                                  color:
+                                                                      AppColors
+                                                                          .white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
                                                             ),
                                                           ),
                                                         ],
@@ -293,12 +300,12 @@ class _ProfilYardimlarState extends State<ProfilYardimlar> {
                                                 },
                                                 leading: const Icon(
                                                   Icons.delete,
-                                                  color: AppColors.purple,
+                                                  color: AppColors.white,
                                                 ),
                                                 title: const Text(
                                                   'Sil',
                                                   style: TextStyle(
-                                                    color: AppColors.purple,
+                                                    color: AppColors.white,
                                                   ),
                                                 ),
                                               ),

@@ -167,7 +167,7 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
                                               fontWeight: FontWeight.w500),
                                         ),
                                       ),
-                                      PopupMenuButton(
+                                      PopupMenuButton(color: Colors.transparent,
                                         itemBuilder: (BuildContext context) =>
                                             <PopupMenuEntry>[
                                           PopupMenuItem(
