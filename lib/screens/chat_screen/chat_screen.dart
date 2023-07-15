@@ -1,3 +1,4 @@
+import 'package:bootcamp/screens/home/home_swt/details/users_profile/users_profile.dart';
 import 'package:bootcamp/style/colors.dart';
 import 'package:bootcamp/style/icons/helphub_icons.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,10 +10,11 @@ import '../../repository/user_repository/messaging_service.dart';
 
 class ChatScreen extends StatefulWidget {
   final String recipientId;
-  final String helpId;
 
-  const ChatScreen({Key? key, required this.recipientId, required this.helpId})
-      : super(key: key);
+  const ChatScreen({
+    Key? key,
+    required this.recipientId,
+  }) : super(key: key);
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -25,6 +27,7 @@ class _ChatScreenState extends State<ChatScreen> {
   late String _recipientName = '';
   late String _recipientLastName = '';
   late String _recipientProfileImage = '';
+  late String _recipientId = '';
 
   Future<void> _loadRecipientData() async {
     final recipientData = await getUserData(widget.recipientId);
@@ -33,6 +36,7 @@ class _ChatScreenState extends State<ChatScreen> {
         _recipientName = recipientData['firstName'];
         _recipientLastName = recipientData['lastName'];
         _recipientProfileImage = recipientData['profileImageURL'];
+        _recipientId = recipientData['userId'];
       });
     }
   }
@@ -97,42 +101,51 @@ class _ChatScreenState extends State<ChatScreen> {
           final currentUserId = snapshotData.data!;
           return Scaffold(
             appBar: AppBar(
-              title: Row(
-                children: [
-                  if (_recipientProfileImage != null)
-                    Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: AppColors.purple,
-                          width: 3,
+              title: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>UsersProfile(userId: _recipientId)
+                    ),
+                  );
+                },
+                child: Row(
+                  children: [
+                    if (_recipientProfileImage != null)
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: AppColors.purple,
+                            width: 3,
+                          ),
+                        ),
+                        child: CircleAvatar(
+                          backgroundColor: Colors.grey.shade50,
+                          backgroundImage: _recipientProfileImage.isNotEmpty
+                              ? NetworkImage(_recipientProfileImage)
+                              : const AssetImage(
+                                      'assets/profile/user_profile.png')
+                                  as ImageProvider<Object>?,
+                          radius: 25,
                         ),
                       ),
-                      child: CircleAvatar(
-                        backgroundColor: Colors.grey.shade50,
-                        backgroundImage: _recipientProfileImage.isNotEmpty
-                            ? NetworkImage(_recipientProfileImage)
-                            : const AssetImage(
-                                    'assets/profile/user_profile.png')
-                                as ImageProvider<Object>?,
-                                radius: 25,
-                      ),
+                    const SizedBox(width: 8),
+                    Text(
+                      '$_recipientName $_recipientLastName' ?? '',
+                      style: const TextStyle(
+                          color: AppColors.purple, fontSize: 25),
                     ),
-                  const SizedBox(width: 8),
-                  Text(
-                    '$_recipientName $_recipientLastName' ?? '',
-                    style:
-                        const TextStyle(color: AppColors.purple, fontSize: 25),
-                  ),
-                ],
+                  ],
+                ),
               ),
               iconTheme: const IconThemeData(color: AppColors.purple),
-              leading: IconButton(
-                icon: const Icon(Helphub.back),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
+              leading: GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Icon(Helphub.back)),
               elevation: 0,
               backgroundColor: Colors.grey.shade50,
             ),

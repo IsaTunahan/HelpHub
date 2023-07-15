@@ -51,8 +51,6 @@ class ChatListScreen extends StatelessWidget {
                             MaterialPageRoute(
                               builder: (context) => ChatScreen(
                                 recipientId: chat.recipientId,
-                                helpId:
-                                    '', 
                               ),
                             ),
                           );

@@ -150,6 +150,10 @@ class _NeedDetailScreenState extends State<NeedDetailScreen> {
         body: SafeArea(
           child: Column(
             children: [
+              const Divider(
+                    thickness: 3,
+                    color: AppColors.purple,
+                  ),
               Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: screenWidth - (screenWidth - 25)),
@@ -166,29 +170,32 @@ class _NeedDetailScreenState extends State<NeedDetailScreen> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              anakategori + '/ ' + altkategori,
-                              style: const TextStyle(
-                                  color: AppColors.darkGrey,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.start,overflow: TextOverflow.ellipsis,
-                            ),
-                         
-                        SizedBox(
-                          height: screenHeight * 0.01,
-                        ),
-                        Text(
-                          ihtiyac,
-                          style: const TextStyle(
-                              color: AppColors.purple,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.start,
-                        ) ],
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                anakategori + '/ ' + altkategori,
+                                style: const TextStyle(
+                                    color: AppColors.darkGrey,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.start,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              SizedBox(
+                                height: screenHeight * 0.01,
+                              ),
+                              Text(
+                                ihtiyac,
+                                style: const TextStyle(
+                                    color: AppColors.purple,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.start,
+                              )
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -282,19 +289,27 @@ class _NeedDetailScreenState extends State<NeedDetailScreen> {
                         vertical: screenHeight * 0.01),
                     child: Column(
                       children: [
-                        ClipRRect(
-                          borderRadius: const BorderRadius.all(Radius.circular(10)),
-                          child: SizedBox(
-                            height: screenHeight * 0.2,
-                            child: GoogleMap(
-                              initialCameraPosition: CameraPosition(
-                                target: needLocation!,
-                                zoom: 10,
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                  color: AppColors.purple, width: 3)),
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(7),
+                            ),
+                            child: SizedBox(
+                              height: screenHeight * 0.2,
+                              child: GoogleMap(
+                                initialCameraPosition: CameraPosition(
+                                  target: needLocation!,
+                                  zoom: 10,
+                                ),
+                                markers: _createMarkers(),
+                                myLocationButtonEnabled: false,
+                                myLocationEnabled: false,
+                                mapType: MapType.normal,
                               ),
-                              markers: _createMarkers(),
-                              myLocationButtonEnabled: false,
-                              myLocationEnabled: false,
-                              mapType: MapType.normal,
                             ),
                           ),
                         ),
@@ -347,118 +362,120 @@ class _NeedDetailScreenState extends State<NeedDetailScreen> {
                 ),
               ),
               Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: screenWidth - (screenWidth - 25)),
-                      child: Card(
-                        elevation: 5,
-                        color: Colors.grey.shade50,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: screenWidth * 0.02,
-                              vertical: screenHeight * 0.02),
-                          child: Row(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: AppColors.purple,
-                                    width: 3,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              UsersProfile(userId: ihtiyacsahibiId)),
+                    );
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth - (screenWidth - 25)),
+                        child: Card(
+                          elevation: 5,
+                          color: Colors.grey.shade50,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: screenWidth * 0.02,
+                                vertical: screenHeight * 0.02),
+                            child: Row(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: AppColors.purple,
+                                      width: 3,
+                                    ),
+                                  ),
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.grey.shade50,
+                                    backgroundImage: ihtiyacSahibiProfilResmi
+                                            .isNotEmpty
+                                        ? NetworkImage(ihtiyacSahibiProfilResmi)
+                                        : const AssetImage(
+                                                'assets/profile/user_profile.png')
+                                            as ImageProvider<Object>?,
+                                    radius: 25,
                                   ),
                                 ),
-                                child: CircleAvatar(
-                                  backgroundColor: Colors.grey.shade50,
-                                  backgroundImage: ihtiyacSahibiProfilResmi
-                                          .isNotEmpty
-                                      ? NetworkImage(ihtiyacSahibiProfilResmi)
-                                      : const AssetImage(
-                                              'assets/profile/user_profile.png')
-                                          as ImageProvider<Object>?,
-                                  radius: 25,
+                                SizedBox(
+                                  width: screenWidth * 0.03,
                                 ),
-                              ),
-                              SizedBox(
-                                width: screenWidth * 0.03,
-                              ),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '$ihtiyacSahibiIsim $ihtiyacSahibiSoyad',
-                                      style: const TextStyle(
-                                          color: AppColors.darkGrey,
-                                          fontSize: 20),
-                                    ),
-                                    SizedBox(
-                                      height: screenHeight * 0.005,
-                                    ),
-                                    Text( 
-                                      '@$ihtiyacSahibiKullaniciAdi',
-                                      style: const TextStyle(
-                                          color: AppColors.purple, fontSize: 15),
-                                    ),
-                                  ],
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '$ihtiyacSahibiIsim $ihtiyacSahibiSoyad',
+                                        style: const TextStyle(
+                                            color: AppColors.darkGrey,
+                                            fontSize: 20),
+                                      ),
+                                      SizedBox(
+                                        height: screenHeight * 0.005,
+                                      ),
+                                      Text(
+                                        '@$ihtiyacSahibiKullaniciAdi',
+                                        style: const TextStyle(
+                                            color: AppColors.purple,
+                                            fontSize: 15),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => UsersProfile(
-                                            userId: ihtiyacsahibiId)),
-                                  );
-                                },
-                                child: const Icon(
+                                const Icon(
                                   Helphub.next,
                                   color: AppColors.purple,
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: screenHeight * 0.03,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: screenWidth - (screenWidth - 25)),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                foregroundColor: AppColors.white,
-                                backgroundColor: AppColors.purple,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
+                      SizedBox(
+                        height: screenHeight * 0.03,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth - (screenWidth - 25)),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: ElevatedButton(
+                                onPressed: () {},
+                                style: ElevatedButton.styleFrom(
+                                  foregroundColor: AppColors.white,
+                                  backgroundColor: AppColors.purple,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
                                 ),
-                              ),
-                              child: const Padding(
-                                padding: EdgeInsets.all(10.0),
-                                child: Text(
-                                  "Destek Ol",
-                                  style: TextStyle(
-                                      color: AppColors.white, fontSize: 25),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(10.0),
+                                  child: Text(
+                                    "Destek Ol",
+                                    style: TextStyle(
+                                        color: AppColors.white, fontSize: 25),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],

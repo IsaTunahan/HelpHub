@@ -95,6 +95,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: Column(
         children: [
+          const Divider(
+                    thickness: 3,
+                    color: AppColors.purple,
+                  ),
           Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: screenWidth - (screenWidth - 25)),

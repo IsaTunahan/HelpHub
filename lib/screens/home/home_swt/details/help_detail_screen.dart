@@ -156,6 +156,10 @@ class _HelpDetailScreenState extends State<HelpDetailScreen> {
         body: SafeArea(
           child: Column(
             children: [
+              const Divider(
+                    thickness: 3,
+                    color: AppColors.purple,
+                  ),
               Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: screenWidth - (screenWidth - 25)),
@@ -290,20 +294,27 @@ class _HelpDetailScreenState extends State<HelpDetailScreen> {
                         vertical: screenHeight * 0.01),
                     child: Column(
                       children: [
-                        ClipRRect(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10)),
-                          child: SizedBox(
-                            height: screenHeight * 0.2,
-                            child: GoogleMap(
-                              initialCameraPosition: CameraPosition(
-                                target: helpLocation!,
-                                zoom: 10,
+                        Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                  color: AppColors.purple, width: 3)),
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(7),
+                            ),
+                            child: SizedBox(
+                              height: screenHeight * 0.2,
+                              child: GoogleMap(
+                                initialCameraPosition: CameraPosition(
+                                  target: helpLocation!,
+                                  zoom: 10,
+                                ),
+                                markers: _createMarkers(),
+                                myLocationButtonEnabled: false,
+                                myLocationEnabled: false,
+                                mapType: MapType.normal,
                               ),
-                              markers: _createMarkers(),
-                              myLocationButtonEnabled: false,
-                              myLocationEnabled: false,
-                              mapType: MapType.normal,
                             ),
                           ),
                         ),
@@ -356,141 +367,141 @@ class _HelpDetailScreenState extends State<HelpDetailScreen> {
                 ),
               ),
               Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: screenWidth - (screenWidth - 25)),
-                      child: Card(
-                        elevation: 5,
-                        color: Colors.grey.shade50,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: screenWidth * 0.02,
-                              vertical: screenHeight * 0.02),
-                          child: Row(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: AppColors.purple,
-                                    width: 3,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              UsersProfile(userId: desteksahibiId)),
+                    );
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth - (screenWidth - 25)),
+                        child: Card(
+                          elevation: 5,
+                          color: Colors.grey.shade50,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: screenWidth * 0.02,
+                                vertical: screenHeight * 0.02),
+                            child: Row(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: AppColors.purple,
+                                      width: 3,
+                                    ),
+                                  ),
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.grey.shade50,
+                                    backgroundImage: destekSahibiProfilResmi
+                                            .isNotEmpty
+                                        ? NetworkImage(destekSahibiProfilResmi)
+                                        : const AssetImage(
+                                                'assets/profile/user_profile.png')
+                                            as ImageProvider<Object>?,
+                                    radius: 25,
                                   ),
                                 ),
-                                child: CircleAvatar(
-                                  backgroundColor: Colors.grey.shade50,
-                                  backgroundImage: destekSahibiProfilResmi
-                                          .isNotEmpty
-                                      ? NetworkImage(destekSahibiProfilResmi)
-                                      : const AssetImage(
-                                              'assets/profile/user_profile.png')
-                                          as ImageProvider<Object>?,
-                                  radius: 25,
+                                SizedBox(
+                                  width: screenWidth * 0.03,
                                 ),
-                              ),
-                              SizedBox(
-                                width: screenWidth * 0.03,
-                              ),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '$destekSahibiIsim $destekSahibiSoyad',
-                                      style: const TextStyle(
-                                        color: AppColors.darkGrey,
-                                        fontSize: 20,
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '$destekSahibiIsim $destekSahibiSoyad',
+                                        style: const TextStyle(
+                                          color: AppColors.darkGrey,
+                                          fontSize: 20,
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: screenHeight * 0.005,
-                                    ),
-                                    Text(
-                                      '@$destekSahibiKullaniciAdi',
-                                      style: const TextStyle(
-                                        color: AppColors.purple,
-                                        fontSize: 15,
+                                      SizedBox(
+                                        height: screenHeight * 0.005,
                                       ),
-                                    ),
-                                  ],
+                                      Text(
+                                        '@$destekSahibiKullaniciAdi',
+                                        style: const TextStyle(
+                                          color: AppColors.purple,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => UsersProfile(
-                                            userId: desteksahibiId)),
-                                  );
-                                },
-                                child: const Icon(
+                                const Icon(
                                   Helphub.next,
                                   color: AppColors.purple,
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: screenHeight * 0.03,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: screenWidth - (screenWidth - 25)),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                final helpId = widget.helpId;
-                                // const message = 'Yardım talebi gönderildi.';
+                      SizedBox(
+                        height: screenHeight * 0.03,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth - (screenWidth - 25)),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  //final helpId = widget.helpId;
+                                  // const message = 'Yardım talebi gönderildi.';
 
-                                // await _messagingService.sendMessage(
-                                //   message,
-                                //   desteksahibiId,
-                                // );
+                                  // await _messagingService.sendMessage(
+                                  //   message,
+                                  //   desteksahibiId,
+                                  // );
 
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ChatScreen(
-                                      recipientId: desteksahibiId,
-                                      helpId: helpId,
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ChatScreen(
+                                        recipientId: desteksahibiId,
+                                      ),
                                     ),
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  foregroundColor: AppColors.white,
+                                  backgroundColor: AppColors.purple,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                foregroundColor: AppColors.white,
-                                backgroundColor: AppColors.purple,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
                                 ),
-                              ),
-                              child: const Padding(
-                                padding: EdgeInsets.all(10.0),
-                                child: Text(
-                                  "Talep et",
-                                  style: TextStyle(
-                                    color: AppColors.white,
-                                    fontSize: 25,
+                                child: const Padding(
+                                  padding: EdgeInsets.all(10.0),
+                                  child: Text(
+                                    "Talep et",
+                                    style: TextStyle(
+                                      color: AppColors.white,
+                                      fontSize: 25,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],
