@@ -1,4 +1,3 @@
-import 'package:bootcamp/screens/chat_screen/chat_list_screen.dart';
 import 'package:bootcamp/screens/home/home_swt/home_help.dart';
 import 'package:bootcamp/screens/home/home_swt/home_need.dart';
 import 'package:bootcamp/style/icons/helphub_icons.dart';
@@ -83,12 +82,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         actions: [
           GestureDetector(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          const ChatListScreen()),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //       builder: (context) =>
+                //            ChatHistoryPage(currentUserId: userid,)),
+                // );
               },
               child: const Icon(Helphub.pages))
         ],
