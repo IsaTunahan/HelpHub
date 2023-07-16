@@ -231,7 +231,7 @@ class _RegisterFormState extends State<RegisterForm> {
             GestureDetector(
               onTap: isLoading ? null : signUp,
               child: Container(
-                padding:
+                padding: 
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 margin: const EdgeInsets.symmetric(horizontal: 25),
                 decoration: BoxDecoration(
@@ -241,8 +241,12 @@ class _RegisterFormState extends State<RegisterForm> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: isLoading
-                      ? const CircularProgressIndicator(
-                          color: AppColors.white,
+                      ? const SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator(
+                            color: AppColors.white,
+                          ),
                         )
                       : const Text(
                           'Kayıt Ol',

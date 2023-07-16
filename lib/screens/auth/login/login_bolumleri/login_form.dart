@@ -148,7 +148,7 @@ class _GirisFormState extends State<LoginForm> {
             GestureDetector(
               onTap: isLoading ? null : signIn,
               child: Container(
-                padding:
+                padding: 
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 margin: const EdgeInsets.symmetric(horizontal: 25),
                 decoration: BoxDecoration(
