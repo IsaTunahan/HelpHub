@@ -167,13 +167,16 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
                                               fontWeight: FontWeight.w500),
                                         ),
                                       ),
-                                      PopupMenuButton(color: Colors.transparent,
+                                      PopupMenuButton(
+                                        color: Colors.transparent,
+                                        elevation: 0,
                                         itemBuilder: (BuildContext context) =>
                                             <PopupMenuEntry>[
                                           PopupMenuItem(
                                             height: 1,
                                             child: Card(
-                                              color: Colors.grey.shade50,
+                                              elevation: 3,
+                                              color: AppColors.purple,
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(10),
@@ -190,7 +193,7 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
                                                           context) {
                                                         return AlertDialog(
                                                           title: const Text(
-                                                              'İhtiyacı Sil'),
+                                                              'ihtiyacı Sil'),
                                                           content: const Text(
                                                               'Bu ihtiyacı silmek istediğinize emin misiniz?'),
                                                           actions: [
@@ -266,7 +269,7 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
                                                                             .green,
                                                                     content:
                                                                         Text(
-                                                                      'İhtiyacınız başarılı bir şekilde silindi',
+                                                                      'İhityacınız başarılı bir şekilde silindi',
                                                                       style: TextStyle(
                                                                           fontSize:
                                                                               15,
@@ -281,9 +284,12 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
                                                               },
                                                               child: const Text(
                                                                 'Sil',
-                                                                style: TextStyle(
-                                                                    color: AppColors
-                                                                        .white),
+                                                                style:
+                                                                    TextStyle(
+                                                                  color:
+                                                                      AppColors
+                                                                          .white,
+                                                                ),
                                                               ),
                                                             ),
                                                           ],
@@ -293,12 +299,12 @@ class _ProfilIhtiyaclarState extends State<ProfilIhtiyaclar> {
                                                   },
                                                   leading: const Icon(
                                                     Icons.delete,
-                                                    color: AppColors.purple,
+                                                    color: AppColors.white,
                                                   ),
                                                   title: const Text(
                                                     'Sil',
                                                     style: TextStyle(
-                                                      color: AppColors.purple,
+                                                      color: AppColors.white,
                                                     ),
                                                   ),
                                                 ),

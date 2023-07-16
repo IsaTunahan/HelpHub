@@ -8,6 +8,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../chat_screen/chat_screen.dart';
+
 class NeedDetailScreen extends StatefulWidget {
   final String needId;
 
@@ -22,6 +24,7 @@ class _NeedDetailScreenState extends State<NeedDetailScreen> {
   String ihtiyacSahibiKullaniciAdi = '';
   String ihtiyacSahibiIsim = '';
   String ihtiyacSahibiSoyad = '';
+  String ihtiyacSahibiTelefon = '';
   String ihtiyacSahibiProfilResmi = '';
   LatLng? needLocation;
 
@@ -61,7 +64,7 @@ class _NeedDetailScreenState extends State<NeedDetailScreen> {
             this.needData = needData;
             ihtiyacSahibiKullaniciAdi = userData['username'] ?? '';
             ihtiyacSahibiIsim = userData['firstName'] ?? '';
-            ihtiyacSahibiSoyad = userData['lastName'] ?? '';
+            ihtiyacSahibiTelefon = userData['phone']?.toString() ?? '';
             ihtiyacSahibiProfilResmi = userData['profileImageURL'] ?? '';
             this.needLocation = needLocation;
           });
@@ -151,9 +154,9 @@ class _NeedDetailScreenState extends State<NeedDetailScreen> {
           child: Column(
             children: [
               const Divider(
-                    thickness: 3,
-                    color: AppColors.purple,
-                  ),
+                thickness: 3,
+                color: AppColors.purple,
+              ),
               Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: screenWidth - (screenWidth - 25)),
@@ -291,7 +294,7 @@ class _NeedDetailScreenState extends State<NeedDetailScreen> {
                       children: [
                         Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(10),
                               border: Border.all(
                                   color: AppColors.purple, width: 3)),
                           child: ClipRRect(
@@ -453,7 +456,72 @@ class _NeedDetailScreenState extends State<NeedDetailScreen> {
                           children: [
                             Expanded(
                               child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('İletişime Geç'),
+                                        content: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            ElevatedButton(
+                                              onPressed: () async {
+                                                final Uri url = Uri(
+                                                  scheme: 'tel',
+                                                  path: ihtiyacSahibiTelefon,
+                                                );
+                                                await launchUrl(url);
+                                                Navigator.pop(context);
+                                              },
+                                               style: ElevatedButton.styleFrom(
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10)),
+                                                      backgroundColor:
+                                                          AppColors.purple),
+                                                  child: const Text(
+                                                    "Ara",
+                                                    style: TextStyle(
+                                                        color: AppColors.white),
+                                                  ),
+                                                ),
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                Navigator.pushReplacement(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ChatScreen(
+                                                      recipientId:
+                                                          ihtiyacsahibiId,
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10)),
+                                                  backgroundColor:
+                                                      AppColors.purple),
+                                              child: const Text(
+                                                "Mesaj gönder",
+                                                style: TextStyle(
+                                                    color: AppColors.white),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
                                 style: ElevatedButton.styleFrom(
                                   foregroundColor: AppColors.white,
                                   backgroundColor: AppColors.purple,
@@ -464,9 +532,11 @@ class _NeedDetailScreenState extends State<NeedDetailScreen> {
                                 child: const Padding(
                                   padding: EdgeInsets.all(10.0),
                                   child: Text(
-                                    "Destek Ol",
+                                    "Destek ol",
                                     style: TextStyle(
-                                        color: AppColors.white, fontSize: 25),
+                                      color: AppColors.white,
+                                      fontSize: 25,
+                                    ),
                                   ),
                                 ),
                               ),

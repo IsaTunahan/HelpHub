@@ -285,12 +285,9 @@ class _ProfilYardimlarState extends State<ProfilYardimlar> {
                                                             child: const Text(
                                                               'Sil',
                                                               style: TextStyle(
-                                                                  color:
-                                                                      AppColors
-                                                                          .white,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
+                                                                color: AppColors
+                                                                    .white,
+                                                              ),
                                                             ),
                                                           ),
                                                         ],

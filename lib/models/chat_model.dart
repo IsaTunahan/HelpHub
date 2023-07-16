@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'message_model.dart';
 
 class Chat {
@@ -13,3 +15,6 @@ class Chat {
     this.lastMessage,
   });
 }
+
+
+ 

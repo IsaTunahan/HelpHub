@@ -19,6 +19,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   bool _isLoading = true;
   final user = FirebaseAuth.instance.currentUser!;
+  final userid = FirebaseAuth.instance.currentUser!.uid;
   late CollectionReference<Map<String, dynamic>> collection;
   List<DocumentSnapshot<Map<String, dynamic>>> documents = [];
   TabController? _tabController;
@@ -86,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          ChatListScreen()),
+                          const ChatListScreen()),
                 );
               },
               child: const Icon(Helphub.pages))

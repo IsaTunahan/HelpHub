@@ -30,16 +30,16 @@ class _ChatScreenState extends State<ChatScreen> {
   late String _recipientId = '';
 
   Future<void> _loadRecipientData() async {
-    final recipientData = await getUserData(widget.recipientId);
-    if (recipientData.exists) {
-      setState(() {
-        _recipientName = recipientData['firstName'];
-        _recipientLastName = recipientData['lastName'];
-        _recipientProfileImage = recipientData['profileImageURL'];
-        _recipientId = recipientData['userId'];
-      });
-    }
+  final recipientData = await getUserData(widget.recipientId);
+  if (recipientData.exists && !_isDisposed) {
+    setState(() {
+      _recipientName = recipientData['firstName'];
+      _recipientLastName = recipientData['lastName'];
+      _recipientProfileImage = recipientData['profileImageURL'];
+      _recipientId = recipientData['userId'];
+    });
   }
+}
 
   Future<DocumentSnapshot> getUserData(String userId) async {
     final userData =
@@ -113,29 +113,35 @@ class _ChatScreenState extends State<ChatScreen> {
                 child: Row(
                   children: [
                     if (_recipientProfileImage != null)
-                      Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: AppColors.purple,
-                            width: 3,
+                      Column(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: AppColors.purple,
+                                width: 3,
+                              ),
+                            ),
+                            child: CircleAvatar(
+                              backgroundColor: Colors.grey.shade50,
+                              backgroundImage: _recipientProfileImage.isNotEmpty
+                                  ? NetworkImage(_recipientProfileImage)
+                                  : const AssetImage(
+                                          'assets/profile/user_profile.png')
+                                      as ImageProvider<Object>?,
+                              radius: 25,
+                            ),
                           ),
-                        ),
-                        child: CircleAvatar(
-                          backgroundColor: Colors.grey.shade50,
-                          backgroundImage: _recipientProfileImage.isNotEmpty
-                              ? NetworkImage(_recipientProfileImage)
-                              : const AssetImage(
-                                      'assets/profile/user_profile.png')
-                                  as ImageProvider<Object>?,
-                          radius: 25,
-                        ),
+                        ],
                       ),
                     const SizedBox(width: 8),
-                    Text(
-                      '$_recipientName $_recipientLastName' ?? '',
-                      style: const TextStyle(
-                          color: AppColors.purple, fontSize: 25),
+                    Expanded(
+                      child: Text(
+                        '$_recipientName $_recipientLastName' ?? '',
+                        style: const TextStyle(
+                            color: AppColors.purple, fontSize: 25),
+                      ),
                     ),
                   ],
                 ),

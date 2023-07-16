@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <application
+    
         android:requestLegacyExternalStorage="true"
         android:label="HelpHub"
         android:name="${applicationName}"
@@ -37,6 +39,12 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyD-9CVbepspkUKoGKNSbZJBu64o2IdjOOA"/>
             <service android:name="com.dexterous.flutterlocalnotifications.ForegroundService" android:foregroundServiceType="data" />
-
     </application>
+    <queries>
+    <intent>
+        <action android:name="android.intent.action.VIEW"/>
+        <data android:scheme="tel"/>
+    </intent>
+</queries>
+
 </manifest>

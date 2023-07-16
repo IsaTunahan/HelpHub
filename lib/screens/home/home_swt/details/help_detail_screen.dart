@@ -25,6 +25,7 @@ class _HelpDetailScreenState extends State<HelpDetailScreen> {
   String destekSahibiKullaniciAdi = '';
   String destekSahibiIsim = '';
   String destekSahibiSoyad = '';
+  String destekSahibiTelefon = '';
   String destekSahibiProfilResmi = '';
   LatLng? helpLocation;
   final MessagingService _messagingService = MessagingService();
@@ -66,6 +67,7 @@ class _HelpDetailScreenState extends State<HelpDetailScreen> {
             destekSahibiKullaniciAdi = userData['username'] ?? '';
             destekSahibiIsim = userData['firstName'] ?? '';
             destekSahibiSoyad = userData['lastName'] ?? '';
+            destekSahibiTelefon = userData['phone']?.toString() ?? '';
             destekSahibiProfilResmi = userData['profileImageURL'] ?? '';
             this.helpLocation = helpLocation;
           });
@@ -157,9 +159,9 @@ class _HelpDetailScreenState extends State<HelpDetailScreen> {
           child: Column(
             children: [
               const Divider(
-                    thickness: 3,
-                    color: AppColors.purple,
-                  ),
+                thickness: 3,
+                color: AppColors.purple,
+              ),
               Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: screenWidth - (screenWidth - 25)),
@@ -461,21 +463,69 @@ class _HelpDetailScreenState extends State<HelpDetailScreen> {
                             Expanded(
                               child: ElevatedButton(
                                 onPressed: () async {
-                                  //final helpId = widget.helpId;
-                                  // const message = 'Yardım talebi gönderildi.';
-
-                                  // await _messagingService.sendMessage(
-                                  //   message,
-                                  //   desteksahibiId,
-                                  // );
-
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => ChatScreen(
-                                        recipientId: desteksahibiId,
-                                      ),
-                                    ),
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('İletişime Geç'),
+                                        content: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            ElevatedButton(
+                                              onPressed: () async {
+                                                final Uri url = Uri(
+                                                  scheme: 'tel',
+                                                  path: destekSahibiTelefon,
+                                                );
+                                                await launchUrl(url);
+                                                Navigator.pop(context);
+                                              },
+                                               style: ElevatedButton.styleFrom(
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10)),
+                                                      backgroundColor:
+                                                          AppColors.purple),
+                                                  child: const Text(
+                                                    "Ara",
+                                                    style: TextStyle(
+                                                        color: AppColors.white),
+                                                  ),
+                                                ),
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                Navigator.pushReplacement(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ChatScreen(
+                                                      recipientId:
+                                                          desteksahibiId,
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10)),
+                                                  backgroundColor:
+                                                      AppColors.purple),
+                                              child: const Text(
+                                                "Mesaj gönder",
+                                                style: TextStyle(
+                                                    color: AppColors.white),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
                                   );
                                 },
                                 style: ElevatedButton.styleFrom(
