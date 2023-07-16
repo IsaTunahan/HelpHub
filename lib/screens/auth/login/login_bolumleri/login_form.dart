@@ -103,6 +103,7 @@ class _GirisFormState extends State<LoginForm> {
           children: [
             SizedBox(height: screenHeight * 0.02),
             AppTextFormField(
+              inputType: TextInputType.emailAddress,
               controller: emailController,
               hintText: 'Email',
               obscureText: false,
@@ -110,6 +111,7 @@ class _GirisFormState extends State<LoginForm> {
             SizedBox(height: screenHeight * 0.01),
             //şifre
             AppTextFormField(
+              inputType: TextInputType.visiblePassword,
               controller: passwordController,
               hintText: 'Şifre',
               obscureText: true,

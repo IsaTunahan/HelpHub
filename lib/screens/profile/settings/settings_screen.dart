@@ -80,11 +80,13 @@ class SettingsScreen extends StatelessWidget {
                     ));
 
                     FirebaseAuth.instance.signOut().then((_) {
-                      Navigator.pushReplacement(
+                      Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const LoginOrRegisterScreen(
-                                showLoginPage: true)),
+                            builder: (context) =>
+                                const LoginOrRegisterScreen(showLoginPage: true)),
+                        (route) =>
+                            false,
                       );
                     });
                   },

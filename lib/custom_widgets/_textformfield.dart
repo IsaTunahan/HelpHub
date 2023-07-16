@@ -5,12 +5,13 @@ class AppTextFormField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final bool obscureText;
+   final TextInputType inputType;
 
   const AppTextFormField({
     Key? key,
     required this.controller,
     required this.hintText,
-    required this.obscureText,
+    required this.obscureText, required this.inputType,
   }) : super(key: key);
 
   @override
@@ -20,6 +21,7 @@ class AppTextFormField extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
       child: TextFormField(
+        keyboardType: inputType,
         controller: controller,
         obscureText: obscureText,
         decoration: InputDecoration(

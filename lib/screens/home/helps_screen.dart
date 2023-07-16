@@ -225,6 +225,7 @@ class _HelpsScreenState extends State<HelpsScreen> {
                       ),
                       SizedBox(height: screenHeight * 0.01),
                       TextFormField(
+                        keyboardType: TextInputType.streetAddress,
                         controller: addressController,
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
@@ -306,6 +307,7 @@ class _HelpsScreenState extends State<HelpsScreen> {
                       ),
                       SizedBox(height: screenHeight * 0.01),
                       TextFormField(
+                        keyboardType: TextInputType.number,
                         controller: miktarController,
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
@@ -342,6 +344,7 @@ class _HelpsScreenState extends State<HelpsScreen> {
                       ),
                       const SizedBox(height: 10),
                       TextFormField(
+                        keyboardType: TextInputType.multiline,
                         controller: destekController,
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
@@ -378,67 +381,91 @@ class _HelpsScreenState extends State<HelpsScreen> {
                     Expanded(
                       child: ElevatedButton(
                         onPressed: () async {
-                          String category = selectedCategory ?? '';
-                          String subcategory = selectedSubcategory ?? '';
-                          String unit = selectedUnit ?? '';
-                          String destek = destekController.text;
-                          String miktar = miktarController.text;
-                          String city = selectedCity ?? '';
-                          String district = selectedDistrict ?? '';
-                          String address = addressController.text;
-                          print('Kategori: $category');
-                          print('Alt Kategori: $subcategory');
-                          print('city: $city');
-                          print('district: $district');
-                          print('adres: $address');
-                          print('Birim: $unit');
-                          print('Destek: $destek');
-                          print('Miktar: $miktar');
+                          if (selectedCategory == null ||
+                              selectedSubcategory == null ||
+                              selectedUnit == null ||
+                              selectedCity == null ||
+                              selectedDistrict == null ||
+                              destekController.text.isEmpty ||
+                              miktarController.text.isEmpty ||
+                              addressController.text.isEmpty) {
 
-                          FirebaseFirestore firestore =
-                              FirebaseFirestore.instance;
-                          CollectionReference destekler =
-                              firestore.collection('helps');
-
-                          try {
-                            await destekler.add({
-                              'Destek Sahibi': user.uid,
-                              'Ana Kategori': category,
-                              'Alt Kategori': subcategory,
-                              'city': selectedCity,
-                              'district': selectedDistrict,
-                              'address': address,
-                              'createdAt': DateTime.now(),
-                              'Birim': unit,
-                              'Miktar': miktar,
-                              'Destek': destek,
-                            });
-                            print('Veri Firestore\'a başarıyla eklendi.');
-                            destekController.clear();
-                            miktarController.clear();
-                            addressController.clear;
-
-                            setState(() {
-                              selectedCategory = null;
-                              selectedSubcategory = null;
-                              selectedUnit = null;
-                              selectedCity = null;
-                              selectedDistrict = null;
-                            });
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                backgroundColor: Colors.green,
+                                backgroundColor: Colors.red,
                                 content: Text(
-                                  'Yardımınız başarılı bir şekilde gönderildi.',
+                                  'Lütfen tüm alanları doldurun.',
                                   style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                                 duration: Duration(seconds: 2),
                               ),
                             );
-                          } catch (e) {
-                            print('Veri eklenirken bir hata oluştu: $e');
+                          } else {
+                            String category = selectedCategory ?? '';
+                            String subcategory = selectedSubcategory ?? '';
+                            String unit = selectedUnit ?? '';
+                            String destek = destekController.text;
+                            String miktar = miktarController.text;
+                            String city = selectedCity ?? '';
+                            String district = selectedDistrict ?? '';
+                            String address = addressController.text;
+                            print('Kategori: $category');
+                            print('Alt Kategori: $subcategory');
+                            print('city: $city');
+                            print('district: $district');
+                            print('adres: $address');
+                            print('Birim: $unit');
+                            print('Destek: $destek');
+                            print('Miktar: $miktar');
+
+                            FirebaseFirestore firestore =
+                                FirebaseFirestore.instance;
+                            CollectionReference destekler =
+                                firestore.collection('helps');
+
+                            try {
+                              await destekler.add({
+                                'Destek Sahibi': user.uid,
+                                'Ana Kategori': category,
+                                'Alt Kategori': subcategory,
+                                'city': selectedCity,
+                                'district': selectedDistrict,
+                                'address': address,
+                                'createdAt': DateTime.now(),
+                                'Birim': unit,
+                                'Miktar': miktar,
+                                'Destek': destek,
+                              });
+                              print('Veri Firestore\'a başarıyla eklendi.');
+                              destekController.clear();
+                              miktarController.clear();
+                              addressController.clear;
+
+                              setState(() {
+                                selectedCategory = null;
+                                selectedSubcategory = null;
+                                selectedUnit = null;
+                                selectedCity = null;
+                                selectedDistrict = null;
+                              });
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  backgroundColor: Colors.green,
+                                  content: Text(
+                                    'Yardımınız başarılı bir şekilde gönderildi.',
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  duration: Duration(seconds: 2),
+                                ),
+                              );
+                            } catch (e) {
+                              print('Veri eklenirken bir hata oluştu: $e');
+                            }
                           }
                         },
                         style: ElevatedButton.styleFrom(

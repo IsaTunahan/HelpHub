@@ -180,11 +180,13 @@ class _ProfilBilgileriState extends State<ProfilBilgileri> {
           ),
           content: SizedBox(
             width: double.maxFinite,
-            child: SingleChildScrollView(
-              child: Column(
+            child: ListView(
+              shrinkWrap: true,
+              children:[ Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   TextFormField(
+                    keyboardType:TextInputType.name,
                     controller: usernameController,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
@@ -213,6 +215,7 @@ class _ProfilBilgileriState extends State<ProfilBilgileri> {
                   ),
                   SizedBox(height: screenHeight * 0.01),
                   TextFormField(
+                    keyboardType:TextInputType.name,
                       controller: firstNameController,
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
@@ -242,6 +245,7 @@ class _ProfilBilgileriState extends State<ProfilBilgileri> {
                       textCapitalization: TextCapitalization.words),
                   SizedBox(height: screenHeight * 0.01),
                   TextFormField(
+                    keyboardType:TextInputType.name,
                       controller: lastNameController,
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
@@ -271,6 +275,7 @@ class _ProfilBilgileriState extends State<ProfilBilgileri> {
                       textCapitalization: TextCapitalization.words),
                   SizedBox(height: screenHeight * 0.01),
                   TextFormField(
+                    keyboardType:TextInputType.emailAddress,
                     controller: emailController,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
@@ -299,6 +304,7 @@ class _ProfilBilgileriState extends State<ProfilBilgileri> {
                   ),
                   SizedBox(height: screenHeight * 0.01),
                   TextFormField(
+                    keyboardType:TextInputType.phone,
                     controller: phoneController,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
@@ -327,6 +333,7 @@ class _ProfilBilgileriState extends State<ProfilBilgileri> {
                   ),
                 ],
               ),
+              ]
             ),
           ),
           actions: [

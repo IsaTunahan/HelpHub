@@ -154,6 +154,7 @@ class _forgotPasswordState extends State<forgotPassword> {
                                 ),
                                 SizedBox(height: screenHeight * 0.01),
                                 AppTextFormField(
+                                  inputType: TextInputType.emailAddress,
                                   controller: emailController,
                                   hintText: 'Email',
                                   obscureText: false,

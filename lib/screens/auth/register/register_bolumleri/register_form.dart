@@ -137,6 +137,7 @@ class _RegisterFormState extends State<RegisterForm> {
           children: [
             SizedBox(height: screenHeight * 0.02),
             AppTextFormField(
+              inputType: TextInputType.name,
               controller: usernameController,
               hintText: 'Kullanıcı Adı',
               obscureText: false,
@@ -145,6 +146,7 @@ class _RegisterFormState extends State<RegisterForm> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
               child: TextFormField(
+                keyboardType:TextInputType.name,
                 controller: firstNameController,
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
@@ -176,6 +178,7 @@ class _RegisterFormState extends State<RegisterForm> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
               child: TextFormField(
+                keyboardType:TextInputType.name,
                 controller: lastNameController,
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
@@ -205,24 +208,28 @@ class _RegisterFormState extends State<RegisterForm> {
             ),
             SizedBox(height: screenHeight * 0.01),
             AppTextFormField(
+              inputType: TextInputType.phone,
               controller: phoneController,
               hintText: 'Telefon',
               obscureText: false,
             ),
             SizedBox(height: screenHeight * 0.01),
             AppTextFormField(
+              inputType: TextInputType.emailAddress,
               controller: emailController,
               hintText: 'Email',
               obscureText: false,
             ),
             SizedBox(height: screenHeight * 0.01),
             AppTextFormField(
+              inputType: TextInputType.visiblePassword,
               controller: passwordController,
               hintText: 'Şifre',
               obscureText: true,
             ),
             SizedBox(height: screenHeight * 0.01),
             AppTextFormField(
+              inputType: TextInputType.visiblePassword,
               controller: confirmPasswordController,
               hintText: 'Şifreyi Doğrula',
               obscureText: true,

@@ -221,6 +221,7 @@ class _NeedsScreenState extends State<NeedsScreen> {
                       ),
                       SizedBox(height: screenHeight * 0.01),
                       TextFormField(
+                        keyboardType: TextInputType.streetAddress,
                         controller: addressController,
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
@@ -275,6 +276,7 @@ class _NeedsScreenState extends State<NeedsScreen> {
                       ),
                       const SizedBox(height: 10),
                       TextFormField(
+                        keyboardType: TextInputType.multiline,
                         controller: ihtiyacController,
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
@@ -311,60 +313,81 @@ class _NeedsScreenState extends State<NeedsScreen> {
                     Expanded(
                       child: ElevatedButton(
                         onPressed: () async {
-                          String category = selectedCategory ?? '';
-                          String subcategory = selectedSubcategory ?? '';
-                          String ihtiyac = ihtiyacController.text;
-                          String city = selectedCity ?? '';
-                          String district = selectedDistrict ?? '';
-                          String address = addressController.text;
-
-                          print('Kategori: $category');
-                          print('Alt Kategori: $subcategory');
-                          print('İhtiyaç: $ihtiyac');
-                          print('city: $city');
-                          print('district: $district');
-                          print('adres: $address');
-
-                          FirebaseFirestore firestore =
-                              FirebaseFirestore.instance;
-                          CollectionReference ihtiyacs =
-                              firestore.collection('needs');
-
-                          try {
-                            await ihtiyacs.doc().set({
-                              'İhtiyaç Sahibi': user.uid,
-                              'anaKategori': category,
-                              'Alt Kategori': subcategory,
-                              'İhtiyaç': ihtiyac,
-                              'city': selectedCity,
-                              'district': selectedDistrict,
-                              'address': address,
-                              'createdAt': DateTime.now(),
-                            });
-                            print('Veri Firestore\'a başarıyla eklendi.');
-
-                            ihtiyacController.clear();
-                            addressController.clear();
-                            setState(() {
-                              selectedCategory = null;
-                              selectedSubcategory = null;
-                              selectedCity = null;
-                              selectedDistrict = null;
-                            });
+                          if (selectedCategory == null ||
+                              selectedSubcategory == null ||
+                              selectedCity == null ||
+                              selectedDistrict == null ||
+                              ihtiyacController.text.isEmpty ||
+                              addressController.text.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                backgroundColor: Colors.green,
+                                backgroundColor: Colors.red,
                                 content: Text(
-                                  'İhtiyacınız başarılı bir şekilde gönderildi.',
+                                  'Lütfen tüm alanları doldurun.',
                                   style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                                 duration: Duration(seconds: 2),
                               ),
                             );
-                          } catch (e) {
-                            print('Veri eklenirken bir hata oluştu: $e');
+                          } else {
+                            String category = selectedCategory ?? '';
+                            String subcategory = selectedSubcategory ?? '';
+                            String ihtiyac = ihtiyacController.text;
+                            String city = selectedCity ?? '';
+                            String district = selectedDistrict ?? '';
+                            String address = addressController.text;
+
+                            print('Kategori: $category');
+                            print('Alt Kategori: $subcategory');
+                            print('İhtiyaç: $ihtiyac');
+                            print('city: $city');
+                            print('district: $district');
+                            print('adres: $address');
+
+                            FirebaseFirestore firestore =
+                                FirebaseFirestore.instance;
+                            CollectionReference ihtiyacs =
+                                firestore.collection('needs');
+
+                            try {
+                              await ihtiyacs.doc().set({
+                                'İhtiyaç Sahibi': user.uid,
+                                'anaKategori': category,
+                                'Alt Kategori': subcategory,
+                                'İhtiyaç': ihtiyac,
+                                'city': selectedCity,
+                                'district': selectedDistrict,
+                                'address': address,
+                                'createdAt': DateTime.now(),
+                              });
+                              print('Veri Firestore\'a başarıyla eklendi.');
+
+                              ihtiyacController.clear();
+                              addressController.clear();
+                              setState(() {
+                                selectedCategory = null;
+                                selectedSubcategory = null;
+                                selectedCity = null;
+                                selectedDistrict = null;
+                              });
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  backgroundColor: Colors.green,
+                                  content: Text(
+                                    'İhtiyacınız başarılı bir şekilde gönderildi.',
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  duration: Duration(seconds: 2),
+                                ),
+                              );
+                            } catch (e) {
+                              print('Veri eklenirken bir hata oluştu: $e');
+                            }
                           }
                         },
                         style: ElevatedButton.styleFrom(
