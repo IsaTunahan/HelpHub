@@ -74,7 +74,7 @@ class _forgotPasswordState extends State<forgotPassword> {
               //Logo
               Image.asset(
                 'assets/logos/HelpHub.png',
-                height: screenHeight * 0.2,
+                height: screenHeight * 0.25,
                 width: screenWidth * 0.8,
               ),
               const SizedBox(
