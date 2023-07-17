@@ -41,7 +41,7 @@
 
 ---
 # Sprint 1
-![Sprint 1](https://github.com/IsaTunahan/Bootcamp/blob/main/Sprint%201.png?raw=true)
+![Sprint 1](https://github.com/IsaTunahan/Bootcamp/blob/feature/Sprint%201.png?raw=true)
 
 * Sprint içinde tamamlanması tahmin edilen puan: 100 Puan
 
@@ -58,23 +58,23 @@
 ---
 
 # Logo
-![Logo](https://github.com/IsaTunahan/Bootcamp/blob/main/logo.png)
+![Logo](https://github.com/IsaTunahan/Bootcamp/blob/feature/logo.png)
 
 # Giriş Ekranı
 | Giriş Yap | Kayıt Ol | Şifre Sıfırlama |
 |---------|---------|---------|
-| <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Giri%C5%9F.png?raw=true" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Kay%C4%B1t.png?raw=true" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/%C5%9Eifremi%20unuttum.png?raw=true" width="300"> |
+| <img src="https://github.com/IsaTunahan/Bootcamp/blob/feature/Giri%C5%9F.png?raw=true" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/feature/Kay%C4%B1t.png?raw=true" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/feature/%C5%9Eifremi%20unuttum.png?raw=true" width="300"> |
 
 # Anasayfa Ekranı
 | Anasayfa | İhtiyacım Var | Destek Ol |
 |---------|---------|---------|
-| <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Anasayfa.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Ihtiyacimvar.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Destekol.png" width="300"> |
+| <img src="https://github.com/IsaTunahan/Bootcamp/blob/feature/Anasayfa.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/feature/Ihtiyacimvar.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/feature/Destekol.png" width="300"> |
 
 
 # Anasayfa Ekranı
 | Bildirim | Profil | Kategori |
 |---------|---------|---------|
-| <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Bildirim.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/kadprofl.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/kategori.png" width="300"> |
+| <img src="https://github.com/IsaTunahan/Bootcamp/blob/feature/Bildirim.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/feature/kadprofl.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/feature/kategori.png" width="300"> |
 
 ---
 
@@ -123,7 +123,7 @@ Sprint planlamasında takım üyelerinin oy birliği ile Help Hub projesine kara
 
 # Sprint 2
 
-![Logo](https://github.com/IsaTunahan/Bootcamp/blob/main/sprint2.png)
+![Logo](https://github.com/IsaTunahan/Bootcamp/blob/feature/sprint2.png)
 
 *  Sprint içinde tamamlanması tahmin edilen puan: 100
 *  Puan tamamlama mantığı: Toplamda proje boyunca tamamlanması gereken 300 puanlık backlog maddesi bulunmaktadır. Sprint 1'de 100 puan, Sprint 2'de 100 puanlık kısmı tamamlanarak toplamda 200 puana ulaşılmıştır. 
@@ -135,24 +135,24 @@ Sprint planlamasında takım üyelerinin oy birliği ile Help Hub projesine kara
 # Giriş Ekranı
 | Giriş Yap | Kayıt Ol | Şifre Sıfırlama |
 |---------|---------|---------|
-| <img src="https://github.com/IsaTunahan/Bootcamp/blob/2102fe227bc911d0ed5f86d1d76310f13cbcb0be/Giris%CC%A7Yap.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/Kayıt%20Ol.png?raw=true" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/a98bf327464c38032c557e3fb892706f11fc4589/s%CC%A7ifre%20s%C4%B1f%C4%B1rlama.png" width="300"> |
+| <img src="https://github.com/IsaTunahan/Bootcamp/blob/2102fe227bc911d0ed5f86d1d76310f13cbcb0be/Giris%CC%A7Yap.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/feature/Kayıt%20Ol.png?raw=true" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/a98bf327464c38032c557e3fb892706f11fc4589/s%CC%A7ifre%20s%C4%B1f%C4%B1rlama.png" width="300"> |
 
 # Profil Ekranı
 | Profil Yardım | Profil İhtiyaç | Ayarlar |
 |---------|---------|---------|
-| <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/profilepage.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/profilepageneeed.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/settings.png" width="300"> |
+| <img src="https://github.com/IsaTunahan/Bootcamp/blob/feature/profilepage.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/feature/profilepageneeed.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/feature/settings.png" width="300"> |
 
 
 # Anasayfa Ekranı
 | Anasayfa | Yardım Et | İhtiyacım Var |
 |---------|---------|---------|
-| <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/homepage.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/helppage.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/needpage.png" width="300"> |
+| <img src="https://github.com/IsaTunahan/Bootcamp/blob/feature/homepage.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/feature/helppage.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/feature/needpage.png" width="300"> |
 
 
 # Kategoriler
 | Ana Kategoriler | Alt Kategori (Eğitim) | Alt Kategori (Temel İhtiyaçlar) |
 |---------|---------|---------|
-| <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/categories.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/_categori.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/_categoris.png" width="300"> |
+| <img src="https://github.com/IsaTunahan/Bootcamp/blob/feature/categories.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/feature/_categori.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/feature/_categoris.png" width="300"> |
 
 
 # Sprint Review
@@ -189,7 +189,7 @@ Takım üyeleri daily scrumlarda tasklarının ne aşamada olduğunu ileterek, e
 
 # Sprint 3
 
-![Logo](https://github.com/IsaTunahan/Bootcamp/blob/main/clickupscsht.png)
+![Logo](https://github.com/IsaTunahan/Bootcamp/blob/feature/clickupscsht.png)
 
 * Sprint içinde tamamlanması tahmin edilen puan: 100
 * Puan tamamlama mantığı: Toplamda proje boyunca tamamlanması gereken 300 puanlık backlog maddesi bulunmaktadır
@@ -202,24 +202,24 @@ Takım üyeleri daily scrumlarda tasklarının ne aşamada olduğunu ileterek, e
 # Anasayfa Ekranı
 | Açılış | En Son Yardımlar | En Son İhtiyaçlar |
 |---------|---------|---------|
-| <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/sprint3/startscreeen.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/sprint3/lasthelps.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/sprint3/lastneeds.png" width="300"> |
+| <img src="https://github.com/IsaTunahan/Bootcamp/blob/feature/sprint3/startscreeen.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/feature/sprint3/lasthelps.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/feature/sprint3/lastneeds.png" width="300"> |
 
 # Profil Ekranı
 | Profilim Yardım | Profilim İhtiyaç | Diğer Kullanıcı Profili |
 |---------|---------|---------|
-| <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/sprint3/myprofilehelp.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/sprint3/myprofileneed.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/sprint3/othersprofile.png" width="300"> |
+| <img src="https://github.com/IsaTunahan/Bootcamp/blob/feature/sprint3/myprofilehelp.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/feature/sprint3/myprofileneed.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/feature/sprint3/othersprofile.png" width="300"> |
 
 
 # İlan Detay Ekranı
 | Yardım Detay | İhtiyaç Detay | İletişim |
 |---------|---------|---------|
-| <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/sprint3/helpdetails.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/sprint3/needdetails.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/sprint3/contanct.png" width="300"> |
+| <img src="https://github.com/IsaTunahan/Bootcamp/blob/feature/sprint3/helpdetails.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/feature/sprint3/needdetails.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/feature/sprint3/contanct.png" width="300"> |
 
 
 # İlan ve İletişim Ekranı
 | Yardım İlan | İhtiyaç İlan | Mesajlaşma |
 |---------|---------|---------|
-| <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/sprint3/helpshare.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/sprint3/needshare.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/sprint3/messagescreen.png" width="300"> |
+| <img src="https://github.com/IsaTunahan/Bootcamp/blob/feature/sprint3/helpshare.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/feature/sprint3/needshare.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/feature/sprint3/messagescreen.png" width="300"> |
 
 
 
