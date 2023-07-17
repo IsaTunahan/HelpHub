@@ -6,11 +6,9 @@
 
 ## Takım Elemanları
 
-* Gülüşan Şenses: Scrum Master
-* Özge Önal: Product Owner
+* Gülüşan Şenses: Scrum Master/ Product Owner
 * İsa Tunahan İslamoğlu: Developer
 * Abdülkadir Hocaoğlu: Developer
-* Furkan Oğuzhan: Developer
 
 ## Ürün İsmi
 * Help Hub
@@ -90,7 +88,7 @@
 
 * Kullanıcılara ait profil sayfaları temellendirilmiştir. 
 
-* Sprint Review katılımcıları: Gülüşan Şenses, Özge Önal, İsa Tunahan İslamoğlu, Abdülkadir Hocaoğlu.
+* Sprint Review katılımcıları: Gülüşan Şenses, İsa Tunahan İslamoğlu, Abdülkadir Hocaoğlu.
 
 # Sprint Retrospective:
 
@@ -164,7 +162,7 @@ Sprint planlamasında takım üyelerinin oy birliği ile Help Hub projesine kara
 *  Ayarlar sayfasında kişisel bilgiler editlenebilir durumdadır.
 *  Firebase veriler hem gönderilebiliyor hem çekilebiliyor.
 *  Ayarlar sayfasına eklenen Çıkış button çalışır durumdadır.
-*  Sprint Review Katılımcıları: Gülüşan Şenses, Özge Önal, İsa Tunahan İslamoğlu, Abdülkadir Hocaoğlu.
+*  Sprint Review Katılımcıları: Gülüşan Şenses, İsa Tunahan İslamoğlu, Abdülkadir Hocaoğlu.
 
 # Sprint Retrospective
 *  Furkan Oğuzhan'ın takım ile iletişimi konusunda sprint 1 sonunda Scrum Master görüşmüş olup, sınavları biteceği için sprint 2 de destek olabileceğini iletmiştir. Ancak Sprint 2 boyunca da takımla/scrum master ile iletişimi olmamıştır.
