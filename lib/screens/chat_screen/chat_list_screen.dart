@@ -1,85 +1,111 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../../repository/user_repository/messaging_service.dart';
-import '../chat_screen/chat_screen.dart';
+class ChatDetailsPage extends StatefulWidget {
+  final String currentUserId;
 
-class ChatListScreen extends StatefulWidget {
-  const ChatListScreen({Key? key}) : super(key: key);
+  const ChatDetailsPage({super.key, 
+    required this.currentUserId,
+  });
 
   @override
-  _ChatListScreenState createState() => _ChatListScreenState();
+  _ChatDetailsPageState createState() => _ChatDetailsPageState();
 }
 
-class _ChatListScreenState extends State<ChatListScreen> {
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  late MessagingService _messagingService;
+class _ChatDetailsPageState extends State<ChatDetailsPage> {
+  String chatId = '';
+  List<String> users = [];
+  Map<String, dynamic> recipientData = {};
 
   @override
   void initState() {
     super.initState();
-    _messagingService = MessagingService();
+    getChatId();
   }
 
-  Future<String> getCurrentUserId() async {
-    final currentUser = _firebaseAuth.currentUser;
-    return currentUser!.uid;
+  Future<void> getChatId() async {
+    final chatsRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.currentUserId)
+        .collection('chats');
+
+    final querySnapshot = await chatsRef.get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      final chatDoc = querySnapshot.docs.first;
+      chatId = chatDoc.id;
+
+      await getChatDetails();
+    }
+  }
+
+  Future<void> getChatDetails() async {
+    final chatRef =
+        FirebaseFirestore.instance.collection('chats').doc(chatId);
+    final chatSnapshot = await chatRef.get();
+
+    if (chatSnapshot.exists) {
+      final chatData = chatSnapshot.data();
+      users = List<String>.from(chatData?['users'] ?? []);
+
+      final recipientId =
+          users.firstWhere((userId) => userId != widget.currentUserId,
+              orElse: () => '');
+
+      if (recipientId.isNotEmpty) {
+        final recipientRef =
+            FirebaseFirestore.instance.collection('users').doc(recipientId);
+        final recipientSnapshot = await recipientRef.get();
+
+        if (recipientSnapshot.exists) {
+          recipientData = recipientSnapshot.data() ?? {};
+        }
+      }
+
+      setState(() {});
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<String>(
-      future: getCurrentUserId(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else {
-          final currentUserId = snapshot.data!;
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text('Chat List'),
-            ),
-            body: FutureBuilder<List<DocumentSnapshot>>(
-              future: _messagingService.getPreviousChats(currentUserId),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else {
-                  final chatDocs = snapshot.data!;
-                  return ListView.builder(
-                    itemCount: chatDocs.length,
-                    itemBuilder: (context, index) {
-                      final chatDoc = chatDocs[index];
-                      return ListTile(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ChatScreen(
-                                recipientId: chatDoc['recipientId'],
-                              ),
-                            ),
-                          );
-                        },
-                        leading: CircleAvatar(
-                          backgroundImage: NetworkImage(chatDoc['recipientImage']),
-                        ),
-                        title: Text(chatDoc['recipientName']),
-                        subtitle: Text(chatDoc['lastMessage']),
-                      );
-                    },
-                  );
-                }
-              },
-            ),
-          );
-        }
-      },
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Chat Details'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (users.isNotEmpty)
+              Text('Users: ${users.join(', ')}'),
+            if (recipientData.isNotEmpty)
+              Column(
+                children: [
+                  Text('Recipient Name: ${recipientData['name']}'),
+                  Text('Recipient Profile Picture: ${recipientData['profilePicture']}'),
+                ],
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+void main() {
+  runApp(ChatDetailsApp());
+}
+
+class ChatDetailsApp extends StatelessWidget {
+  const ChatDetailsApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Chat Details',
+      home: ChatDetailsPage(
+        currentUserId: 'your_current_user_id_here',
+      ),
     );
   }
 }

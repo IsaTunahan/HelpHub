@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:http/http.dart' as http;
 
 import '../../models/message_model.dart';
@@ -35,10 +34,21 @@ class MessagingService {
         _firebaseFirestore.collection('users').doc(currentUserId);
     final recipientRef =
         _firebaseFirestore.collection('users').doc(recipientId);
-
     final chatData = {
-      'users': [currentUserRef, recipientRef],
+      'users': [currentUserId, recipientId],
     };
+    final chatDatas = {
+      'chatId': chatId,
+      'recipientId': recipientId,
+    };
+   
+ final currentUserChatsRef =
+      currentUserRef.collection('chats').doc(chatId);
+  final recipientChatsRef =
+      recipientRef.collection('chats').doc(chatId);
+
+await currentUserChatsRef.set(chatDatas);
+  await recipientChatsRef.set(chatDatas);
 
     final chatRef = _firebaseFirestore.collection('chats').doc(chatId);
     await chatRef.set(chatData);
@@ -55,12 +65,76 @@ class MessagingService {
     final docRef = await chatRef.collection('messages').add(messageMap);
     return docRef;
   }
+Future<void> getChatDetails(String chatId) async {
+  final chatRef = _firebaseFirestore.collection('chats').doc(chatId);
+  final chatSnapshot = await chatRef.get();
+
+  if (chatSnapshot.exists) {
+    final chatData = chatSnapshot.data();
+    final List<String>? users = List<String>.from(chatData?['users'] ?? []);
+
+    for (String? userId in users!) {
+      final userRef = _firebaseFirestore.collection('users').doc(userId);
+      final userSnapshot = await userRef.get();
+
+      if (userSnapshot.exists) {
+        final userData = userSnapshot.data();
+        if (userData != null) {
+          // Kullanıcı verilerine erişmek için userData kullanabilirsiniz
+          print('User ID: $userId');
+          print('Username: ${userData['username']}');
+          print('Email: ${userData['email']}');
+          print('---');
+
+          // Alıcı bilgilerine erişmek için alıcı ID'sini alın
+          final recipientId = chatData?['recipientId'];
+          if (recipientId != null) {
+            final recipientRef =
+                _firebaseFirestore.collection('users').doc(recipientId);
+            final recipientSnapshot = await recipientRef.get();
+
+            if (recipientSnapshot.exists) {
+              final recipientData = recipientSnapshot.data();
+              if (recipientData != null) {
+                // Alıcı verilerine erişmek için recipientData kullanabilirsiniz
+                print('Recipient ID: $recipientId');
+                print('Recipient Name: ${recipientData['name']}');
+                print('Recipient Profile Picture: ${recipientData['profilePicture']}');
+                print('---');
+              } else {
+                print('Recipient data is null for ID: $recipientId');
+              }
+            } else {
+              print('Recipient not found: $recipientId');
+            }
+          }
+        } else {
+          print('User data is null for ID: $userId');
+        }
+      } else {
+        print('User not found: $userId');
+      }
+    }
+  } else {
+    print('Chat not found: $chatId');
+  }
+}
+
 
   Future<void> markMessageAsRead(String messageId) async {
     await _firebaseFirestore
         .collection('messages')
         .doc(messageId)
         .update({'isRead': true});
+  }
+
+  Future<List<DocumentSnapshot>> getChats(String currentUserId) async {
+    final snapshot = await FirebaseFirestore.instance
+        .collection('chats')
+        .where('users', arrayContains: currentUserId)
+        .get();
+
+    return snapshot.docs;
   }
 
   Future<void> sendNotification(String recipientToken, String message) async {
@@ -124,14 +198,11 @@ class MessagingService {
   }
 
   Future<List<DocumentSnapshot>> getPreviousChats(String currentUserId) async {
-  final snapshot = await FirebaseFirestore.instance
-      .collection('chats')
-      .where('users', arrayContains: currentUserId)
-      .get();
+    final snapshot = await FirebaseFirestore.instance
+        .collection('chats')
+        .where('users', arrayContains: currentUserId)
+        .get();
 
-  return snapshot.docs;
-}
-
-
-
+    return snapshot.docs;
+  }
 }

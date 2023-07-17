@@ -1,6 +1,5 @@
 import 'package:bootcamp/screens/home/home_swt/home_help.dart';
 import 'package:bootcamp/screens/home/home_swt/home_need.dart';
-import 'package:bootcamp/style/icons/helphub_icons.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -79,18 +78,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         backgroundColor:
             _selectedIndex == 0 ? AppColors.purple : AppColors.yellow,
         elevation: 0,
-        actions: [
-          GestureDetector(
-              onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //       builder: (context) =>
-                //            ChatHistoryPage(currentUserId: userid,)),
-                // );
-              },
-              child: const Icon(Helphub.pages))
-        ],
+        
       ),
       body: Column(
         children: [

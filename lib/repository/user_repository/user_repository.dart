@@ -7,6 +7,7 @@ import '../../models/user_model.dart';
 class UserRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+
   Future<UserModel?> getUserData(String userId) async {
     QuerySnapshot snapshot = await FirebaseFirestore.instance
       .collection('users')
