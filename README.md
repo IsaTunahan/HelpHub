@@ -185,8 +185,89 @@ Takım üyeleri daily scrumlarda tasklarının ne aşamada olduğunu ileterek, e
 *  Facebook ile giriş eklendi ve çalışır hale getirildi.
 *  Sprint review ve sonrasında retro gerçekleştirildi.
 
-  
+
+---
+
+
+# Sprint 3
+
+![Logo](https://github.com/IsaTunahan/Bootcamp/blob/main/clickupscsht.png)
+
+* Sprint içinde tamamlanması tahmin edilen puan: 100
+* Puan tamamlama mantığı: Toplamda proje boyunca tamamlanması gereken 300 puanlık backlog maddesi bulunmaktadır
+* Sprint 1'de 100 puan, Sprint 2'de 100 puan ve Sprint 3'de 100 puanlık kısmı tamamlanarak toplamda 300 puana ulaşılmıştır.
+* Daily Scrum: Daily Scrum toplantıları, sprint 1 ve 2de olduğu gibi takımın iletişimde kalması adına hafta içi akşam saatlerinde Slack ya da Google Meet üzerinden yapılmaktadır.
+* Daily Scrum toplantısı her güne ait notlarımız ClickUp içerisinde Product Backlog altında Daily Scrum Notlar adıyla yer almaktadır.
+
+[Notlar için tıklayın(ClickUp)](https://app.clickup.com/9009157545/v/dc/8cftnd9-440/8cftnd9-300)
+
+# Anasayfa Ekranı
+| Açılış | En Son Yardımlar | En Son İhtiyaçlar |
+|---------|---------|---------|
+| <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/sprint3/startscreeen.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/sprint3/lasthelps.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/sprint3/lastneeds.png" width="300"> |
+
+# Profil Ekranı
+| Profilim Yardım | Profilim İhtiyaç | Diğer Kullanıcı Profili |
+|---------|---------|---------|
+| <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/sprint3/myprofilehelp.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/sprint3/myprofileneed.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/sprint3/othersprofile.png" width="300"> |
+
+
+# İlan Detay Ekranı
+| Yardım Detay | İhtiyaç Detay | İletişim |
+|---------|---------|---------|
+| <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/sprint3/helpdetails.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/sprint3/needdetails.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/sprint3/contanct.png" width="300"> |
+
+
+# İlan ve İletişim Ekranı
+| Yardım İlan | İhtiyaç İlan | Mesajlaşma |
+|---------|---------|---------|
+| <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/sprint3/helpshare.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/sprint3/needshare.png" width="300"> | <img src="https://github.com/IsaTunahan/Bootcamp/blob/main/sprint3/messagescreen.png" width="300"> |
 
 
 
 
+# Sprint Review
+
+
+* Alınan kararlar: Belirtilen şekilde 3 sprint koşularak uygulama tamamlanmış olup, reviewda gösterilmiştir.
+* Ana sayfada yer alan en son yardımlar ve en son ihtiyaçlar hazır durumdadır.
+* Uygulama içi mesajlaşma sistemi çalışır durumdadır.
+* Yardım ve ihtiyaçlar detaylarına gidilebilir durumdadır.
+* Yarım/İhtiyaç Oluştur aşamasında kategori, alt kategori, detaylı adres bilgileri ve açık uçlu alan çalışır durumdadır.
+* Yardım detayında harita bulunmakta ve yol tarifi alınabilmektedir.
+* İhtiyaçlarda yer alan destek ol butonundan ihtiyaç sahibi ile ara ve mesaj gönder olarak iletişime geçilebilmektedir.
+* Kullanıcılar profil sayfasında yer alan profil güncelle butonu ile kullanıcı adı , isim, soyisim, e-posta, telefon, profil fotoğrafı alanlarının düzenleyebilmektedir.
+* İhtiyaç/Yardım detayında ihtiyacın/yardımın oluşturulma tarih ve saati doğru şekilde görüntülenebilmektedir.
+* Kullanıcılar birbirlerinin profillerini görüntüleyebilir durumdadır.
+* Profil sayfasında yer alan mesaj gönder fonksiyonu başarılı şekilde çalışmaktadır.
+* Uygulama genelinde tasarım bütünlüğü review katılımcıları ile de teyit edilmiştir.
+* Sprint Review Katılımcıları: Gülüşan Şenses, İsa Tunahan İslamoğlu, Abdülkadir Hocaoğlu.
+
+
+# Sprint Retrospective
+
+
+* Gülüşan; yoğun geçen 3. sprint için İsa ve Abdülkadir’e özel teşekkürlerini iletti.
+* Retro katılımcıları projede yer almaktan mutluluk duyduklarını paylaştılar.
+* Sprint boyunca desteği olmayan Özge Önal için üzgün olduğumuzu belirttik.Raporlanması konusunda scrum master form üzerine not düşecektir.
+* Sprint planlamasında takım üyeleri ile alınacak tasklara ortak karar verildi.
+* Tasklar için how toplantısına geçildi. Tasklar takım üyelerine assign edildi.
+* Takım üyeleri daily scrumlarda tasklarının ne aşamada olduğunu ileterek, engel bulunup bulunmadığı konusunda görüşmeler yapıldı.
+
+
+# Sprint Notları
+
+
+* Sprint planlamada tüm tasklara takım (Gülüşan Şenses, İsa Tunahan İslamoğlu, Abdülkadir Hocaoğlu) ile karar verildi.
+* Ana sayfada yer alan en son yardımlar ve en son ihtiyaçlar çalışır duruma getirildi.
+* Uygulama içi mesajlaşma sistemi kuruldu.
+* Yardım ve ihtiyaçlar detaylara çalışıldı.
+* Yarım/İhtiyaç Oluştur aşamasında kategori, alt kategori, detaylı adres bilgileri ve açık uçlu alan üzerine çalışıldı.
+* Yardım detayında harita bulunmakta ve yol tarifi fonksiyonları eklendi.
+* İhtiyaçlarda yer alan destek ol butonuna ara ve mesaj gönder fonksiyonları eklendi.
+* Kullanıcıların profil sayfasında yer alan profil güncelle butonu ile kullanıcı adı , isim, soyisim, e-posta, telefon, profil fotoğrafı alanlarını düzenleyebilmeleri sağlandı.
+* İhtiyaç/Yardım detayında ihtiyacın/yardımın oluşturulma tarih ve saati eklendi.
+* Kullanıcıların birbirlerinin profillerini görüntüleyebilmeleri için çalışıldı.
+* Profil sayfasına da mesaj gönder fonksiyonu ekledi.
+* Uygulama genelinde tasarım bütünlüğü sağlandı.
+* Sprint review ve sonrasında retro gerçekleştirildi.
